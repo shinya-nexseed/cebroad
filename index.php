@@ -9,14 +9,16 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <head>
 	<meta charset="UTF-8">
     <title>Cebroad</title>
-		 <link href="webroot/assets/css/bootstrap.min.css" rel="stylesheet">
+		<link href="webroot/assets/css/bootstrap.min.css" rel="stylesheet">
 		<link href="webroot/assets/css/bootstrap.min.css" rel='stylesheet' type='text/css' />
+		<link href="webroot/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
+		<link href="webroot/assets/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-		 <script src="webroot/assets/js/bootstrap.min.js"></script>
-		 <script src="webroot/assets/js/jquery.min.js"></script>
-	 <!-- Custom files -->
+		<script src="webroot/assets/js/bootstrap.min.js"></script>
+		<script src="webroot/assets/js/jquery.min.js"></script>
+	<!-- Custom files -->
 		<link href="webroot/assets/css/sitetop_style.css" rel='stylesheet' type='text/css' />
-   	 <!-- Custom Theme files -->
+   	<!-- Custom Theme files -->
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 		</script>
@@ -53,16 +55,16 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Variety</a>
+          <a class="navbar-brand" href="#">Cebroad</a>
         </div>
         <div class="collapse navbar-collapse navbar-right">
           <ul class="nav navbar-nav">
             <!-- <li class="active"> -->
-            <li><a href="#">Start</a></li>
-            <li><a href="#about">About me</a></li>
-            <li><a href="#work">Work</a></li>
-            <li><a href="#portfolio">Portfolio</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="#">Help</a></li>
+            <li><a href="#about">Sign up</a></li>
+            <li><a href="#work">Login</a></li>
+          <!--   <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#contact">Contact</a></li> -->
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -72,21 +74,21 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         <!---start-image-slider---->
 		<div class="slideshow">
 		   <div>
-		     <h1>May I introduce my self?</h1>
+		     <h1>BEYOND SCHOOL</h1>
 		     <span class="border"> </span>
-		     <p>Fronted Design UI/UX Design</p>
+		     <p>Join the events and meet new friends beyond schools in CEBU.</p>
 		   </div>
-		    <div>
-		     <h1>May I introduce my self?</h1>
+		 <!--    <div>
+		     <h1>Get together beyond school</h1>
 		     <span class="border"> </span>
-		     <p>Fronted Design UI/UX Design</p>
-		   </div>
+		     <p>join and make your Cebu life more fun</p>
+		   </div> -->
 		</div>
 		<div class="go_btn">
-		          <a class="button" href="#">Go Ahead</a>
-		 </div>
+		          <a class="button" href="#">Sign up</a>
+		</div>
 		<!-----start-slider-script---->
-		<script>
+<!-- 		<script>
 			$(function() {
 				$(".slideshow > div:gt(0)").hide();
 				setInterval(function() { 
@@ -99,7 +101,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				},  3000);
 				
 			});
-		</script>
+		</script> -->
 		<!-----//End-slider-script---->
 	</div>
         <!----//End-slider---->
@@ -121,33 +123,36 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <div  class="work" id="work">
 		<div class="container">
 			<div class="row">
-				<div class="col-md-4 text-center">
+				<div class="col-md-6 text-center">
 					<div class="grid ">
-						<img src="webroot/assets/images/icon1.png" alt=""/>
+						<!-- <img src="webroot/assets/images/icon1.png" alt=""/> -->
+						<i class="fa fa-building fa-large" aria-hidden="true"></i>
 						<h3>Sketching is fun</h3>
 						<p>Lorem ipsum dolor sit amet, lobortis scelerisque magna. Ut in nunc sem. Integer bibendum enim et erat molestie. Nullam sem diam. Duis adipiscing commodo ipsum dapibus elementum.</p>
 					</div>
 				</div>
-					<div class="col-md-4 text-center">
+					<div class="col-md-6 text-center">
 						<div class="grid ">
-							<img src="webroot/assets/images/icon2.png" alt=""/>
+							<!-- <img src="webroot/assets/images/icon2.png" alt=""/> -->
+							<i class="fa fa-users fa-large" aria-hidden="true"></i>
 							<h3>Design afterwords</h3>
 							<p>Lorem ipsum dolor sit amet, lobortis scelerisque magna. Ut in nunc sem. Integer bibendum enim et erat molestie. Nullam sem diam. Duis adipiscing commodo ipsum dapibus elementum.</p>
 						</div>
 					</div>
-					<div class="col-md-4 text-center">
-						<div class="grid ">
-							<img src="webroot/assets/images/icon3.png" alt=""/>
+					<!-- <div class="col-md-4 text-center">
+						<div class="grid "> -->
+							<!-- <img src="webroot/assets/images/icon3.png" alt=""/> -->
+							<!-- <i class="fa fa-building" aria-hidden="true"></i>
 							<h3>Finalize</h3>
 							<p>Lorem ipsum dolor sit amet, lobortis scelerisque magna. Ut in nunc sem. Integer bibendum enim et erat molestie. Nullam sem diam. Duis adipiscing commodo ipsum dapibus elementum.</p>
-							</div>
-					</div>
+							</div> -->
+				<!-- 	</div> -->
 					<div class="clearfix"></div>
 			</div>
 		</div>	
 	</div>	
 		<link rel="stylesheet" type="text/css" href="webroot/assets/css/sitetop_component.css" />
-		<script src="js/modernizr.custom.js"></script>
+		<script src="webroot/assets/js/modernizr.custom.js"></script>
 	<div  class="portfolio" id="portfolio">
 		<div class="container demo-3">
 				<ul class="col-md-12 grid cs-style-3">
@@ -159,7 +164,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 									<span>amet conseteter sadipscing elitr</span>
 								</figcaption>
 							</figure>
-							<a data-toggle="modal" data-target=".bs-example-modal-md" href="#"><label class="search-icon"> </label></a>
+							<a data-toggle="modal" data-target=".bs-example-modal-md" href="#"><!-- <label class="search-icon"> </label> --></a>
 						</li>
 						<li class="col-md-6">
 							<figure>
@@ -169,7 +174,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 									<span>amet conseteter sadipscing elitr</span>
 								</figcaption>
 							</figure>
-							<a data-toggle="modal" data-target=".bs-example-modal-md" href="#"><label class="search-icon"> </label></a>
+							<a data-toggle="modal" data-target=".bs-example-modal-md" href="#"><!-- <label class="search-icon"> </label> --></a>
 						</li>
 						<li class="col-md-6">
 							<figure>
@@ -179,7 +184,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 									<span>amet conseteter sadipscing elitr</span>
 								</figcaption>
 							</figure>
-							<a data-toggle="modal" data-target=".bs-example-modal-md" href="#"><label class="search-icon"> </label></a>
+							<a data-toggle="modal" data-target=".bs-example-modal-md" href="#"><!-- <label class="search-icon"> </label> --></a>
 						</li> 
 						<li class="col-md-6">
 							<figure>
@@ -189,7 +194,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 									<span>amet conseteter sadipscing elitr</span>
 								</figcaption>
 							</figure>
-							<a data-toggle="modal" data-target=".bs-example-modal-md" href="#"><label class="search-icon"> </label></a>
+							<a data-toggle="modal" data-target=".bs-example-modal-md" href="#"><!-- <label class="search-icon"> </label> --></a>
 						</li>
 						<li>
 					</ul>
@@ -199,7 +204,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				</div>
 		</div>
 		<!-- /container -->
-		<script src="js/toucheffects.js"></script>
+		<script src="webroot/assets/js/toucheffects.js"></script>
 <!----//End-container---->
 <!----start-model-box---->
 						<div class="modal fade bs-example-modal-md" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
@@ -213,7 +218,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						</div>
 						<!----start-model-box---->
 <!----start-contact---->
- <div  class="contact" id="contact">
+<!--  <div  class="contact" id="contact">
 		<div class="container contact">
 				<h5>Get in touch!</h5>
 					<div class="row contact-form">
@@ -231,11 +236,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							</form>
 						</div>
 				</div>
-			</div>
+			</div> -->
 		<!----//End-contact---->
 		<div class="footer">
 			<div class="container">
-				<div class="row social-icons">
+			<!-- 	<div class="row social-icons">
 					<div class="col-xs-4 text-center">
 						<a href="#"><img class="responsive-img" src="webroot/assets/images/footr-twb.png" alt=""/></a>
 					</div>
@@ -246,7 +251,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					<div class="col-xs-4 text-center">
 						<a href="#"><img class="responsive-img" src="webroot/assets/images/footr-fb.png" alt=""/> </a>
 					</div>
-				</div>
+				</div> -->
 				<div class="row copy-right">
 					<div class="col-md-12 text-center">
 						<p>Copyright &#169; 2014 All Rights Reserved |<!-- Template by &nbsp;<a href="http://w3layouts.com">W3Layouts --></a></p>
