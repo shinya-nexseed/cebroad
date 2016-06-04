@@ -60,9 +60,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         <div class="collapse navbar-collapse navbar-right">
           <ul class="nav navbar-nav">
             <!-- <li class="active"> -->
-            <li><a href="#">Help</a></li>
-            <li><a href="#about">Sign up</a></li>
-            <li><a href="#work">Login</a></li>
+          <!--   <li><a href="#">Help</a></li> -->
+            <li><a href="join/signup.php">Sign up</a></li>
+            <li><a href="signin.php">Login</a></li>
           <!--   <li><a href="#portfolio">Portfolio</a></li>
             <li><a href="#contact">Contact</a></li> -->
           </ul>
@@ -73,11 +73,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         <!----//slider-requried-files--->
         <!---start-image-slider---->
 		<div class="slideshow">
-		   <div>
-		     <h1>BEYOND SCHOOL</h1>
+		    <div>
+		     <h1>Beyond Schools</h1>
 		     <span class="border"> </span>
-		     <p>Join the events and meet new friends beyond schools in CEBU.</p>
-		   </div>
+		     <p>Don't be stuck at your school. Come out!</p>
+		    </div>
 		 <!--    <div>
 		     <h1>Get together beyond school</h1>
 		     <span class="border"> </span>
@@ -85,7 +85,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		   </div> -->
 		</div>
 		<div class="go_btn">
-		          <a class="button" href="#">Sign up</a>
+		    <a class="button" href="join/signup.php">Sign up</a>
 		</div>
 		<!-----start-slider-script---->
 <!-- 		<script>
@@ -113,8 +113,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		<div class="container">
 			<div class="row content-top">
 				<div class="col-md-12  text-center">
- 					<h2>Rapgael Lechner.</h2>
- 					 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris egestas orci et blandit dictum. Interdum et malesuada fames ac ante ipsum primis in faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Quisque posuere diam et est hendrerit, eget sodales lectus tincidunt. Etiam suscipit orci sapien, at molestie lorem imperdiet vitae. Fusce nunc eros, congue non hendrerit sed, lobortis scelerisque magna. Ut in nunc sem. Integer bibendum enim et erat molestie, sed interdum nisl ultricies. In hac habitasse Platea dictumst, Duis adipiscing commodo ipsum dapibus elementum.</p
+ 					<h2>SNS for foreign students in Cebu</h2>
+ 					 <p>If you are looking for new friends or trying to extend your network here in Cebu, you can search new friends who are also studying here in CEBU. You can join the events that someone creates on Ceburoad or you can also host events.</p>
  				</div>	
 			</div>
 		</div>
@@ -127,16 +127,16 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					<div class="grid ">
 						<!-- <img src="webroot/assets/images/icon1.png" alt=""/> -->
 						<i class="fa fa-building fa-large" aria-hidden="true"></i>
-						<h3>Sketching is fun</h3>
-						<p>Lorem ipsum dolor sit amet, lobortis scelerisque magna. Ut in nunc sem. Integer bibendum enim et erat molestie. Nullam sem diam. Duis adipiscing commodo ipsum dapibus elementum.</p>
+						<h3>Search events</h3>
+						<p>You can search events and contact the organizer. Join and meet new people. Don't be bored come out.</p>
 					</div>
 				</div>
 					<div class="col-md-6 text-center">
 						<div class="grid ">
 							<!-- <img src="webroot/assets/images/icon2.png" alt=""/> -->
 							<i class="fa fa-users fa-large" aria-hidden="true"></i>
-							<h3>Design afterwords</h3>
-							<p>Lorem ipsum dolor sit amet, lobortis scelerisque magna. Ut in nunc sem. Integer bibendum enim et erat molestie. Nullam sem diam. Duis adipiscing commodo ipsum dapibus elementum.</p>
+							<h3>Create events</h3>
+							<p>You can also create events. Share your interests and thoughts, and finde new friends who have same interest as you.</p>
 						</div>
 					</div>
 					<!-- <div class="col-md-4 text-center">
@@ -150,7 +150,20 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					<div class="clearfix"></div>
 			</div>
 		</div>	
-	</div>	
+	</div>
+<div  class="about me" id="about">  
+		<div class="container">
+			<div class="row content-top">
+				<div class="col-md-12  text-center">
+ 					<h2>Upcomming Events</h2>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
 		<link rel="stylesheet" type="text/css" href="webroot/assets/css/sitetop_component.css" />
 		<script src="webroot/assets/js/modernizr.custom.js"></script>
 	<div  class="portfolio" id="portfolio">
@@ -158,7 +171,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				<ul class="col-md-12 grid cs-style-3">
 						<li class="col-md-6">
 							<figure>
-								<img class="responsive-img img1" src="webroot/assets/images/pic1.png" alt="img03">
+								<img class="responsive-img img1" src="webroot/assets/images/cala.jpg" alt="img03">
 								<figcaption>
 									<h4>Lorem ipsum dolor sit </h4>
 									<span>amet conseteter sadipscing elitr</span>
@@ -168,7 +181,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						</li>
 						<li class="col-md-6">
 							<figure>
-								<img class="responsive-img img1" src="webroot/assets/images/pic2.png" alt="img01">
+								<img class="responsive-img img1" src="webroot/assets/images/cala2.jpg	" alt="img01">
 								<figcaption>
 									<h4>Lorem ipsum dolor sit </h4>
 									<span>amet conseteter sadipscing elitr</span>
@@ -178,7 +191,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						</li>
 						<li class="col-md-6">
 							<figure>
-								<img class="responsive-img img1" src="webroot/assets/images/pic3.png" alt="img02">
+								<img class="responsive-img img1" src="webroot/assets/images/cala.jpg" alt="img02">
 								<figcaption>
 									<h4>Lorem ipsum dolor sit </h4>
 									<span>amet conseteter sadipscing elitr</span>
@@ -188,18 +201,18 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						</li> 
 						<li class="col-md-6">
 							<figure>
-								<img class="responsive-img img1" src="webroot/assets/images/pic4.png" alt="img04">
+								<img class="responsive-img img1" src="webroot/assets/images/cala2.jpg" alt="img04">
 								<figcaption>
-									<h4>Lorem ipsum dolor sit </h4>
-									<span>amet conseteter sadipscing elitr</span>
+									<h4>Calamansi Night </h4>
+									<span>vol 2.0</span>
 								</figcaption>
 							</figure>
 							<a data-toggle="modal" data-target=".bs-example-modal-md" href="#"><!-- <label class="search-icon"> </label> --></a>
 						</li>
 						<li>
 					</ul>
-					 <div class="view">
-						<a class="view-btn" href="#">View More <span> </span></a>
+					<div class="view">
+						<a class="view-btn" href="#">View More</a>
 					</div>
 				</div>
 		</div>
