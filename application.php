@@ -1,6 +1,6 @@
 <?php
   session_start();
-  require('dbconnect.php');
+  // require('dbconnect.php');
   // 仮ログインデータ
   // DBのusersテーブルにid = 1のデータを登録しておく
   $_SESSION['id'] = 1;
@@ -11,6 +11,13 @@
 <head>
   <meta charset="UTF-8">
   <title>Cebroad</title>
+  <meta name="generator" content="Bootply" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="css/styles.css" rel="stylesheet">
 </head>
 <body>
     <div class="wrapper">
@@ -84,7 +91,7 @@
                           <li>
                             <form class="navbar-form navbar-left">
                                 <div class="input-group input-group-sm" style="max-width:360px;">
-                                  <input type="text" class="form-control" placeholder="Search Events as Title" name="srch-term" id="srch-term">
+                                  <input type="text" class="form-control" placeholder="Search Events as Title" name="srch-term-users" id="srch-term">
                                   <div class="input-group-btn">
                                     <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
                                   </div>
@@ -95,8 +102,10 @@
                           <li>
                             <form class="navbar-form navbar-left">
                                 <div class="input-group input-group-sm" style="max-width:360px;">
-                                  <input type="text" class="form-control" placeholder="Search Events as Category" name="srch-term" id="srch-term">
-                                  <div class="input-group-btn">
+                                  <select class="form-control" name="srch-term-categorys" class="form-control" style="width:150px">
+                                    <option value="0">Select Category</option>
+                                    <option value="1">Club</option>            
+                                  </select>
                                     <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
                                   </div>
                                 </div>
@@ -104,9 +113,14 @@
                           </li>
 
                           <li>
+                            <a href="#"><i class="fa fa-bell-o" aria-hidden="true"></i></a>
+                          </li>
+
+                          <li>
                             <a href="#"><span class="badge">SignOut</span></a>
                           </li>
-                        </ul>
+
+                          </ul>
       
                         </nav>
                     </div>
