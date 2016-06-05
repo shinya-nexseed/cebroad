@@ -78,10 +78,28 @@
                       </div>
                     <!--パスワード-->
                       <div class="form-group">
-                        <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password">
+                      <?php if(isset($_POST['password'])): ?>
+                        <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" value="<?php echo h($_POST['password']); ?>">
+                      <?php else: ?>
+                          <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" value="">
+                      <?php endif; ?>
+                      <?php if(isset($error['password']) && $error['password'] == 'blank'): ?>
+                        <p class="error">＊Please type Password.</p>
+                      <?php endif; ?>
+                      <?php if(isset($error['password']) && $error['password'] == 'length'): ?>
+                         <p class="error">＊Please type Password more than 4 letters.</p>
+                      <?php endif; ?>
                       </div>
+
                       <div class="form-group">
-                        <input type="password" name="confirm-password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password">
+                      <?php if(isset($_POST['password'])): ?>
+                        <input type="password" name="confirm-password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password" value="<?php echo h($_POST['password']); ?>">
+                      <?php else: ?>
+                          <input type="password" name="confirm-password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password" value="">
+                      <?php endif; ?>
+                      <?php if(isset($error['password']) && $error['password'] == 'blank'): ?>
+                        <p class="error">＊Please type Password.</p>
+                      <?php endif; ?>
                       </div>
                      
                       <div class="form-group">
