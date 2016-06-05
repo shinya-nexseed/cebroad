@@ -1,6 +1,6 @@
 <?php
   session_start();
-  // require('dbconnect.php');
+  require('dbconnect.php');
   // 仮ログインデータ
   // DBのusersテーブルにid = 1のデータを登録しておく
   $_SESSION['id'] = 1;
@@ -23,74 +23,17 @@
     <div class="wrapper">
         <div class="box">
             <div class="row row-offcanvas row-offcanvas-left">
-                          
-              
-                <!-- sidebar -->
-                <div class="column col-sm-2 col-xs-1 sidebar-offcanvas" id="sidebar">
-                  
-                  <div class="profile-sidebar">
-                    <!-- SIDEBAR USERPIC -->
-                    <div class="profile-userpic">
-                      <img src="http://keenthemes.com/preview/metronic/theme/assets/admin/pages/media/profile/profile_user.jpg" class="img-responsive" alt="">
-                    </div>
-                    <!-- END SIDEBAR USERPIC -->
 
-                    <!-- SIDEBAR BUTTONS -->
-                    <div class="profile-userbuttons">
-                      <button type="button" class="btn btn-success btn-sm">User Edit</button>
-                      <button type="button" class="btn btn-danger btn-sm">Make Event</button>
-                      <br>
-                      <br>
-                    </div>
-                    <!-- END SIDEBAR BUTTONS -->
-                    <!-- SIDEBAR MENU -->
-                    <div class="profile-usermenu">
-                      <ul class="nav">
-                        <li class="active">
-
-                          <i class="glyphicon glyphicon-home"></i>
-                          NAME:<br>【nick_name】<br>
-                        </li>
-                        <li>
-
-                          <i class="glyphicon glyphicon-user"></i>
-                          BIRTH:<br>MM/DD/YY【birthday】<br>
-                        </li>
-                        <li>
-                          <i class="glyphicon glyphicon-ok"></i>
-                          SCHOOL:<br>【name】<br>
-                        </li>
-                        <li>
-                          <i class="glyphicon glyphicon-flag"></i>
-                          INTRODUCTION:<br>【introduction】<br>
-                        </li>
-                      </ul>
-                    </div>
-                    <!-- END MENU -->
-                  </div>
-                  
-                </div>
-                <!-- /sidebar -->
-              
                 <!-- main right col -->
-                <div class="column col-sm-10 col-xs-11" id="main">
+                <div class="column col-sm-12 col-xs-12" id="main">
                     
                     <!-- top nav -->
                     <div class="navbar navbar-blue navbar-static-top">  
-                        <div class="navbar-header">
-                          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
-                            <span class="sr-only">Toggle</span>
-                            <span class="icon-bar"></span>
-                      <span class="icon-bar"></span>
-                      <span class="icon-bar"></span>
-                          </button>
                           <a href="/" class="navbar-brand logo">C</a>
-                        </div>
-                        <nav class="collapse navbar-collapse" role="navigation">
-                        <ul class="nav">
-                          <li>
+                        <ul style="list-style:none;">
+                          <li style="display:inline-block">
                             <form class="navbar-form navbar-left">
-                                <div class="input-group input-group-sm" style="max-width:360px;">
+                                <div class="input-group input-group-sm" style="max-width:300px;">
                                   <input type="text" class="form-control" placeholder="Search Events as Title" name="srch-term-users" id="srch-term">
                                   <div class="input-group-btn">
                                     <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
@@ -99,38 +42,82 @@
                             </form>
                           </li>
 
-                          <li>
+                          <li style="display:inline-block;">
                             <form class="navbar-form navbar-left">
-                                <div class="input-group input-group-sm" style="max-width:360px;">
-                                  <select class="form-control" name="srch-term-categorys" class="form-control" style="width:150px">
+                                <div class="input-group input-group-sm" style="max-width:200px;">
+                                  <select class="form-control" name="srch-term-categorys" class="form-control" >
                                     <option value="0">Select Category</option>
                                     <option value="1">Club</option>            
                                   </select>
+                                  <div class="input-group-btn">
                                     <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
                                   </div>
                                 </div>
                             </form>
                           </li>
 
-                          <li>
-                            <a href="#"><i class="fa fa-bell-o" aria-hidden="true"></i></a>
+                          <li style="display:inline-block;">
+                            <a href="#"><i class="fa fa-bell-o fa-2x" aria-hidden="true"></i></a>
                           </li>
 
-                          <li>
-                            <a href="#"><span class="badge">SignOut</span></a>
+                          <li style="display:inline-block;">
+                            <a href="#">SignOut</a>
                           </li>
 
                           </ul>
-      
-                        </nav>
                     </div>
 
-
-
                     <!-- /top nav -->
-                  
+
                     <div class="padding">
                         <div class="full col-sm-9">
+
+                          <!-- sidebar -->
+                          <div class="column col-sm-2 col-xs-1 sidebar-offcanvas" id="sidebar">
+                            
+                            <div class="profile-sidebar">
+                              <!-- SIDEBAR USERPIC -->
+                              <div class="profile-userpic">
+                                <img src="http://keenthemes.com/preview/metronic/theme/assets/admin/pages/media/profile/profile_user.jpg" class="img-responsive" alt="">
+                              </div>
+                              <!-- END SIDEBAR USERPIC -->
+
+                              <!-- SIDEBAR BUTTONS -->
+                              <div class="profile-userbuttons">
+                                <button type="button" class="btn btn-success btn-sm">User Edit</button>
+                                <button type="button" class="btn btn-danger btn-sm">Make Event</button>
+                                <br>
+                                <br>
+                              </div>
+                              <!-- END SIDEBAR BUTTONS -->
+                              <!-- SIDEBAR MENU -->
+                              <div class="profile-usermenu">
+                                <ul class="nav">
+                                  <li class="active">
+
+                                    <i class="glyphicon glyphicon-home"></i>
+                                    NAME:<br>【nick_name】<br>
+                                  </li>
+                                  <li>
+
+                                    <i class="glyphicon glyphicon-user"></i>
+                                    BIRTH:<br>MM/DD/YY【birthday】<br>
+                                  </li>
+                                  <li>
+                                    <i class="glyphicon glyphicon-ok"></i>
+                                    SCHOOL:<br>【name】<br>
+                                  </li>
+                                  <li>
+                                    <i class="glyphicon glyphicon-flag"></i>
+                                    INTRODUCTION:<br>【introduction】<br>
+                                  </li>
+                                </ul>
+                              </div>
+                              <!-- END MENU -->
+                            </div>
+                            
+                          </div>
+                          <!-- /sidebar -->
                           
                         <!-- content -->                      
                         <div class="row">
@@ -143,7 +130,8 @@
                     </div><!-- /padding -->
                 </div>
                 <!-- /main -->
-              
+
+                  </div>             
             </div>
         </div>
     </div>
