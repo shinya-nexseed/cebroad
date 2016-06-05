@@ -30,7 +30,6 @@
     return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
   }
 ?>
-
     <!-- Bootstrap -->
     <link href="../webroot/assets/css/bootstrap.css" rel="stylesheet">
     <link href="../webroot/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -38,9 +37,7 @@
     <link href="../webroot/assets/css/timeline.css" rel="stylesheet">
     <link href="../webroot/assets/css/signup.css" rel="stylesheet">
     <link href="../webroot/assets/css/main.css" rel="stylesheet">
-    <link href="../webroot/assets/js/signup.js" rel="stylesheet">
   
-
       <div class="container">
           <div class="row">
           <div class="col-md-6 col-md-offset-3">
