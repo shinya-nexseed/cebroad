@@ -18,9 +18,9 @@ body a{
 }
 /*----start-header----*/
 .navbar-inverse {
-	background: url(../images/party3.jpg) no-repeat;
+	background: url(../images/club.jpg), no-repeat;
 	background-size:cover;
-	min-height: 685px;
+	min-height: 700px;
 	width: 100%;
 	border: none;
 }
@@ -47,7 +47,7 @@ body a{
 /*-----starrt-slider-style-----*/
 .slideshow { 
 	position: relative;
-	margin-top: 7em;
+	margin-top: 14em;
 }
 .slideshow > div { 
 	position: absolute; 
@@ -63,7 +63,7 @@ body a{
 	font-style: normal;
 	border: none;
 	text-align: center;
-   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 	text-transform: none;
 }
 .slideshow p{
@@ -84,7 +84,7 @@ body a{
 }
 /*----navbar-nav----*/
 .navbar-inverse .navbar-nav>li>a {
-	color: rgb(247, 45, 91);
+	color: rgb(255, 54, 87);
 	padding: 2.5em 1.2em;
 	text-shadow: 0px 0px 0.1px rgba(60, 77, 95, 0.06);
 	-webkit-text-shadow: 0px 0px 0.1px rgba(60, 77, 95, 0.06);
@@ -96,12 +96,19 @@ body a{
 	letter-spacing: 1px;
 	font-size:1em;
 }
+.overlay {
+    background-color: rgba(0, 0, 0, 0.2);
+    position: relative;
+    width: 100%;
+    height: 700px;
+    display: block;
+}
 
 .navbar-inverse .navbar-nav>li>a:hover {
 	color: #fff;
 	text-decoration: underline;
 }
-.navbar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand {
+.navbar>.overlay> .container .navbar-brand, .navbar>.overlay> .container-fluid .navbar-brand {
 	font-size:28px;
 	font-weight:500;
 	text-decoration: none;
@@ -140,7 +147,7 @@ h2 {
 	color: #000000;
 	font-weight: 600;
 	text-decoration: none;
-	text-transform: uppercase;
+	/*text-transform: uppercase;*/
 	padding-top: 2em;
 }
 .content-top p {
@@ -168,7 +175,7 @@ div.grid {
 }
 .go_btn{
 	position: absolute;
-	bottom: 10%;
+	bottom: 30%;
 	left: 41%;
 }
 .button {
@@ -178,19 +185,19 @@ div.grid {
 	font-family: 'Rokkitt', serif;
 	font-size: 1.5em;
 	color: #FFF;
-	background: rgb(247, 45, 91);
+	background: rgb(255, 54, 87);;
 	text-decoration: none;
-	border: 8px opacity rgb(247, 45, 91);
+	border: 8px opacity rgb(255, 54, 87);
 	text-transform: uppercase;
 }
 .button:hover {
-	background:rgb(247, 45, 91);
+	background:rgb(255, 54, 87);
 	text-decoration:none;
 	color:#fff;
 }
 h3{
 	font-size: 23px;
-	color: rgb(247, 45, 91);
+	color: rgb(255, 54, 87);
 	font-weight: 700;
 	text-decoration: none;
 }
@@ -235,7 +242,7 @@ h3{
   	font-family: 'Rokkitt', serif;
 	font-size: 1.5em;
 	color: #FFF;
-	background: rgb(247, 45, 91);
+	background: rgb(255, 54, 87);
 	text-decoration: none;
 	text-transform: uppercase;
 }
@@ -255,8 +262,8 @@ h3{
 }
 .view-btn:hover,.con-button a:hover { 
 	background:none;
-	border:2px solid rgb(247, 45, 91);
-	color:rgb(247, 45, 91);
+	border:2px solid rgb(255, 54, 87);
+	color:rgb(255, 54, 87);
 	text-decoration:none;
 }
 /*--contact--*/
@@ -369,7 +376,7 @@ h5{
 	background: #fff;
 }
 .footer{
-	background:rgba(0,0,0,1);
+	background:rgb(74, 74, 74);
 	padding:2% 0;
 }
 .social-icons{
@@ -449,7 +456,7 @@ h5{
 		left: 31%;
 	}
 	.slideshow {
-		margin-top: 7.5em;
+		margin-top: 14em;
 	}
 	.navbar-inverse {
 		min-height: 600px;
@@ -471,7 +478,7 @@ h5{
 		margin-top: 6em;
 	}
 	.slideshow h1{
-		font-size:4em;
+		font-size:3em;
 	}
 	.navbar-inverse {
 		min-height: 550px;
@@ -496,7 +503,7 @@ h5{
 		margin-top: 6em;
 	}
 	.slideshow h1{
-		font-size:3.5em;
+		font-size:2.5em;
 	}
 	.navbar-inverse {
 		min-height: 450px;
@@ -555,7 +562,7 @@ h5{
 		margin-top: 4em;
 	}
 	.slideshow h1{
-		font-size:2.8em;
+		font-size:2em;
 	}
 	.navbar-inverse {
 		min-height: 400px;
@@ -701,5 +708,24 @@ h5{
 {
 	font-size: 100px ;
 }
+
+.hero__content-footer {
+    background-color: #000;
+    background-color: rgba(0,0,0,0.6);
+    bottom: 0;
+    left: 0;
+    padding-bottom: 50px;
+    padding-top: 50px;
+    position: absolute;
+    right: 0;
+}
+
+.terms{
+	color:rgba(0,0,0,1);
+	font-size:4em;
+	font-weight:700;
+	text-align:center;
+	font-family: 'Rokkitt', serif;
+
 /*----//End-media-quries-for-320px-tabs----*/
 /*---- //End-Responmsive-Media-quries----*/
