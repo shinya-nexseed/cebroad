@@ -62,14 +62,22 @@
                       <?php else: ?>
                         <input type="text" name="nick_name" id="nick_name" tabindex="1" class="form-control" placeholder="Nickname" value="">
                       <?php endif; ?>
-                      <!-- もしもニックネームが空欄だったら 5/5.1 -->
+                      <!-- ニックネームが空欄だったら -->
                       <?php if(isset($error['nick_name']) && $error['nick_name'] == 'blank'): ?>
-                        <p class="error">＊ニックネームを入力してください</p>
+                        <p class="error">＊Please type your Nicknake.</p>
                       <?php endif; ?>
                       </div>
                     <!--メールアドレス-->
                       <div class="form-group">
+                      <?php if (isset($_POST['email'])): ?>
+                        <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email Address" value="<?php echo h($_POST['email']); ?>">
+                        <?php else: ?>
                         <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email Address" value="">
+                        <?php endif; ?>
+                      <!-- メールアドレスが空欄だったら -->
+                      <?php if(isset($error['email']) && $error['email'] == 'blank'): ?>
+                        <p class="error">＊Please type your Email Address.</p>
+                      <?php endif; ?>
                       </div>
                     <!--パスワード-->
                       <div class="form-group">
