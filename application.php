@@ -1,6 +1,6 @@
 <?php
   session_start();
-  require('dbconnect.php');
+  // require('dbconnect.php');
   // 仮ログインデータ
   // DBのusersテーブルにid = 1のデータを登録しておく
   $_SESSION['id'] = 1;
@@ -14,12 +14,25 @@
   <meta name="generator" content="Bootply" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="webroot/assets/font-awesome/css/font-awesome.css">
     <!--[if lt IE 9]>
       <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <link href="css/styles.css" rel="stylesheet">
-</head>
-<body>
+
+  <script>
+    $(document).ready(function(){
+        //Handles menu drop down
+        $('.dropdown-menu').find('form').click(function (e) {
+            e.stopPropagation();
+        });
+    });
+  </script>
+
+
+
+  </head>
+  <body>
     <div class="wrapper">
         <div class="box">
             <div class="row row-offcanvas row-offcanvas-left">
@@ -30,39 +43,85 @@
                     <!-- top nav -->
                     <div class="navbar navbar-blue navbar-static-top">  
                           <a href="/" class="navbar-brand logo">C</a>
+
+
+
                         <ul style="list-style:none;">
-                          <li style="display:inline-block">
-                            <form class="navbar-form navbar-left">
+                          <li style="display:inline-block" class="navbar-form navbar-left">
+                            <form>
                                 <div class="input-group input-group-sm" style="max-width:300px;">
                                   <input type="text" class="form-control" placeholder="Search Events as Title" name="srch-term-users" id="srch-term">
                                   <div class="input-group-btn">
-                                    <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                                    <button class="btn btn-default" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
                                   </div>
                                 </div>
                             </form>
                           </li>
 
-                          <li style="display:inline-block;">
-                            <form class="navbar-form navbar-left">
+
+
+                          <li style="display:inline-block;" class="navbar-form navbar-left">
+                            <form>
                                 <div class="input-group input-group-sm" style="max-width:200px;">
                                   <select class="form-control" name="srch-term-categorys" class="form-control" >
                                     <option value="0">Select Category</option>
                                     <option value="1">Club</option>            
                                   </select>
                                   <div class="input-group-btn">
-                                    <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                                    <button class="btn btn-default" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
                                   </div>
                                 </div>
                             </form>
                           </li>
 
-                          <li style="display:inline-block;">
-                            <a href="#"><i class="fa fa-bell-o fa-2x" aria-hidden="true"></i></a>
+                          <li style="display:inline-block" class="navbar-form navbar-right">
+                            <a href="#"><span class="badge">SignOut</span></a>
                           </li>
 
-                          <li style="display:inline-block;">
-                            <a href="#">SignOut</a>
+                          <li style="display:inline-block;" class="navbar-form navbar-right">
+                            <a href="#"><span class="badge"><i class="fa fa-bell-o fa-2x" aria-hidden="true"></i></span></a>
                           </li>
+
+                          <li style="display:inline-block;" class="navbar-form navbar-right">
+                            <a href="#"><img src="images/01.jpg" class="img-responsive" style="height:100%; width:30px;" alt=""></a>
+                          </li>
+
+
+
+                              <li class="dropdown navbar-right">
+                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sign in <b class="caret"></b></a>
+                                 <ul class="dropdown-menu" style="padding: 15px;min-width: 250px;">
+                                    <li>
+                                       <div class="row">
+                                          <div class="col-md-12">
+                                             <form class="form" role="form" method="post" action="login" accept-charset="UTF-8" id="login-nav">
+                                                <div class="form-group">
+                                                   <label class="sr-only" for="exampleInputEmail2">Email address</label>
+                                                   <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Email address" required>
+                                                </div>
+                                                <div class="form-group">
+                                                   <label class="sr-only" for="exampleInputPassword2">Password</label>
+                                                   <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password" required>
+                                                </div>
+                                                <div class="checkbox">
+                                                   <label>
+                                                   <input type="checkbox"> Remember me
+                                                   </label>
+                                                </div>
+                                                <div class="form-group">
+                                                   <button type="submit" class="btn btn-success btn-block">Sign in</button>
+                                                </div>
+                                             </form>
+                                          </div>
+                                       </div>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li>
+                                       <input class="btn btn-primary btn-block" type="button" id="sign-in-google" value="Sign In with Google">
+                                       <input class="btn btn-primary btn-block" type="button" id="sign-in-twitter" value="Sign In with Twitter">
+                                    </li>
+                                 </ul>
+                              </li>
 
                           </ul>
                     </div>
@@ -78,7 +137,7 @@
                             <div class="profile-sidebar">
                               <!-- SIDEBAR USERPIC -->
                               <div class="profile-userpic">
-                                <img src="http://keenthemes.com/preview/metronic/theme/assets/admin/pages/media/profile/profile_user.jpg" class="img-responsive" alt="">
+                                <img src="images/01.jpg" class="img-responsive" style="width:130px; height:100%;" alt=""><br>
                               </div>
                               <!-- END SIDEBAR USERPIC -->
 
@@ -123,7 +182,7 @@
                         <div class="row">
 
                             <?php
-                              require($resource.'/'.$action.'.php');
+                              // require($resource.'/'.$action.'.php');
                             ?>     
                           
                         </div><!-- /col-9 -->
@@ -165,8 +224,6 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/scripts.js"></script>
-
-
 
 </body>
 </html>
