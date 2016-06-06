@@ -4,6 +4,9 @@
   // 仮ログインデータ
   // DBのusersテーブルにid = 1のデータを登録しておく
   $_SESSION['id'] = 1;
+
+  echo '<br>';
+  echo 'application.phpを通過';
 ?>
 
 <!DOCTYPE html>
