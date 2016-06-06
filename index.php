@@ -228,7 +228,7 @@
 						<li>
 					</ul>
 					<div class="view">
-						<a class="view-btn" href="#">View More</a>
+						<a class="view-btn" href="enent/show.php">View More</a>
 					</div>
 				</div>
 		</div>
