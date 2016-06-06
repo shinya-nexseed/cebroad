@@ -1,15 +1,7 @@
 <?php 
-  // require('dbconnect.php');
-
-  //セッションを使うページに必ず入れる
-  // session_start();
-
-  // $error = Array();
-
-  //フォームからデータが送信された場合
-  //ボタンが押されたときに発動
+  
+  //フォームからデータが送信された場合(ボタンが押されたときに発動)
   if(!empty($_POST)){
-
     //エラー項目の確認
     if($_POST['nick_name'] == ''){
     $error['nick_name'] = 'blank';
@@ -27,6 +19,21 @@
       $error['confirm_password'] = 'incorrect';
     }
   }
+  // 重複アカウントのチェック
+  if (isset($_POST['email']) && empty($error)) {
+    $sql = sprintf(
+          'SELECT COUNT(*) AS cnt FROM users WHERE email="%s"',
+          mysqli_real_escape_string($db,$_POST['email'])
+        );
+        $record = mysqli_query($db,$sql) or die(mysqli_error($db));
+        $table = mysqli_fetch_assoc($record);
+        // もし$table['cnt']が1以上を返せば、アカウントが重複しているとみなして$errorを生成する
+        if ($table['cnt'] > 0) {
+            $error['email'] = 'duplicate';
+        }
+  }
+
+
   //htmlspecialcharsのショートカット
   function h($value){
     return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
@@ -76,6 +83,10 @@
                         <!-- メールアドレスが空欄だったら -->
                         <?php if(isset($error['email']) && $error['email'] == 'blank'): ?>
                           <p class="error">* Please type your Email Address.</p>
+                        <?php endif; ?>
+                        <!--すでにメールアドレスが存在していたら-->  
+                        <?php if (isset($error['email']) && $error['email'] == 'duplicate'): ?>
+                          <p class="error">* This Email Address already exists.</p>
                         <?php endif; ?>
                       </div>
                     <!--パスワード-->
