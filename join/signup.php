@@ -1,4 +1,6 @@
 <?php 
+$sql = 'SELECT * FROM `schools`';
+$schools = mysqli_query($db, $sql) or die(mysqli_error($db));
   
   //フォームからデータが送信された場合(ボタンが押されたときに発動)
   if(!empty($_POST)){
@@ -117,6 +119,13 @@
                           <p class="error">* The 2 Password do not match.</p>
                         <?php endif; ?>
                       </div>
+                      <!--学校名-->
+                        <select class="form-control" name="school_id">
+                        <option value="0">Select your school</option>
+                      <?php foreach ($schools as $school) { ?>
+                        <option value="<?php echo $school['school_id']; ?>"><?php echo $school['school_name']; ?></option>
+                      <?php } ?>
+</select>
                      
                       <div class="form-group">
                         <div class="row">
