@@ -20,7 +20,7 @@
 		<div class="row">
 				<ul class="event-list">
 				<?php foreach ($rtn as $event): ?>
-					<div class="[col-xs-12 col-sm-5 well]">
+					<div class="[col-xs-12 col-sm-5]">
 					<div class="pic">
 						<h2 class="title"><?php echo $event['event_name']; ?></h2>
 							<p class="day"><?php echo $event['date']; ?></p>
@@ -28,9 +28,9 @@
 					</div>
 						<div class="info">
 							<ul class="list-inline">
-								<li style="width:33%;">10 go</li>
-								<li style="width:34%;">1 like</li>
-								<li style="width:33%;">1 not go</li>
+								<li style="width:33%;">1</li>
+								<li style="width:34%;">1</li>
+								<li style="width:33%;">1</li>
 							</ul>
 						</div>
 					</div>
