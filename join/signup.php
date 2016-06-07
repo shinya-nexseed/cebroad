@@ -36,6 +36,10 @@ $schools = mysqli_query($db, $sql) or die(mysqli_error($db));
   }
 
 
+
+  
+
+
   //htmlspecialcharsのショートカット
   function h($value){
     return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
@@ -120,13 +124,14 @@ $schools = mysqli_query($db, $sql) or die(mysqli_error($db));
                         <?php endif; ?>
                       </div>
                       <!--学校名-->
-                        <select class="form-control" name="school_id">
+                      <div class="form-group">
+                        <select type="" class="form-control" name="school_id">
                         <option value="0">Select your school</option>
-                      <?php foreach ($schools as $school) { ?>
+                      <?php while ($school = mysqli_fetch_assoc($schools)) { ?>
                         <option value="<?php echo $school['school_id']; ?>"><?php echo $school['school_name']; ?></option>
                       <?php } ?>
-</select>
-                     
+                        </select>
+                     </div>
                       <div class="form-group">
                         <div class="row">
                           <div class="col-sm-6 col-sm-offset-3">
