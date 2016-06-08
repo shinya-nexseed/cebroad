@@ -1,0 +1,11 @@
+hayato users/show.php
+
+会員情報詳細	users/show.php	プロフィール画像表示
+会員情報詳細	users/show.php	名前表示
+会員情報詳細	users/show.php	性別表示
+会員情報詳細	users/show.php	生年月日表示
+会員情報詳細	users/show.php	国籍表示
+会員情報詳細	users/show.php	学校名表示
+会員情報詳細	users/show.php	自己紹介文表示
+会員情報詳細	users/show.php	イベント一覧へ遷移できる (戻るボタン)
+会員情報詳細	users/show.php	会員情報編集画面へ遷移できる
