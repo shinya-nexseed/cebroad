@@ -7,7 +7,7 @@
     //これがないとログインから１時間たったら再度ログインしないとindex.phpに入れなくなる。
     $_SESSION['time'] = time();
     //event/show.phpへ遷移
-    header('Location: event/show.php'); 
+    header('Location: events/show.php'); 
     exit(); 
     }else{
         echo'ログイン判定(ログインしていない場合にサイトトップ表示)';
@@ -109,7 +109,7 @@
                         <h2 class="text-center">Cebu Local SNS</h2>
                         <p>Join the getherings that interest you and meet new friends beyond school!</p>
                         <div class="search-form wow pulse" data-wow-delay="0.8s">
-                            <a href="signup.php"><button class="navbar-btn nav-button wow bounceInRight login" data-wow-delay="0.8s">Sing up</button></a>
+                            <a href="join/signup.php"><button class="navbar-btn nav-button wow bounceInRight login" data-wow-delay="0.8s">Sing up</button></a>
                             <!-- <form action="" class=" form-inline">
                                 <div class="form-group">
                                     <input type="text" class="form-control" placeholder="Job Key Word">
