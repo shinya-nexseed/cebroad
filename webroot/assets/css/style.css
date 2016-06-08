@@ -46,7 +46,7 @@ body{
 
 }
 .header-social ul li a:hover{
-	color:#FF008F
+	color:rgb(255, 42, 80)
 }
 .navbar-default .navbar-nav > li > a{
 	color: #202020;
@@ -62,7 +62,7 @@ body{
 }
 .navbar-default .navbar-nav > li > a.active:after{
 
-  background-color:#FF008F;
+  background-color:rgb(255, 42, 80);
   bottom: -24px;
   content: "";
   height: 5px;
@@ -72,7 +72,7 @@ body{
   width: 100%;
 }
 .navbar-default .navbar-nav > li > a::after {
-background-color:#FF008F;
+background-color:rgb(255, 42, 80);
   bottom: -24px;
   content: "";
   height: 5px;
@@ -110,7 +110,7 @@ background-color:#FF008F;
   transition: all 0.4s ease;
 }
 .nav-button.login{
-	background-color: #FF008F;
+	background-color: rgb(255, 42, 80);
 	margin-right: 5px;
 }
 .nav-button.signup{
@@ -118,11 +118,11 @@ background-color:#FF008F;
 	margin-right: 5px;
 }
 .nav-button.viewmore{
-	background-color: #FF008F;
+	background-color: rgb(255, 42, 80);
 	margin-left:45%;
 }
 .nav-button:hover{
-	background-color:#FF008F;
+	background-color:rgb(255, 42, 80);
 
 }
 .navbar{
@@ -207,7 +207,7 @@ background-color:#FF008F;
   width: 195px;
 }
 .form-inline input[type=submit]{
-	background:#FF008F;
+	background:rgb(255, 42, 80);
 	color: #fff;
 	height: 40px;
 	width: 90px;
@@ -257,7 +257,7 @@ background-color:#FF008F;
 	-ms-transition: all 0.2s ease-in-out;
 	-o-transition: all 0.2s ease-in-out;
 	transition: all 0.2s ease-in-out;
-	border-bottom: 2px solid#FF008F
+	border-bottom: 2px solidrgb(255, 42, 80)
 }
 .single-work h3{
 	color: #202020;
@@ -282,7 +282,7 @@ background-color:#FF008F;
 	transition: all 0.2s ease-in-out;
 }
 .single-work.active{	
-	background:#FF008F
+	background:rgb(255, 42, 80)
 }
 .single-work.active h3{
 	color: #fff
@@ -291,7 +291,7 @@ background-color:#FF008F;
 	color: #eeeeee
 }
 .single-work:hover{
-	background:#FF008F
+	background:rgb(255, 42, 80)
 }
 .single-work:hover h3{
 	color: #fff
@@ -307,7 +307,7 @@ background-color:#FF008F;
   border-width: 4px;
 }
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
-  border-color: transparent transparent#FF008F;
+  border-color: transparent transparentrgb(255, 42, 80);
   border-style: solid;
   border-width: 4px;
   color: #666666;
@@ -435,14 +435,14 @@ background-color:#FF008F;
 	font-size: 14px
 }
 .table tr td p i{
-	color:#FF008F
+	color:rgb(255, 42, 80)
 }
 .table tr td p{
 	font-size: 13px
 }
 .table tr td a{
 	color: #fff;
-	background:#FF008F;
+	background:rgb(255, 42, 80);
 	padding:12px 15px;
 	border-radius: 5px;
 	font-size: 13px;
@@ -459,7 +459,7 @@ background-color:#FF008F;
 }
 .table tr:hover td a:hover{
 	background: #fff;
-	color:#FF008F
+	color:rgb(255, 42, 80)
 }
 .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td{
 	border-top: 0px;
@@ -483,7 +483,7 @@ background-color:#FF008F;
 	background: #F4FFFF
 }
 .table tr:hover{
-	background:#FF008F;
+	background:rgb(255, 42, 80);
 	color: #fff
 }
 
@@ -516,7 +516,7 @@ background-color:#FF008F;
   text-transform: uppercase;
 }
 .job-add a {
-  background: none repeat scroll 0 0#FF008F;
+  background: none repeat scroll 0 0rgb(255, 42, 80);
   border-radius: 5px;
   color: #fff;
   display: inline-block;
@@ -549,10 +549,10 @@ background-color:#FF008F;
   border-radius: 50%;
 }
 .testimonial .owl-theme .owl-controls .owl-page span{
-	background:#FF008F
+	background:rgb(255, 42, 80)
 }
 .client-text {
-  background: none repeat scroll 0 0#FF008F;
+  background: none repeat scroll 0 0rgb(255, 42, 80);
   border-radius: 2px;
   color: #fff;
   margin-left: 175px;
@@ -571,7 +571,7 @@ background-color:#FF008F;
 
 .footer-area{
 	background: #000;
-	border-top: 4px solid#FF008F;
+	border-top: 4px solidrgb(255, 42, 80);
 	padding-bottom: 20px
 
 }
@@ -610,7 +610,7 @@ background-color:#FF008F;
 	font-weight: 700;
 }
 .single-footer ul li a:hover{
-	color:#FF008F;
+	color:rgb(255, 42, 80);
 	text-decoration: none;
 }
 
@@ -624,7 +624,7 @@ background-color:#FF008F;
 	margin-left: 20px;
 }
 .footer-copy span a{
-	color:#FF008F;
+	color:rgb(255, 42, 80);
 	font-weight: 800;
 }
 body {
