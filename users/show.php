@@ -23,12 +23,29 @@
     // $member = mysqli_fetch_assoc($record); 
 
 //ユーザー情報取得
-  $sql = sprintf('SELECT * FROM `users` WHERE `id`=1'
+  	$sql = sprintf('SELECT * FROM `users` WHERE `id`=1'
       );
     $record = mysqli_query($db, $sql) or die (mysqli_error($db));
     $user = mysqli_fetch_assoc($record); 
     
     var_dump($user);
+
+//国籍情報取得
+    $sql = sprintf('SELECT * FROM `nationality` WHERE `nationality_id`=1'
+      );
+    $record = mysqli_query($db, $sql) or die (mysqli_error($db));
+    $nationality = mysqli_fetch_assoc($record); 
+    
+    var_dump($nationality);
+
+ //学校情報取得
+    $sql = sprintf('SELECT * FROM `schools` WHERE `id`=1'
+      );
+    $record = mysqli_query($db, $sql) or die (mysqli_error($db));
+    $school = mysqli_fetch_assoc($record); 
+    
+    var_dump($school);
+
 ?>
 
 <!DOCTYPE html>
@@ -104,11 +121,11 @@
 			                      </tr>
 			                      <tr>
 			                        <td>Nationality</td>
-			                        <td><?php echo h($user['nationality_id']); ?></td>
+			                        <td><?php echo h($nationality['nationality']); ?></td>
 			                      </tr>
 			                        <tr>
 			                        <td>School name</td>
-			                        <td><?php echo h($user['school_id']); ?></td>
+			                        <td><?php echo h($school['name']); ?></td>
 			                      </tr>
 			                      <tr>
 			                        <td>Self-introduction</td>
