@@ -13,12 +13,12 @@
   <title>Cebroad</title>
   <meta name="generator" content="Bootply" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="webroot/assets/font-awesome/css/font-awesome.css">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../webroot/assets/font-awesome/css/font-awesome.css">
     <!--[if lt IE 9]>
       <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <link href="css/styles.css" rel="stylesheet">
+    <link href="../css/styles.css" rel="stylesheet">
 
   <script>
     $(document).ready(function(){
@@ -75,18 +75,41 @@
                           </li>
 
                           <li style="display:inline-block" class="navbar-form navbar-right">
-                            <a href="#"><span class="badge">SignOut</span></a>
+                            <a href="logout.php"><span class="badge">SignOut</span></a>
                           </li>
 
                           <li style="display:inline-block;" class="navbar-form navbar-right">
-                            <a href="#"><span class="badge"><i class="fa fa-bell-o fa-2x" aria-hidden="true"></i></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="badge"><i class="fa fa-bell-o fa-2x" aria-hidden="true"></i></span></a>
+                              <ul class="dropdown-menu">
+                                        <li>
+                                            <div class="navbar-login">
+                                                <div class="row">
+                                                    <div class="col-lg-12" style="color:#c0c0c0">
+                                                        <p class="text-left"><strong>【nick_name】</strong> edit 【title】<a href="#">Detail>></a></p>
+                                                          
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                        <li>
+                                            <div class="navbar-login">
+                                                <div class="row">
+                                                    <div class="col-lg-12" style="color:#c0c0c0">
+                                                        <p class="text-left">You are received Mssage from<strong>【nick_name】</strong> <a href="#">Detail>></a></p>
+                                                          
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
                           </li>
 
                           <li style="display:inline-block;" class="navbar-right">
                               <ul class="nav navbar-right">
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                      <img src="images/01.jpg" class="img-responsive" style="height:100%; width:30px;" alt="">
+                                      <img src="../images/01.jpg" class="img-responsive" style="height:100%; width:30px;" alt="">
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li>
@@ -94,7 +117,7 @@
                                                 <div class="row">
                                                     <div class="col-lg-4">
                                                         <p class="text-center">
-                                                            <img src="images/01.jpg" class="img-responsive" style="height:100%; width:100px;" alt="">
+                                                            <img src="../images/01.jpg" class="img-responsive" style="height:100%; width:100px;" alt="">
                                                         </p>
                                                     </div>
                                                     <div class="col-lg-8" style="color:#c0c0c0">
@@ -110,8 +133,8 @@
                                                 <div class="row">
                                                     <div class="col-lg-12">
                                                         <p>
-                                                             <button type="button" class="btn btn-success btn-sm">User Edit</button><br>
-                                                            <button type="button" class="btn btn-primary btn-sm">Make Event</button>
+                                                             <a href="/cebroad/users/edit"><button type="button" class="btn btn-success btn-sm">User Edit</button></a><br>
+                                                            <a href="/cebroad/events/add"><button type="button" class="btn btn-primary btn-sm">Make Event</button></a>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -132,19 +155,19 @@
                         <div class="full col-sm-9">
 
                           <!-- sidebar -->
-                          <div class="column col-sm-2 col-xs-1 sidebar-offcanvas" id="sidebar">
+                          <div class="column col-sm-2 sidebar-offcanvas" id="sidebar">
                             
                             <div class="profile-sidebar">
                               <!-- SIDEBAR USERPIC -->
                               <div class="profile-userpic">
-                                <img src="images/01.jpg" class="img-responsive" style="width:130px; height:100%;" alt=""><br>
+                                <img src="../images/01.jpg" class="img-responsive" style="width:130px; height:100%;" alt=""><br>
                               </div>
                               <!-- END SIDEBAR USERPIC -->
 
                               <!-- SIDEBAR BUTTONS -->
                               <div class="profile-userbuttons">
-                                <button type="button" class="btn btn-success btn-sm">User Edit</button>
-                                <button type="button" class="btn btn-primary btn-sm">Make Event</button>
+                                <a href="/cebroad/users/edit"><button type="button" class="btn btn-success btn-sm">User Edit</button></a>
+                                <a href="/cebroad/events/add"><button type="button" class="btn btn-primary btn-sm">Make Event</button></a>
                                 <br>
                                 <br>
                               </div>
@@ -181,7 +204,7 @@
                         <div class="row">
 
                             <?php
-                              // require($resource.'/'.$action.'.php');
+                              require($resource.'/'.$action.'.php');
                             ?>     
                           
                         </div><!-- /col-9 -->
@@ -221,7 +244,7 @@
     </div>
       <!-- script references -->
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-        <script type="text/javascript" src="webroot/assets/js/bootstrap.js"></script>
+        <script type="text/javascript" src="../webroot/assets/js/bootstrap.js"></script>
 
 </body>
 </html>
