@@ -1,91 +1,85 @@
-<!DOCTYPE HTML>
-<html lang="ja">
-<head>
-	<meta charset="UTF-8">
-    <title>Cebroad</title>
-		<link href="webroot/assets/css/bootstrap.min.css" rel="stylesheet">
-		<link href="webroot/assets/css/bootstrap.min.css" rel='stylesheet' type='text/css' />
-		<link href="webroot/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
-		<link href="webroot/assets/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-		<script src="webroot/assets/js/bootstrap.min.js"></script>
-		<script src="webroot/assets/js/jquery.min.js"></script>
-	<!-- Custom files -->
-		<link href="webroot/assets/css/sitetop_style.css" rel='stylesheet' type='text/css' />
-   	<!-- Custom Theme files -->
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
-		</script>
-	<!----//webfonts---->
-		<link href='http://fonts.googleapis.com/css?family=Rokkitt:400,700' rel='stylesheet' type='text/css'>
-		<link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800' rel='stylesheet' type='text/css'>
-	<!----//webfonts---->
-		<script type="text/javascript">
-				$(function() {
-				  $('a[href*=#]:not([href=#])').click(function() {
-				    if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
-			
-				      var target = $(this.hash);
-				      target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
-				      if (target.length) {
-				        $('html,body').animate({
-				          scrollTop: target.offset().top
-				        }, 1000);
-				        return false;
-				      }
-				    }
-				  });
-				});
-		</script>
-</head>
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Cebroad</title>
+        <meta name="description" content="company is a free job board template">
+        <meta name="author" content="Ohidul">
+        <meta name="keyword" content="html, css, bootstrap, job-board">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<body>
-  index.php通過
-    <div id="top" class="navbar navbar-inverse" role="navigation">
-    <div class="overlay">
-		<div class="container">
-		    <div class="navbar-header">
-		      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-		       <a class="nav-icon" href="#"> <img src="webroot/assets/images/nav-icon.png " /> </a>
-				<span class="icon-bar"></span>
-		        <span class="icon-bar"></span>
-		        <span class="icon-bar"></span>
-		      </button>
-		      <a class="navbar-brand" href="index.php">Cebroad</a>
-		    </div>
-		    <div class="collapse navbar-collapse navbar-right">
-		      <ul class="nav navbar-nav">
-		        <!-- <li class="active"> -->
-		        <li><a href="aboutus.php">About us</a></li>
-		        <li><a href="join/signup.php">Sign up</a></li>
-		        <li><a href="signin.php">Login</a></li>
-		        <!-- <li><a href="#portfolio">Portfolio</a></li>
-		        <li><a href="#contact">Contact</a></li> -->
-		      </ul>
-		    </div><!--/.nav-collapse -->
-			<div class="slideshow">
-			    <div>
-			     <h1>Team 0404</h1>
-			     <span class="border"> </span>
-			     <p>Hi all, thank you for visiting this page. Team0404 is a five member group and we created this SNS as an assignment of a program we were in. We are also studying in CEBU like you. So we hope to see you somewhere soon.</p>
-			    </div>
-			</div>
-			<script src="js/jquery.min.js"></script>
-			<script src="js/bootstrap.min.js"></script>
-		</div>
-	</div>
-	</div>
-    <!----//End-container---->
-  	<!----//-container---->
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700,800' rel='stylesheet' type='text/css'>
 
-		<div class="footer">
-			<div class="container">
-				<div class="row copy-right">
-					<div class="col-md-12 text-center">
-						<p>Copyright &#169; 2014 All Rights Reserved | Team 0404<!-- Template by &nbsp;<a href="http://w3layouts.com">W3Layouts --></a></p>
-					</div>
-				</div>
-			</div>
-		</div>
-</body>
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+        <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+        <link rel="stylesheet" href="webroot/assets/css/normalize.css">
+        <link rel="stylesheet" href="webroot/assets/css/font-awesome.min.css">
+        <link rel="stylesheet" href="webroot/assets/css/fontello.css">
+        <link rel="stylesheet" href="webroot/assets/css/animate.css">        
+        <link rel="stylesheet" href="webroot/assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="webroot/assets/css/owl.carousel.css">
+        <link rel="stylesheet" href="webroot/assets/css/owl.theme.css">
+        <link rel="stylesheet" href="webroot/assets/css/owl.transitions.css">
+        <link rel="stylesheet" href="webroot/assets/css/style.css">
+        <link rel="stylesheet" href="webroot/assets/css/responsive.css">
+        <script src="webroot/assets/js/vendor/modernizr-2.6.2.min.js"></script>
+    </head>
+    <body>
+        <div id="preloader">
+            <div id="status">&nbsp;</div>
+        </div>
+        <div class="slider-area">
+            <div class="container slider-content">
+                <div class="row">
+                        <h2 class="text-center">Team 0404</h2>
+                        <p>Hi all, thank you for visiting this page. Team0404 is a five member group and we created this SNS as an assignment of a program we were in. 
+                        <br>We are also studying in CEBU like you. So we hope to see you somewhere soon.</p>
+                    <!-- </div> -->
+                </div>
+            </div>
+        </div>
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="navbar-collapse">
+            <a href="index.php" id="special2" data-wow-delay="0.8s">Cebroad</a>
+        </div>
+        <div class="footer-area">
+            <div class="container">
+                <div class="row footer">
+                    <div class="col-md-6">
+                        <div class="single-footer">
+                            <h4>Useful lnks</h4>
+                            <div class="footer-links">
+                                <ul class="list-unstyled">
+                                    <li><a href="aboutus.php">About us</a></li>
+                                    <li><a href="">Terms and Conditions</a></li>
+                                    <li><a href="">Privacy policy</a></li>
+                                    <li><a href="">Contact us</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row footer-copy">
+                    <p><span>(C) All rights reserved</span> | <span><a href="aboutus.php">Team0404</a></span> <!-- | <span> Web Designed by <a href="http://ohidul.me">Ohidul Islam</a></span> </p> -->
+                </div>
+            </div>
+        </div>
+		
+		
+		
+		
+		
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="webroot/assets/js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
+        <script src="webroot/assets/js/bootstrap.min.js"></script>
+        <script src="webroot/assets/js/owl.carousel.min.js"></script>
+        <script src="webroot/assets/js/wow.js"></script>
+        <script src="webroot/assets/js/main.js"></script>
+    </body>
 </html>
