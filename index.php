@@ -477,7 +477,7 @@
                                     <li><a href="" class="active">Services</a></li>
                                     <li><a href="">Work</a></li>
                                     <li><a href="">Our Blog</a></li> -->
-                                    <li><a href="">About us</a></li>
+                                    <li><a href="aboutus.php">About us</a></li>
                                     <li><a href="">Terms and Conditions</a></li>
                                     <li><a href="">Privacy policy</a></li>
                                     <li><a href="">Contact us</a></li>
@@ -487,7 +487,7 @@
                     </div>
                 </div>
                 <div class="row footer-copy">
-                    <p><span>(C) All rights reserved</span> | <span><a href="">Team0404</a></span> <!-- | <span> Web Designed by <a href="http://ohidul.me">Ohidul Islam</a></span> </p> -->
+                    <p><span>(C) All rights reserved</span> | <span><a href="aboutus.php">Team0404</a></span> <!-- | <span> Web Designed by <a href="http://ohidul.me">Ohidul Islam</a></span> </p> -->
                 </div>
             </div>
         </div>
