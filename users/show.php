@@ -1,9 +1,34 @@
 <?php
 //データベース接続
   require('dbconnect.php');
+//関数
+  require('functions.php'); 
+
 
 //セッションを使うページに必ず入れる
   // session_start();
+
+// //ログイン判定
+//    //セッションにidが存在し、かつオンのtimeと3600秒足した値が現在時刻より小さい時に
+//    //現在時刻より小さい時にログインしていると判定する
+//    if (isset($_SESSION['id']) && $_SESSION['time'] + 3600 > time()){
+//     //$_SESSIONに保存している時間更新
+//     //これがないとログインから１時間たったら再度ログインしないとindex.phpに入れなくなる。
+//     $_SESSION['time'] = time(); 
+
+    //ログインしているユーザーのデータをdbから取得（$_SESSION['id']を使用して）
+    // $sql = sprintf('SELECT * FROM `users` WHERE `id`=%d', mysqli_real_escape_string($db, $_SESSION['id'])
+    //   );
+    // $record = mysqli_query($db, $sql) or die (mysqli_error($db));
+    // $member = mysqli_fetch_assoc($record); 
+
+//ユーザー情報取得
+  $sql = sprintf('SELECT * FROM `users` WHERE `id`=1'
+      );
+    $record = mysqli_query($db, $sql) or die (mysqli_error($db));
+    $user = mysqli_fetch_assoc($record); 
+    
+    var_dump($user);
 ?>
 
 <!DOCTYPE html>
@@ -52,76 +77,45 @@
 <body>
 <div class="container">
      <div class="row">
-      	<div class="col-md-5  toppad  pull-right col-md-offset-3 ">
-         	<A href="edit.html" >Edit Profile</A>
-
-        	<A href="edit.html" >Logout</A>
-        	<br>
-			<p class=" text-info">May 05,2014,03:00 pm </p>
-      	</div>
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
    
    
          	<div class="panel panel-info">
             	<div class="panel-heading">
-              		<h3 class="panel-title">Sheena Kristin A.Eschor</h3>
+              		<h3 class="panel-title"><?php echo h($user['nick_name']); ?></h3>
             	</div>
 	            <div class="panel-body">
 	              	<div class="row">
-	                	<div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="http://babyinfoforyou.com/wp-content/uploads/2014/10/avatar-300x300.png" class="img-circle img-responsive"> </div>
-	                
-		                <!--<div class="col-xs-10 col-sm-10 hidden-md hidden-lg"> <br>
-		                  <dl>
-		                    <dt>DEPARTMENT:</dt>
-		                    <dd>Administrator</dd>
-		                    <dt>HIRE DATE</dt>
-		                    <dd>11/12/2013</dd>
-		                    <dt>DATE OF BIRTH</dt>
-		                       <dd>11/12/2013</dd>
-		                    <dt>GENDER</dt>
-		                    <dd>Male</dd>
-		                  </dl>
-		                </div>-->
+	                	<div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="profile_picture/<?php echo h($user['profile_picture_path']); ?>" class="img-circle img-responsive"> </div>
 		                <div class=" col-md-9 col-lg-9 "> 
 		                  	<table class="table table-user-information">
 			                    <tbody>
 			                      <tr>
-			                        <td>Department:</td>
-			                        <td>Programming</td>
+			                        <td>Nick name:</td>
+			                        <td><?php echo h($user['nick_name']); ?></td>
 			                      </tr>
 			                      <tr>
-			                        <td>Hire date:</td>
-			                        <td>06/23/2013</td>
+			                        <td>Gender:</td>
+			                        <td><?php echo h($user['gender']); ?></td>
 			                      </tr>
 			                      <tr>
-			                        <td>Date of Birth</td>
-			                        <td>01/24/1988</td>
+			                        <td>Birthday</td>
+			                        <td><?php echo h($user['birthday']); ?></td>
 			                      </tr>
-			                   
-			                         <tr>
-			                             <tr>
-			                        <td>Gender</td>
-			                        <td>Male</td>
+			                      <tr>
+			                        <td>Nationality</td>
+			                        <td><?php echo h($user['nationality_id']); ?></td>
 			                      </tr>
 			                        <tr>
-			                        <td>Home Address</td>
-			                        <td>Metro Manila,Philippines</td>
+			                        <td>School name</td>
+			                        <td><?php echo h($user['school_id']); ?></td>
 			                      </tr>
 			                      <tr>
-			                        <td>Email</td>
-			                        <td><a href="mailto:info@support.com">info@support.com</a></td>
+			                        <td>Self-introduction</td>
+			                        <td><?php echo h($user['introduction']); ?></td>
 			                      </tr>
-			                        <td>Phone Number</td>
-			                        <td>123-4567-890(Landline)<br><br>555-4567-890(Mobile)
-			                        </td>
-			                           
-			                      </tr>
-			                     
 			                    </tbody>
-		                  	</table>
-			                  
-			                <a href="#" class="btn btn-primary">My Sales Performance</a>
-			                <a href="#" class="btn btn-primary">Team Sales Performance</a>
+		                  	</table>			                 
 		                </div>
 	            	</div>
            		</div>
