@@ -18,24 +18,23 @@
 
     <div class="container">
 		<div class="row">
-				<ul class="event-list">
 				<?php foreach ($rtn as $event): ?>
-					<div class="[col-xs-12 col-sm-5]">
-					<div class="pic">
-						<h2 class="title"><?php echo $event['event_name']; ?></h2>
+					<div class="col-xs-12 col-sm-6 col-md-4 panel panel-primary">
+						<div class="panel-heading">
+							<h2 class="panel-title"><?php echo $event['event_name']; ?></h2>
+						</div>
+						<div class="panel-body">
 							<p class="day"><?php echo $event['date']; ?></p>
-						<img alt="sea" width="300" height="200" src="https://okinawa-labo.com/wp-content/uploads/2014/07/seaofoka.jpg" />
-					</div>
-						<div class="info">
-							<ul class="list-inline">
-								<li style="width:33%;">1</li>
-								<li style="width:34%;">1</li>
-								<li style="width:33%;">1</li>
-							</ul>
+							<img alt="sea" width="300" height="200" src="https://okinawa-labo.com/wp-content/uploads/2014/07/seaofoka.jpg" />
+							<div class="info">
+								<ul class="list-inline">
+									<li style="width:33%;">1</li>
+									<li style="width:34%;">1</li>
+									<li style="width:33%;">1</li>
+								</ul>
+							</div>
 						</div>
 					</div>
 				<?php endforeach; ?>
-
-				</ul>
 		</div>
 	</div>
