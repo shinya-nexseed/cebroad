@@ -42,7 +42,7 @@
                     
                     <!-- top nav -->
                     <div class="navbar navbar-blue navbar-static-top">  
-                          <a href="/" class="navbar-brand logo">C</a>
+                          <a href="/cebroad/events/index" class="navbar-brand logo">C</a>
 
 
 
@@ -96,7 +96,7 @@
                                             <div class="navbar-login">
                                                 <div class="row">
                                                     <div class="col-lg-12" style="color:#c0c0c0">
-                                                        <p class="text-left">You are received Mssage from<strong>【nick_name】</strong> <a href="#">Detail>></a></p>
+                                                        <p class="text-left">You are received Message from<strong>【nick_name】</strong> <a href="#">Detail>></a></p>
                                                           
                                                     </div>
                                                 </div>
