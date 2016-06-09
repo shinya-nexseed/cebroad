@@ -5,17 +5,17 @@
   require('functions.php'); 
 
 
-//セッションを使うページに必ず入れる
-  // session_start();
+// //セッションを使うページに必ず入れる
+//   session_start();
 
-// //ログイン判定
-//    //セッションにidが存在し、かつオンのtimeと3600秒足した値が現在時刻より小さい時に
-//    //現在時刻より小さい時にログインしていると判定する
-//    if (isset($_SESSION['id']) && $_SESSION['time'] + 3600 > time()){
-//     //$_SESSIONに保存している時間更新
-//     //これがないとログインから１時間たったら再度ログインしないとindex.phpに入れなくなる。
-//     $_SESSION['time'] = time(); 
-
+//ログイン判定
+   //セッションにidが存在し、かつオンのtimeと3600秒足した値が現在時刻より小さい時に
+   //現在時刻より小さい時にログインしていると判定する
+   if (isset($_SESSION['id']) && $_SESSION['time'] + 3600 > time()){
+    //$_SESSIONに保存している時間更新
+    //これがないとログインから１時間たったら再度ログインしないとindex.phpに入れなくなる。
+    $_SESSION['time'] = time();
+	}
     //ログインしているユーザーのデータをdbから取得（$_SESSION['id']を使用して）
     // $sql = sprintf('SELECT * FROM `users` WHERE `id`=%d', mysqli_real_escape_string($db, $_SESSION['id'])
     //   );
@@ -23,15 +23,15 @@
     // $member = mysqli_fetch_assoc($record); 
 
 //ユーザー情報取得
-  	$sql = sprintf('SELECT * FROM `users` WHERE `id`=1'
-      );
+  	$sql = sprintf('SELECT * FROM `users` WHERE `id`=%d', mysqli_real_escape_string($db, $_SESSION['id'])
+  		);
     $record = mysqli_query($db, $sql) or die (mysqli_error($db));
     $user = mysqli_fetch_assoc($record); 
     
     var_dump($user);
 
 //国籍情報取得
-    $sql = sprintf('SELECT * FROM `nationality` WHERE `nationality_id`=1'
+    $sql = sprintf('SELECT * FROM `nationality` WHERE `nationality_id`=%d', mysqli_real_escape_string($db, $user['nationality_id'])
       );
     $record = mysqli_query($db, $sql) or die (mysqli_error($db));
     $nationality = mysqli_fetch_assoc($record); 
@@ -39,7 +39,7 @@
     var_dump($nationality);
 
  //学校情報取得
-    $sql = sprintf('SELECT * FROM `schools` WHERE `id`=1'
+    $sql = sprintf('SELECT * FROM `schools` WHERE `id`=%d', mysqli_real_escape_string($db, $user['school_id'])
       );
     $record = mysqli_query($db, $sql) or die (mysqli_error($db));
     $school = mysqli_fetch_assoc($record); 
