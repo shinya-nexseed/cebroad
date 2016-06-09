@@ -113,10 +113,17 @@
             	<div class="panel-heading" id="panel-color">
               		<h3 class="panel-title"><?php echo h($user['nick_name']); ?></h3>
             	</div>
-            	<form method="post" action="">
+            	<form method="post" action="" role="form" enctype="multipart/form-data">
 		            <div class="panel-body">
 		              	<div class="row">
-		                	<div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="profile_picture/<?php echo h($user['profile_picture_path']); ?>" class="img-circle img-responsive"> 
+		                	<div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="profile_pictures/<?php echo h($user['profile_picture_path']); ?>" class="img-circle img-responsive"><br>
+		                	<input type="file" name="profile_picture_path" class="form-control">
+				                <?php if(isset($error['profile_picture_path']) && $error['profile_picture_path'] == 'type'): ?>
+				                	<p class="error">＊プロフィール写真は「.gif」「.jpg」「.png」の画像を指定してください</p>
+				                <?php endif; ?>
+				                <?php if(!empty($error)): ?>
+				                	<p class="error">＊画像を指定していた場合は、恐れ入りますが画像を改めて指定してください</p>
+				                <?php endif; ?>
 		                	</div>
 			                <div class=" col-md-9 col-lg-9 "> 
 			                  	<table class="table table-user-information">
