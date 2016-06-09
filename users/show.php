@@ -23,7 +23,7 @@
     $record = mysqli_query($db, $sql) or die (mysqli_error($db));
     $user = mysqli_fetch_assoc($record); 
     
-    var_dump($user);
+    // var_dump($user);
 
 //国籍情報取得
     $sql = sprintf('SELECT * FROM `nationality` WHERE `nationality_id`=%d', mysqli_real_escape_string($db, $user['nationality_id'])
@@ -31,7 +31,7 @@
     $record = mysqli_query($db, $sql) or die (mysqli_error($db));
     $nationality = mysqli_fetch_assoc($record); 
     
-    var_dump($nationality);
+    // var_dump($nationality);
 
  //学校情報取得
     $sql = sprintf('SELECT * FROM `schools` WHERE `id`=%d', mysqli_real_escape_string($db, $user['school_id'])
@@ -39,7 +39,7 @@
     $record = mysqli_query($db, $sql) or die (mysqli_error($db));
     $school = mysqli_fetch_assoc($record); 
     
-    var_dump($school);
+    // var_dump($school);
 
 ?>
 
@@ -97,7 +97,7 @@
 	            	</div>
            		</div>
 	            <div class="panel-footer">
-                    <a data-original-title="Broadcast Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
+                    <a data-original-title="Broadcast Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning" href="edit.php"><i class="glyphicon glyphicon-edit"></i></a>
 	            </div>            
         	</div>
     	</div>
