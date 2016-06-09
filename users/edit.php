@@ -11,6 +11,77 @@
     $_SESSION['time'] = time();
 	}
 
+//エラーの設定
+    $error = Array();
+    //フォームからデータが送信された場合
+    if(!empty($_POST)){
+
+	    //エラー項目の確認
+	    if($_POST['nick_name'] == ''){
+	    	$error['nick_name'] = 'blank';
+	    }
+
+	    if ($_POST['email'] == ''){
+	    	$error['email'] = 'blank';
+	    }
+
+	    if($_POST['password'] == ''){
+	        $error['password'] = 'blank';
+	      
+	    //パスワードが4文字以上か？↓
+	    } else if(strlen($_POST['password']) < 4){
+	        $error['password'] = 'length';
+	    }
+	    //新しいパスワードと確認パスワードが一致していない場合エラー
+	    if ($_POST['password_new'] !== $_POST['password_confirm']){
+	        $error['contradiction'] = 'contradiction';
+	    }
+
+	    if ($_POST['gender'] == ''){
+	        $error['gender'] = 'blank';
+	    }
+
+        $fileName = $_FILES['profile_picture_path']['name'];
+       if (!empty($fileName)) {
+          $ext = substr($fileName, -3);
+          if ($ext != 'jpg' && $ext != 'gif' && $ext != 'png') {
+            $error['profile_picture_path'] = 'type';
+           }
+       }
+
+ 		//エラーがなければ
+	    if (empty($error)){
+	        // //画像が選択されていれば
+	        if(!empty($fileName)){
+
+	        //画像のアップロード
+	        $picture = date('YmdHis').$_FILES['profile_picture_path']['name'];
+        	move_uploaded_file($_FILES['profile_picture_path']['tmp_name'],'users/profile_pictures/'. $picture );
+        	} else {
+         	 $picture = $user['profile_picture_path'];
+        	}
+
+	        //アップロード処理
+	        $sql = sprintf('UPDATE `users` SET `nick_name`="%s", `email`= "%s", `password`= "%s", gender="%s", `profile_picture_path`="%s", `introduction`="%s", `birthday`="%s", modified = NOW() WHERE `id`=%d',
+	          mysqli_real_escape_string($db, $_POST['nick_name']), 
+	          mysqli_real_escape_string($db, $_POST['email']),
+	          mysqli_real_escape_string($db, sha1($_POST['password_new'])),
+	          // mysqli_real_escape_string($db, $_POST['school_id']),
+	          mysqli_real_escape_string($db, $_POST['gender']),
+	          mysqli_real_escape_string($db, $picture),
+	          mysqli_real_escape_string($db, $_POST['introduction']),
+	          mysqli_real_escape_string($db, $_POST['birthday']),
+	          // mysqli_real_escape_string($db, $_POST['nationality_id']),
+	          mysqli_real_escape_string($db, $_SESSION['id'])
+	        );
+
+	    	mysqli_query($db, $sql) or die(mysqli_error($db));
+	    	// header('Location:show');
+	    }
+
+	}
+var_dump($_POST);
+
 //ユーザー情報取得
   	$sql = sprintf('SELECT * FROM `users` WHERE `id`=%d', mysqli_real_escape_string($db, $_SESSION['id'])
   		);
@@ -34,67 +105,6 @@
     $school = mysqli_fetch_assoc($record); 
     
     // var_dump($school);
-
-//エラーの設定
-    $error = Array();
-    //フォームからデータが送信された場合
-    if(!empty($_POST)){
-      //エラー項目の確認
-      if($_POST['nick_name'] == ''){
-      $error['nick_name'] = 'blank';
-      }
-
-      if ($_POST['email'] == ''){
-        $error['email'] = 'blank';
-      }
-
-      if($_POST['password'] == ''){
-        $error['password'] = 'blank';
-      
-      //パスワードが4文字以上か？↓
-      } else if(strlen($_POST['password']) < 4){
-        $error['password'] = 'length';
-      }
-      //新しいパスワードと確認パスワードが一致していない場合エラー
-      if ($_POST['password_new'] !== $_POST['password_confirm']){
-        $error['contradiction'] = 'contradiction';
-      }
-
-      if ($_POST['gender'] == ''){
-        $error['gender'] = 'blank';
-      }
-    }
-
-    var_dump($_POST);
-
- //エラーがなければ
-    if (empty($error)){
-        // //画像が選択されていれば
-        // if(!empty($fileName)){
-
-        // //画像のアップロード
-        // $picture = date('YmdHis').$_FILES['picture_path']['name'];
-        // move_uploaded_file($_FILES['picture_path']['tmp_name'],'member_picture/'. $picture );
-        // } else {
-        //   $picture = $member['picture_path'];
-        // }
-        //アップロード処理
-        $sql = sprintf('UPDATE `users` SET `nick_name`="%s", `email`= "%s", `password`= "%s", gender="%s", `introduction`="%s", `birthday`="%s", modified = NOW() WHERE `id`=%d',
-          mysqli_real_escape_string($db, $_POST['nick_name']), 
-          mysqli_real_escape_string($db, $_POST['email']),
-          mysqli_real_escape_string($db, sha1($_POST['password_new'])),
-          // mysqli_real_escape_string($db, $_POST['school_id']),
-          mysqli_real_escape_string($db, $_POST['gender']),
-          // mysqli_real_escape_string($db, $_POST['profile_picture_path']),
-          mysqli_real_escape_string($db, $_POST['introduction']),
-          mysqli_real_escape_string($db, $_POST['birthday']),
-          // mysqli_real_escape_string($db, $_POST['nationality_id']),
-          mysqli_real_escape_string($db, $user['id'])
-        );
-
-      mysqli_query($db, $sql) or die(mysqli_error($db));
-    }
-      
 
 ?>
 
@@ -263,8 +273,8 @@
 		            	</div>
 	           		</div>
 		            <div class="panel-footer">
-	                    <a data-original-title="Broadcast Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning" href="edit.php"><i class="glyphicon glyphicon-edit"></i></a>
-	                    <input type="submit" class="btn btn-default" value="確認画面へ">
+	                    <!-- <a data-original-title="Broadcast Message" data-toggle="tooltip" type="submit" class="btn btn-sm btn-warning" href="">保存</a> -->
+	                    <input type="submit" class="btn btn-default"  value="保存">
 		            </div> 
 	            </form>           
         	</div>
