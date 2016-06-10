@@ -10,6 +10,7 @@
     //これがないとログインから１時間たったら再度ログインしないとindex.phpに入れなくなる。
     $_SESSION['time'] = time();
 	}
+var_dump($_SESSION);
 
 //エラーの設定
     $error = Array();
@@ -53,25 +54,24 @@
 	    if (empty($error)){
 	        // //画像が選択されていれば
 	        if(!empty($fileName)){
-
-	        //画像のアップロード
-	        $picture = date('YmdHis').$_FILES['profile_picture_path']['name'];
-        	move_uploaded_file($_FILES['profile_picture_path']['tmp_name'],'users/profile_pictures/'. $picture );
-        	} else {
-         	 $picture = $user['profile_picture_path'];
+		        //画像のアップロード
+		        $picture = date('YmdHis').$_FILES['profile_picture_path']['name'];
+	        	move_uploaded_file($_FILES['profile_picture_path']['tmp_name'],'users/profile_pictures/'. $picture );
+	        } else {
+	         	$picture = $_SESSION['profile_picture_path'];
         	}
 
 	        //アップロード処理
-	        $sql = sprintf('UPDATE `users` SET `nick_name`="%s", `email`= "%s", `password`= "%s", gender="%s", `profile_picture_path`="%s", `introduction`="%s", `birthday`="%s", modified = NOW() WHERE `id`=%d',
+	        $sql = sprintf('UPDATE `users` SET `nick_name`="%s", `email`= "%s", `password`= "%s", `school_id`=%d, gender="%s", `profile_picture_path`="%s", `introduction`="%s", `birthday`="%s", `nationality_id`=%d, modified = NOW() WHERE `id`=%d',
 	          mysqli_real_escape_string($db, $_POST['nick_name']), 
 	          mysqli_real_escape_string($db, $_POST['email']),
 	          mysqli_real_escape_string($db, sha1($_POST['password_new'])),
-	          // mysqli_real_escape_string($db, $_POST['school_id']),
+	          mysqli_real_escape_string($db, $_POST['school_id']),
 	          mysqli_real_escape_string($db, $_POST['gender']),
 	          mysqli_real_escape_string($db, $picture),
 	          mysqli_real_escape_string($db, $_POST['introduction']),
 	          mysqli_real_escape_string($db, $_POST['birthday']),
-	          // mysqli_real_escape_string($db, $_POST['nationality_id']),
+	          mysqli_real_escape_string($db, $_POST['nationality_id']),
 	          mysqli_real_escape_string($db, $_SESSION['id'])
 	        );
 
@@ -80,7 +80,6 @@
 	    }
 
 	}
-var_dump($_POST);
 
 //ユーザー情報取得
   	$sql = sprintf('SELECT * FROM `users` WHERE `id`=%d', mysqli_real_escape_string($db, $_SESSION['id'])
@@ -94,17 +93,25 @@ var_dump($_POST);
     $sql = sprintf('SELECT * FROM `nationality` WHERE `nationality_id`=%d', mysqli_real_escape_string($db, $user['nationality_id'])
       );
     $record = mysqli_query($db, $sql) or die (mysqli_error($db));
-    $nationality = mysqli_fetch_assoc($record); 
-    
-    // var_dump($nationality);
+    $nationality_selected = mysqli_fetch_assoc($record); 
 
- //学校情報取得
+//全籍情報取得
+    $sql = sprintf('SELECT * FROM `nationality` WHERE 1'
+    	);
+    $nationalities = mysqli_query($db, $sql) or die(mysqli_error($db));
+
+    
+//学校情報取得
     $sql = sprintf('SELECT * FROM `schools` WHERE `id`=%d', mysqli_real_escape_string($db, $user['school_id'])
       );
     $record = mysqli_query($db, $sql) or die (mysqli_error($db));
-    $school = mysqli_fetch_assoc($record); 
-    
-    // var_dump($school);
+    $school_selected = mysqli_fetch_assoc($record);    
+
+//全学校情報取得
+    $sql = sprintf('SELECT * FROM `schools` WHERE 1'
+      );
+    $schools = mysqli_query($db, $sql) or die (mysqli_error($db));
+
 
 ?>
 
@@ -165,11 +172,7 @@ var_dump($_POST);
 				                      <tr>
 				                        <td>Current password:</td>
 				                        	<td>
-					                        	<?php if(isset($_POST['password'])): ?>
-									            <input type="password" name="password" class="form-control" placeholder="" value="<?php echo h($_POST['password']); ?>">
-									            <?php else: ?>
 									            <input type="password" name="password" class="form-control" placeholder="" value="">
-									            <?php endif; ?>
 									            <?php if(isset($error['password']) && $error['password'] == 'blank'): ?>
 									            <p class="error">＊現在のパスワードを入力してください</p>
 									            <?php endif; ?>
@@ -217,10 +220,12 @@ var_dump($_POST);
 				                        <td>Gender:</td>
 				                        	<td>
 				                        		<?php if(isset($user['gender'])): ?>
-									              <input type="text" name="gender" class="form-control" value="<?php echo h($user['gender']); ?>">
+									              <input type="radio" name="gender" value="male"><label for="male">male</label>
+												  <input type="radio" name="gender" value="female"><label for="female">female</label>
 									              <?php else: ?>
-									              <input type="text" name="gender" class="form-control" placeholder="例： female" value="" ?>
-									            <?php endif; ?>	
+												  <input type="radio" name="gender"><label value="male">male</label>
+												  <input type="radio" name="gender"><label value="female">female</label>
+												<?php endif; ?>	
 									            <?php if(isset($error['gender']) && $error['gender'] == 'blank'): ?>
 									                <p class="error">＊性別を入力してください</p>
 									            <?php endif; ?>
@@ -240,21 +245,29 @@ var_dump($_POST);
 				                      <tr>
 				                        <td>Nationality</td>
 					                        <td>
-					                        	<?php if(isset($nationality['nationality_id'])): ?>
-									              <input type="text" name="nationality" class="form-control" value="<?php echo h($nationality['nationality']); ?>">
-									              <?php else: ?>
-									              <input type="text" name="nationality" class="form-control" placeholder="例： female" value="" ?>
-									            <?php endif; ?>					              
+					                        	<select name="nationality_id">
+					                        		<?php while($nationality = mysqli_fetch_assoc($nationalities)): ?>
+					                        			<?php if($nationality_selected['nationality_id'] == $nationality['nationality_id']): ?>
+					                        				<option value="<?php echo $nationality['nationality_id'] ?>" selected><?php echo $nationality['nationality']; ?></option>
+					                        			<?php else: ?>
+					                        				<option value="<?php echo $nationality['nationality_id'] ?>"><?php echo $nationality['nationality']; ?></option>
+					                        			<?php endif; ?>
+					                        		<?php endwhile; ?>
+					                        	</select>				              
 					                        </td>
 				                      </tr>
 				                        <tr>
 				                        <td>School name</td>
 					                        <td>
-					                        	<?php if(isset($school['id'])): ?>
-										            <input type="text" name="school" class="form-control" value="<?php echo h($school['name']); ?>">
-										            <?php else: ?>
-										            <input type="text" name="school" class="form-control" placeholder="例： Nexseed" value="" ?>
-										        <?php endif; ?>
+												<select name="school_id" id="school_id">
+													<?php while($school = mysqli_fetch_assoc($schools)): ?>
+														<?php if($school_selected['id']==$school['id']): ?>
+												    		<option value="<?php echo $school['id']; ?>" selected><?php echo $school['name']; ?></option>
+												    	<?php else: ?>
+												    		<option value="<?php echo $school['id']; ?>"><?php echo $school['name']; ?></option>
+												    	<?php endif; ?>
+												    <?php endwhile; ?>
+											    </select>
 					                        </td>
 				                      </tr>
 				                      <tr>
@@ -281,5 +294,7 @@ var_dump($_POST);
     	</div>
 	</div>
 </div> 
+
+
 </body>
 </html>
