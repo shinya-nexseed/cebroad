@@ -20,8 +20,21 @@
 	}
 
 	if ($resource === 'index' || $resource === '') {
+		      // echo 'route1';
+
 		require('index.php');
 	} else {
+		if($resource === 'login'){
+			// echo 'route2';
+			require('login.php');
+		}
+
+		else if($resource === 'logout'){
+			require('logout.php');
+		}
+		else{
+			// echo 'route3';
 		require('application.php'); 
+		}
 	}
 ?>
