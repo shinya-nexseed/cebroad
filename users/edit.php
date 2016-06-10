@@ -220,8 +220,8 @@ var_dump($_SESSION);
 				                        <td>Gender:</td>
 				                        	<td>
 				                        		<?php if(isset($user['gender'])): ?>
-									              <input type="radio" name="gender" value="male"><label for="male">male</label>
-												  <input type="radio" name="gender" value="female"><label for="female">female</label>
+									              <input type="radio" name="gender" value="male" <?php if($user['gender']== "male") echo "checked" ?>><label for="male">male</label>
+												  <input type="radio" name="gender" value="female"<?php if($user['gender']== "female") echo "checked" ?>><label for="female">female</label>
 									              <?php else: ?>
 												  <input type="radio" name="gender"><label value="male">male</label>
 												  <input type="radio" name="gender"><label value="female">female</label>
