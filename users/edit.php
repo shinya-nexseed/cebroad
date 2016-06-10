@@ -160,13 +160,16 @@ var_dump($_SESSION);
 				                      <tr>
 				                        <td>Email:</td>
 				                        	<td><?php if(isset($user['email'])): ?>
-									              <input type="email" name="email" class="form-control" value="<?php echo h($user['email']); ?>">
-									              <?php else: ?>
-									              <input type="email" name="email" class="form-control" placeholder="例： kon@gmail.com" value="" ?>
+									            <input type="email" name="email" class="form-control" value="<?php echo h($user['email']); ?>">
+									            <?php else: ?>
+									            <input type="email" name="email" class="form-control" placeholder="例： kon@gmail.com" value="" ?>
 									            <?php endif; ?>
 									            <?php if(isset($error['email']) && $error['email'] == 'blank'): ?>
 	              									<p class="error">＊メールアドレスを入力してください</p>
 	          									<?php endif; ?>
+	          									<?php if(isset($error['email']) && $error['email'] == 'duplicate'): ?>
+								                <p class="error">* 指定されたメールアドレスはすでに登録されています</p>
+								                <?php endif; ?>
 									        </td> 
 				                      </tr>
 				                      <tr>
