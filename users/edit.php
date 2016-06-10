@@ -88,6 +88,9 @@ var_dump($_SESSION);
     $user = mysqli_fetch_assoc($record); 
     
     var_dump($user);
+    }elseif (!preg_match("/[0-9a-z!#\$%\&'\*\+\/\=\?\^\|\-\{\}\.]+@[0-9a-z!#\$%\&'\*\+\/\=\?\^\|\-\{\}\.]+/" , $_POST['email']) ) {
+    	$error['email'] = 'regex';
+	}
 
 //国籍情報取得
     $sql = sprintf('SELECT * FROM `nationality` WHERE `nationality_id`=%d', mysqli_real_escape_string($db, $user['nationality_id'])
