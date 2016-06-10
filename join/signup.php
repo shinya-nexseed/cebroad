@@ -1,7 +1,12 @@
 <?php 
-$sql = 'SELECT * FROM `schools`';
-$schools = mysqli_query($db, $sql) or die(mysqli_error($db));
-  
+//メモ
+//join/register(メールアドレス登録)→pre_thanks→signup→check→thanks
+
+
+// if(isset($school)){
+  $sql = 'SELECT * FROM `schools`';
+  $schools = mysqli_query($db, $sql) or die(mysqli_error($db));
+// }
   //フォームからデータが送信された場合(ボタンが押されたときに発動)
   if(!empty($_POST)){
     //エラー項目の確認
@@ -20,7 +25,7 @@ $schools = mysqli_query($db, $sql) or die(mysqli_error($db));
     if(($_POST['password']) !== ($_POST['confirm_password'])){
       $error['confirm_password'] = 'incorrect';
     }
-  }
+
   // 重複アカウントのチェック
   if (isset($_POST['email']) && empty($error)) {
     $sql = sprintf(
@@ -34,11 +39,13 @@ $schools = mysqli_query($db, $sql) or die(mysqli_error($db));
             $error['email'] = 'duplicate';
         }
   }
-
-
-
-  
-
+  // エラーがない場合
+  if (empty($error)) {
+    $_SESSION['join'] = $_POST;
+    header('Location: check');
+    exit();
+  }
+}
 
   //htmlspecialcharsのショートカット
   function h($value){
@@ -82,7 +89,7 @@ $schools = mysqli_query($db, $sql) or die(mysqli_error($db));
                     <!--メールアドレス-->
                       <div class="form-group">
                         <?php if (isset($_POST['email'])): ?>
-                          <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email Address" value="<?php echo h($_POST['email']); ?>">
+                          <input type ="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email Address" value="<?php echo h($_POST['email']); ?>">
                         <?php else: ?>
                           <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email Address" value="">
                         <?php endif; ?>
@@ -135,7 +142,7 @@ $schools = mysqli_query($db, $sql) or die(mysqli_error($db));
                       <div class="form-group">
                         <div class="row">
                           <div class="col-sm-6 col-sm-offset-3">
-                            <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="CONFIRM">
+                            <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="CHECK">
                           </div>
                         </div>
                       </div>
