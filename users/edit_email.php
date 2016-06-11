@@ -29,7 +29,12 @@
 		if (!preg_match("/[0-9a-z!#\$%\&'\*\+\/\=\?\^\|\-\{\}\.]+@[0-9a-z!#\$%\&'\*\+\/\=\?\^\|\-\{\}\.]+/" , $_POST['email']) ) {
     	$error['email'] = 'regex';
     	}
+
+    	if(sha1($_POST['password']) !== $user['password']){
+        $error['password'] = 'incorrect'; 
+    	}
 	}
+
 
 var_dump($_POST);
 var_dump($user);
@@ -130,12 +135,24 @@ var_dump($user);
 									                <?php endif; ?>
 										        </td> 
 				                      	</tr>
+				                      	<rt>
+				                      		<td>Password:</td>
+						                      	<td>
+											            <input type="password" name="password" class="form-control" placeholder="" value="">
+											            <?php if(isset($error['password']) && $error['password'] == 'blank'): ?>
+											            	<p class="error">＊現在のパスワードを入力してください</p>
+											            <?php endif; ?>
+											            <?php if(isset($error['password']) && $error['password'] == 'incorrect'): ?>
+											            	<p class="error">＊登録されているパスワードと一致しません</p>
+											            <?php endif; ?>
+											    </td> 
+										</rt>
 				                      	<tr>
-			                      		<td>
-			                      			<br>
-			                      			<input type="submit" class="btn btn-mini" value="update" align="">
-			                      		</td>
-			                        </tr>
+				                      		<td>
+				                      			<br>
+				                      			<input type="submit" class="btn btn-mini" value="update" align="" onclick="gate();">
+				                      		</td>
+			                        	</tr>
 				                    </tbody>
 			                  	</table>			                 
 			                </div>
