@@ -34,19 +34,6 @@
 	    if(sha1($_POST['password']) !== $user['password']){
         $error['password'] = 'incorrect'; 
     	} 
-
-        if($_POST['password_new'] < 4){
-        $error['password_new'] = 'length'; 
-        }
-
-        if($_POST['password_new'] !== $_POST['password_confirm']){
-	        $error['contradiction'] = 'contradiction';
-	    }
-
-	    if(strlen($_POST['password_new']) < 4){
-			        $error['password_new'] = 'length';
-		}
-
 	}
 
 var_dump($_POST);
@@ -97,6 +84,49 @@ var_dump($user);
 	<title></title>
 	<link href="../webroot/assets/css/users_show.css" rel="stylesheet">
 	<link href="../webroot/assets/css/bootstrap.min.css" rel="stylesheet">
+	<script type="text/javascript">
+	  function checkForm(){
+	    if(form.password_new.value != "" && form.password_new.value == form.password_confirm.value) {
+	      if(form.password_new.value.length < 4) {
+	        alert("Error: Password must contain at least four characters!");
+	        form.password_new.focus();
+	        return false;
+	      }
+
+	      if(form.password_new.value.length > 20) {
+	        alert("Error: Password must be less than twenty characters!");
+	        form.password_new.focus();
+	        return false;
+	      }
+
+	      re = /[0-9]/;
+	      if(!re.test(form.password_new.value)) {
+	        alert("Error: password must contain at least one number (0-9)!");
+	        form.password_new.focus();
+	        return false;
+	      }
+	      re = /[a-z]/;
+	      if(!re.test(form.password_new.value)) {
+	        alert("Error: password must contain at least one lowercase letter (a-z)!");
+	        form.password_new.focus();
+	        return false;
+	      }
+	      re = /[A-Z]/;
+	      if(!re.test(form.password_new.value)) {
+	        alert("Error: password must contain at least one uppercase letter (A-Z)!");
+	        form.password_new.focus();
+	        return false;
+	      }
+	    } else {
+	      alert("Error: Please check that you've entered and confirmed your password!");
+	      form.password_new.focus();
+	      return false;
+	    }
+
+	    alert("You entered a valid password: " + form.password_new.value);
+	    return true;
+	  }
+	</script>
 </head>
 <body>
 <div class="container-fluid">
@@ -106,7 +136,7 @@ var_dump($user);
             	<!-- <div class="panel-heading" id="panel-color"> -->
               		<!-- <h3 class="panel-title"><?php //echo h($user['nick_name']); ?></h3> -->
             	<!-- </div> -->
-            	<form method="post" action="" role="form" enctype="multipart/form-data">
+            	<form name="form" method="post" onsubmit="return checkForm();" role="form" enctype="multipart/form-data" >
 		            <div class="panel-body">
 		              	<div class="row">
 		              		<div class=" col-md-3 col-lg-3" align="center"> 
@@ -138,9 +168,6 @@ var_dump($user);
 									            <?php if(isset($error['password']) && $error['password'] == 'blank'): ?>
 									                <p class="error">＊新しいパスワードを入力してください</p>
 									            <?php endif; ?>
-									            <?php if(isset($error['password']) && $error['password'] == 'length'): ?>
-									                <p class="error">＊パスワードは4文字以上で入力してください </p>
-									            <?php endif; ?>				                        	
 									        </td> 
 				                      </tr>
 				                      <tr>
