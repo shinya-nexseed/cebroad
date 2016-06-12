@@ -1,5 +1,5 @@
 <?php
-
+	echo 'routes通過';
 	$params = explode('/', $_GET['url']);
 
 	$resource = $params[0];
@@ -18,10 +18,18 @@
 	if (isset($_POST) && !empty($_POST)) {
 		$post = $_POST;
 	}
+	if (empty($resource)) {
+		echo 'リソースがから';
+	} else {
+		echo $resource;
+	}
+
 
 	if ($resource === 'index' || $resource === '') {
 		require('index.php');
+	} else if ($resource === 'join') {
+		require('join/join_layout.php'); 
 	} else {
-		require('application.php'); 
+		require('application.php');
 	}
 ?>
