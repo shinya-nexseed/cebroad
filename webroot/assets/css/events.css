@@ -1,6 +1,9 @@
-/*.title {
-	margin: 0 auto;
+.events_label_color {
+	color: red;
 }
-.day {
-	margin: 0 auto;
-}*/
+textarea {
+	resize: none;
+}
+.testvar {
+	height: 1000px;
+}

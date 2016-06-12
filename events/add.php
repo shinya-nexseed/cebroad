@@ -14,20 +14,20 @@
       return array_reverse($errors);
     }
 
-  try {
-    $e = null;
-    if ($name === '') {
-        $e = e('名前が未入力です', $e);
-    }
-    if ($email === '') {
-        $e = e('メールアドレスが未入力です', $e);
-    }
-    if ($e) {
-        throw $e;
-    }
-} catch (Exception $e) {
-    die(implode("<br />\n", exception_to_array($e)));
-}
+//   try {
+//     $e = null;
+//     if ($name === '') {
+//         $e = e('名前が未入力です', $e);
+//     }
+//     if ($email === '') {
+//         $e = e('メールアドレスが未入力です', $e);
+//     }
+//     if ($e) {
+//         throw $e;
+//     }
+// } catch (Exception $e) {
+//     die(implode("<br />\n", exception_to_array($e)));
+// }
 
 
   if (!empty($_POST)) {
@@ -93,45 +93,54 @@
 $now = date('Y-m-d');
 $year = date('Y-m-d', strtotime("+1year"));
  ?>
-<link rel="stylesheet" href="../webroot/assets/css/bootstrap.css">
-<link rel="stylesheet" href="../webroot/assets/css/add.css">
+<link rel="stylesheet" href="../webroot/assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="../webroot/assets/css/events.css">
 <script src="http://maps.googleapis.com/maps/api/js?libraries=places&output?json&region=ph&language=en&key=AIzaSyDf24saS_c-qe8Qy4QPgVbTub1sJi02ov8"></script>
 <script src="../webroot/assets/js/jquery-1.12.4.min.js"></script>
 
 <div class="container">
+
+
     <form action="/cebroad/events/confirm" method="post" enctype="multipart/form-data">
     <input type="hidden" name="MAX_FILE_SIZE" value="10240" />
 
       <div class="row">
 
-        <div class="col-sm-8 col-md-8 col-md-offset-2 col-sm-offset-2">
+      <div class="testvar hidden-xs col-sm-2 col-md-2">
+</div>
+
+        <div class="col-sm-8 col-md-8">
             <h1>New event</h1>
-            <h3>Red items are necessarily required</h3>
+            <h3 class="events_label_color">Red items are necessarily required</h3>
         </div>
 
-        <div class="col-sm-8 col-md-8 col-md-offset-2 col-sm-offset-2">
+        <div class="col-sm-8 col-md-8">
             <div class="form-group">
-                <label class="red">Title</label>
+                <label class="events_label_color">Title</label>
                 <input type="text" name="title" class="form-control" required>
             </div>
         </div>
 
-        <div class="col-sm-4 col-md-4 col-sm-offset-2 col-md-offset-2">
-            <label class="red">Date</label>
+        <div class="col-sm-4 col-md-4">
+            <label class="events_label_color">Date</label>
             <div class="form-group">
                 <input type="date" name="date" class="form-control " min="<?php echo $now; ?>" max="<?php echo $year; ?>"  required>
             </div>
         </div>
 
-        <div class="col-sm-4 col-md-4 col-sm-offset-2 col-md-offset-2">
-            <label class="red">Starting time</label>
+
+        <div class="col-sm-2 col-md-2">
+            <label class="events_label_color">Starting time</label>
             <div class="form-group">
                 <input type="time" name="starting_time" class="form-control" required>
             </div>
+        </div>
+        <div class="col-sm-2 col-md-2">
                 <label id="closing_time_label">Closing time</label>
                 <div class="form-group">
                     <input type="time" name="closing_time" class="form-control" id="closing_time">
                 </div>
+
 <!--             <div class="form-group">
                 <a id="time_button" onclick="closingTime()">Add closing time</a>
             </div> -->
@@ -139,49 +148,49 @@ $year = date('Y-m-d', strtotime("+1year"));
         </div>
 
 
-        <div class="col-sm-4 col-md-4 col-sm-offset-2 col-md-offset-2">
+        <div class="col-sm-4 col-md-4">
             <label>Capacity</label>
             <div class="form-group">
                 <input type="number" name="capacity" class="form-control " min="1" required>
             </div>
         </div>
 
-        <div class="col-sm-8 col-md-8 col-md-offset-2 col-sm-offset-2">
-            <label class="red">Place</label>
+        <div class="col-sm-8 col-md-8">
+            <label class="events_label_color">Place</label>
             <div class="form-group">
                 <input id="searchTextField" type="text" name="place" class="form-control" required>
             </div>
         </div>
         
-        <div class="col-sm-8 col-md-8 col-md-offset-2 col-sm-offset-2">
+        <div class="col-sm-8 col-md-8">
             <div class="form-group">
-                <label class="red">detail</label>
+                <label class="events_label_color">detail</label>
                 <textarea name="detail" class="form-control" rows="6" required></textarea>
             </div>
         </div>
 
-        <div class="col-sm-8 col-md-2 col-md-offset-2 col-sm-offset-2">
+        <div class="col-sm-8 col-md-8">
             <div class="form-group">
                 <label>Picture1</label>
                 <input type="file" name="pic1">
             </div>
         </div>
 
-        <div class="col-sm-8 col-md-2 col-md-offset-2 col-sm-offset-2">
+        <div class="col-sm-8 col-md-8">
             <div class="form-group">
                 <label>Picture2</label>
                 <input type="file" name="pic2">
             </div>
         </div>
 
-        <div class="col-sm-8 col-md-2 col-md-offset-2 col-sm-offset-2">
+        <div class="col-sm-8 col-md-8">
             <div class="form-group">
                 <label>Picture3</label>
                 <input type="file" name="pic3">
             </div>
         </div>
 
-        <div class="col-sm-8 col-md-2 col-md-offset-2 col-sm-offset-2">
+        <div class="col-sm-8 col-md-8">
           <div class="form-group">
               <a id="addPic">Add a picture</a>
           </div>
@@ -194,7 +203,7 @@ $year = date('Y-m-d', strtotime("+1year"));
             <input id=lng type="hidden" name="lng" value="">
         </div>
 
-        <div class="col-sm-8 col-md-8 col-md-offset-2 col-sm-offset-2";>
+        <div class="col-sm-8 col-md-8";>
             <div class="form-group">
                 <input type="submit" id="confirm" class="btn btn-primary" disabled="disabled" value="confirm">
             </div>
@@ -241,4 +250,4 @@ $('#searchTextField').keydown(function() {
 <!-- <script src="../webroot/assets/js/gmap.js"></script> -->
 
 
-<script src="../webroot/assets/js/bootstrap.js"></script>
+<script src="../webroot/assets/js/bootstrap.min.js"></script>
