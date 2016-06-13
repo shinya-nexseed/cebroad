@@ -83,37 +83,37 @@
   function checkForm(){
     if(form.password_new.value != "" && form.password_new.value == form.password_confirm.value) {
       if(form.password_new.value.length < 4) {
-        alert("Error: Password must contain at least four characters!");
+        alert("Error: Password must contain at least four characters");
         form.password_new.focus();
         return false;
       }
 
       if(form.password_new.value.length > 20) {
-        alert("Error: Password must be less than twenty characters!");
+        alert("Error: Password must be less than twenty characters");
         form.password_new.focus();
         return false;
       }
 
       re = /[0-9]/;
       if(!re.test(form.password_new.value)) {
-        alert("Error: password must contain at least one number (0-9)!");
+        alert("Error: password must contain at least one number (0-9)");
         form.password_new.focus();
         return false;
       }
       re = /[a-z]/;
       if(!re.test(form.password_new.value)) {
-        alert("Error: password must contain at least one lowercase letter (a-z)!");
+        alert("Error: password must contain at least one lowercase letter (a-z)");
         form.password_new.focus();
         return false;
       }
       re = /[A-Z]/;
       if(!re.test(form.password_new.value)) {
-        alert("Error: password must contain at least one uppercase letter (A-Z)!");
+        alert("Error: password must contain at least one uppercase letter (A-Z)");
         form.password_new.focus();
         return false;
       }
     } else {
-      alert("Error: Please check that you've entered and confirmed your password!");
+      alert("Error: Please check that you've entered and confirmed your password");
       form.password_new.focus();
       return false;
     }
@@ -147,10 +147,10 @@
 				                        	<td>
 									            <input type="password" name="password" class="form-control" placeholder="" value="">
 									            <?php if(isset($error['password']) && $error['password'] == 'blank'): ?>
-									            	<p class="error">＊現在のパスワードを入力してください</p>
+									            	<p class="error">＊Please enter your current password</p>
 									            <?php endif; ?>
 									            <?php if(isset($error['password']) && $error['password'] == 'incorrect'): ?>
-									            	<p class="error">＊登録されているパスワードと一致しません</p>
+									            	<p class="error">＊Please check that you've entered and confirmed your password</p>
 									            <?php endif; ?>
 									        </td> 
 				                      </tr>
@@ -159,7 +159,7 @@
 				                        	<td>
 									            <input type="password" name="password_new" class="form-control" placeholder="" value="">
 									            <?php if(isset($error['password']) && $error['password'] == 'blank'): ?>
-									                <p class="error">＊新しいパスワードを入力してください</p>
+									                <p class="error">＊Please enter new password</p>
 									            <?php endif; ?>
 									        </td> 
 				                      </tr>
@@ -168,13 +168,13 @@
 				                        	<td>
 									            <input type="password" name="password_confirm" class="form-control" placeholder="" value="">
 									            <?php if(isset($error['password']) && $error['password'] == 'blank'): ?>
-									                <p class="error">＊新しいパスワードをもう一度入力して下さい。</p>
+									                <p class="error">＊Please confirm new password</p>
 									            <?php endif; ?>
 									            <?php if(isset($error['password']) && $error['password'] == 'length'): ?>
-									                <p class="error">＊パスワードは4文字以上で入力してください </p>
+									                <p class="error">＊Password must contain at least four characters! </p>
 									            <?php endif; ?>
 									            <?php if(isset($error['contradiction']) == 'contradiction'): ?>
-									                <p class="error">＊確認パスワードが一致しません。</p>
+									                <p class="error">＊Please check that you've entered and confirmed your password</p>
 									            <?php endif; ?>				                        
 									        </td> 
 				                      </tr>
