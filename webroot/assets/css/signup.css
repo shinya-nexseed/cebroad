@@ -97,3 +97,21 @@ body {
 	background-color: #1CA347;
 	border-color: #1CA347;
 }
+
+.btn-check {
+	background-color: #87cefa;
+	outline: none;
+	color: #fff;
+	font-size: 14px;
+	height: auto;
+	font-weight: normal;
+	padding: 14px 0;
+	text-transform: uppercase;
+	border-color: #1CB94A;
+}
+.btn-check:hover,
+.btn-check:focus {
+	color: #fff;
+	background-color: #1CA347;
+	border-color: #1CA347;
+}

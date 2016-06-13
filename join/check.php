@@ -13,14 +13,12 @@
 	$rtn = mysqli_query($db, $sql) or die(mysqli_error($db));
 
 // $school_nameに上記のsql文で取得したschool_name一件を代入
-
 	$school = mysqli_fetch_assoc($rtn);
 	$school_name = $school['school_name'];
 
 
-
 if (!empty($_POST)) {
-	//登録用sql文
+	 // ①登録用sql文
     $sql = sprintf('INSERT INTO `users` SET `nick_name`="%s", `email`="%s", `password`="%s", `school_id`=%d, created=NOW()',
         mysqli_real_escape_string($db, $_SESSION['join']['nick_name']),
         mysqli_real_escape_string($db, $_SESSION['join']['email']),
@@ -65,6 +63,7 @@ if (!empty($_POST)) {
                 <div class="row">
                   <div class="col-lg-12">
                   <!-- 登録内容を表示 -->
+            <table class="table">
                 <tr>
                   <td><div class="text-center">Nickname</div></td>
                   <td><div class="text-center"><?php echo h($_SESSION['join']['nick_name']); ?></div></td>
@@ -81,13 +80,19 @@ if (!empty($_POST)) {
                   <td><div class="text-center">School Name</div></td>
                   <td><div class="text-center"><?php echo h($school_name); ?></div></td>
                 </tr>
-              </tbody>
             </table>
-
-            <a href="signup?action=rewrite">&laquo;&nbsp;Rewrite</a>
-            <form method="post">
-            	<input type="submit" class="btn btn-default" name="register-submit" value="Register">
-            </form>
+                    <center>
+                      <a href="signup?action=rewrite">Rewrite</a>
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-sm-6 col-sm-offset-3">
+                            <form method="post">
+                      	       <input type="submit" class="btn btn-info" name="check-submit" id="check-submit" tabindex="4" class="form-control btn btn-check" value="Register">
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </center>
                   </div>
                 </div>
               </div>

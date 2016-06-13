@@ -10,13 +10,13 @@
   //フォームからデータが送信された場合(ボタンが押されたときに発動)
   if(!empty($_POST)){
     //エラー項目の確認
-    if($_POST['nick_name'] == ''){
+    if($_POST['nick_name'] === ''){
     $error['nick_name'] = 'blank';
     }
-    if ($_POST['email'] == ''){
+    if ($_POST['email'] === ''){
       $error['email'] = 'blank';
     }
-    if($_POST['password'] == ''){
+    if($_POST['password'] === ''){
       $error['password'] = 'blank';
       //パスワードが4文字以上か？↓
     } else if(strlen($_POST['password']) < 4){
