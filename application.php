@@ -11,9 +11,13 @@
 <head>
   <meta charset="UTF-8">
   <title>Cebroad</title>
+  <link href="../webroot/assets/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../webroot/assets/css/event_show_styles.css" rel="stylesheet">
 </head>
 <body>
   <?php
+    echo 'application php通過';
+    echo '<br>';
     require($resource.'/'.$action.'.php');
   ?>
 </body>
