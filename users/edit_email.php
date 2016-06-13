@@ -26,9 +26,19 @@
 	    	$error['email'] = 'blank';	
 	    }
 
-		if (!preg_match("/[0-9a-z!#\$%\&'\*\+\/\=\?\^\|\-\{\}\.]+@[0-9a-z!#\$%\&'\*\+\/\=\?\^\|\-\{\}\.]+/" , $_POST['email']) ) {
-    	$error['email'] = 'regex';
-    	}
+    	if(!preg_match('/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/iD', $_POST['email'])){
+    		$error['email'] = 'regex'; 
+		}
+
+		if(preg_match('/ /',$_POST['email'])){
+		  //$subjectのなかに半角スペースが含まれている場合
+			$error['email'] = 'space'; 
+		}
+
+		if(preg_match('/　/',$_POST['email'])){
+		  //$subjectのなかに全角スペースが含まれている場合
+			$error['email'] = 'capital_space';
+		}
 
     	if(sha1($_POST['password']) !== $user['password']){
         $error['password'] = 'incorrect'; 
@@ -36,8 +46,8 @@
 	}
 
 
-var_dump($_POST);
-var_dump($user);
+// var_dump($_POST);
+// var_dump($user);
 // var_dump(sha1($_POST['password']));
 
 //重複アカウントのチェック
@@ -87,18 +97,10 @@ var_dump($user);
     $record = mysqli_query($db, $sql) or die (mysqli_error($db));
     $user = mysqli_fetch_assoc($record); 
 
-var_dump($user);
+// var_dump($user);
 
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-	<title></title>
-	<link href="../webroot/assets/css/users_show.css" rel="stylesheet">
-	<link href="../webroot/assets/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
 <div class="container-fluid">
      <div class="row">
         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-3 col-md-offset-3 col-lg-offset-3 toppad" >   
@@ -133,6 +135,12 @@ var_dump($user);
 									                <?php if(isset($error['email']) && $error['email'] == 'regex'): ?>
 									                	<p class="error">* 正しいEmailアドレスを入力してください</p>
 									                <?php endif; ?>
+									                <?php if(isset($error['email']) && $error['email'] == 'space'): ?>
+									                	<p class="error">* Emailアドレスに「 」を入れないでください</p>
+									                <?php endif; ?>
+									                <?php if(isset($error['capital_space']) && $error['email'] == 'regex'): ?>
+									                	<p class="error">* Emailに「　」を入しないでください</p>
+									                <?php endif; ?>
 										        </td> 
 				                      	</tr>
 				                      	<rt>
@@ -163,5 +171,3 @@ var_dump($user);
     	</div>
 	</div>
 </div> 
-</body>
-</html>
