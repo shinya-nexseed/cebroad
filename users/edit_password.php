@@ -36,9 +36,9 @@
     	} 
 	}
 
-var_dump($_POST);
-var_dump($user);
-// var_dump(sha1($_POST['password']));
+// var_dump($_POST);
+// var_dump($user);
+// // var_dump(sha1($_POST['password']));
 	
 
 //エラーがなければ
@@ -74,61 +74,54 @@ var_dump($user);
     $record = mysqli_query($db, $sql) or die (mysqli_error($db));
     $user = mysqli_fetch_assoc($record); 
 
-var_dump($user);
+// var_dump($user);
 
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-	<title></title>
-	<link href="../webroot/assets/css/users_show.css" rel="stylesheet">
-	<link href="../webroot/assets/css/bootstrap.min.css" rel="stylesheet">
-	<script type="text/javascript">
-	  function checkForm(){
-	    if(form.password_new.value != "" && form.password_new.value == form.password_confirm.value) {
-	      if(form.password_new.value.length < 4) {
-	        alert("Error: Password must contain at least four characters!");
-	        form.password_new.focus();
-	        return false;
-	      }
 
-	      if(form.password_new.value.length > 20) {
-	        alert("Error: Password must be less than twenty characters!");
-	        form.password_new.focus();
-	        return false;
-	      }
+<script type="text/javascript">
+  function checkForm(){
+    if(form.password_new.value != "" && form.password_new.value == form.password_confirm.value) {
+      if(form.password_new.value.length < 4) {
+        alert("Error: Password must contain at least four characters!");
+        form.password_new.focus();
+        return false;
+      }
 
-	      re = /[0-9]/;
-	      if(!re.test(form.password_new.value)) {
-	        alert("Error: password must contain at least one number (0-9)!");
-	        form.password_new.focus();
-	        return false;
-	      }
-	      re = /[a-z]/;
-	      if(!re.test(form.password_new.value)) {
-	        alert("Error: password must contain at least one lowercase letter (a-z)!");
-	        form.password_new.focus();
-	        return false;
-	      }
-	      re = /[A-Z]/;
-	      if(!re.test(form.password_new.value)) {
-	        alert("Error: password must contain at least one uppercase letter (A-Z)!");
-	        form.password_new.focus();
-	        return false;
-	      }
-	    } else {
-	      alert("Error: Please check that you've entered and confirmed your password!");
-	      form.password_new.focus();
-	      return false;
-	    }
+      if(form.password_new.value.length > 20) {
+        alert("Error: Password must be less than twenty characters!");
+        form.password_new.focus();
+        return false;
+      }
 
-	    alert("You entered a valid password: " + form.password_new.value);
-	    return true;
-	  }
-	</script>
-</head>
-<body>
+      re = /[0-9]/;
+      if(!re.test(form.password_new.value)) {
+        alert("Error: password must contain at least one number (0-9)!");
+        form.password_new.focus();
+        return false;
+      }
+      re = /[a-z]/;
+      if(!re.test(form.password_new.value)) {
+        alert("Error: password must contain at least one lowercase letter (a-z)!");
+        form.password_new.focus();
+        return false;
+      }
+      re = /[A-Z]/;
+      if(!re.test(form.password_new.value)) {
+        alert("Error: password must contain at least one uppercase letter (A-Z)!");
+        form.password_new.focus();
+        return false;
+      }
+    } else {
+      alert("Error: Please check that you've entered and confirmed your password!");
+      form.password_new.focus();
+      return false;
+    }
+
+    alert("You entered a valid password: " + form.password_new.value);
+    return true;
+  }
+</script>
 <div class="container-fluid">
      <div class="row">
         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-3 col-md-offset-3 col-lg-offset-3 toppad" >   
@@ -199,5 +192,3 @@ var_dump($user);
     	</div>
 	</div>
 </div> 
-</body>
-</html>

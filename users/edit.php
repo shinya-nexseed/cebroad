@@ -33,9 +33,9 @@
 	    
 	}
 
-var_dump($_POST);
-var_dump($user);
-// var_dump(sha1($_POST['password']));
+// var_dump($_POST);
+// var_dump($user);
+// // var_dump(sha1($_POST['password']));
 
 //画像ファイルが送信された場合
 	if(!empty($_FILES)){
@@ -114,18 +114,10 @@ var_dump($user);
     $record = mysqli_query($db, $sql) or die (mysqli_error($db));
     $user = mysqli_fetch_assoc($record); 
 
-var_dump($user);
+// var_dump($user);
 
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-	<title></title>
-	<link href="../webroot/assets/css/users_show.css" rel="stylesheet">
-	<link href="../webroot/assets/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
 <div class="container-fluid">
      <div class="row">
         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-9 col-xs-offset-0 col-sm-offset-0 col-md-offset-2 col-lg-offset-2 toppad" >   
@@ -250,5 +242,3 @@ var_dump($user);
     	</div>
 	</div>
 </div> 
-</body>
-</html>
