@@ -80,7 +80,7 @@ hr {
 .navbar-blue {
     border-width:0;
 	background-color:#000000;
-    color:#ffffff;
+    color:rgba(1, 0, 0, 0.5);
     font-family:arial,sans-serif;
     top:0;
     position:fixed;
@@ -128,8 +128,8 @@ hr {
 .logo {
   display:block;
   padding:3px;
-  background-color:#fff;
-  color:#000000;
+  background-color:rgb(255, 42, 80);
+  color:#ffffff;
   height:28px;
   width:28px;
   margin:9px;
@@ -184,12 +184,12 @@ h1,h2,h3 {
 }
   
 .badge{
-   color:#000000;
-   background-color:#fff;
+   color:#ffffff;
+   background-color:rgb(255, 42, 80);
 }
 .badge:hover, .badge-inverse{
-   background-color:#000000;
-   color:#fff;
+   background-color:#ffffff;
+   color:rgb(255, 42, 80);
 }
     
 .jumbotron {

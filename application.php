@@ -1,9 +1,43 @@
 <?php
   session_start();
-  // require('dbconnect.php');
-  // 仮ログインデータ
-  // DBのusersテーブルにid = 1のデータを登録しておく
-  $_SESSION['id'] = 1;
+  require('dbconnect.php');
+  //セッションにidが存在し、かつセッションのtimeと3600秒足した値が
+  //現在時刻より小さいときにログインをしていると判断する
+  if(isset($_SESSION['id'])&&$_SESSION['time']+3600>time()){
+    //セッションに保存している期間更新
+    $_SESSION['time']=time();
+
+
+    //ログインしているユーザーのデータをDBから取得
+    $sql=sprintf('SELECT *, schools.name AS school_name FROM `members` JOIN `schools` ON members.school_id=schools.id WHERE `member_id`=%d',
+      mysqli_real_escape_string($db, $_SESSION['id'])
+      );
+    $record=mysqli_query($db, $sql)or die(mysqli_error($db));
+    $member=mysqli_fetch_assoc($record);
+
+
+    //イベントカテゴリ
+    $sql=sprintf('SELECT * FROM `event_categories` WHERE 1');
+    $record=mysqli_query($db, $sql)or die(mysqli_error($db));
+
+    $categories=array();
+
+    while($categories[]=mysqli_fetch_assoc($record)){
+    //実行結果として得られたデータを取得
+    if($categories==false){
+      break;
+    }
+    // $categories[]=mysqli_fetch_assoc($record);
+  }
+
+ 
+  }else{
+    //ログインしていない場合の処理
+    header('Location: ../login');
+    exit();
+  }
+  //データベースから切断
+  $dbh = null;
 ?>
 
 <!DOCTYPE html>
@@ -29,6 +63,11 @@
     });
   </script>
 
+  <?php
+    function h($value){
+      return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+    }
+  ?>
 
 
   </head>
@@ -46,11 +85,11 @@
 
 
 
-                        <ul style="list-style:none;">
+                        <ul class="hidden-xs" style="list-style:none;">
                           <li style="display:inline-block" class="navbar-form navbar-left">
-                            <form>
+                            <form method="get">
                                 <div class="input-group input-group-sm" style="max-width:300px;">
-                                  <input type="text" class="form-control" placeholder="Search Events as Title" name="srch-term-users" id="srch-term">
+                                  <input type="text" class="form-control" placeholder="Search Events as Title" name="srch-word" id="srch-term">
                                   <div class="input-group-btn">
                                     <button class="btn btn-default" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
                                   </div>
@@ -61,21 +100,27 @@
 
 
                           <li style="display:inline-block;" class="navbar-form navbar-left">
-                            <form>
+                            <form method="get">
                                 <div class="input-group input-group-sm" style="max-width:200px;">
                                   <select class="form-control" name="srch-term-categorys" class="form-control" >
-                                    <option value="0">Select Category</option>
-                                    <option value="1">Club</option>            
+                                    <option value="0" selected>Select Category</option>
+                                    <?php
+                                      foreach ($categories as $category) {
+                                        echo '<option value="'.$category['id'].'">'.$category['name'].'</option>';
+                                      }
+                                        
+                                     ?>
+            
                                   </select>
                                   <div class="input-group-btn">
-                                    <button class="btn btn-default" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                    <button class="btn btn-default" type="submit" name="srch-category"><i class="fa fa-search" aria-hidden="true"></i></button>
                                   </div>
                                 </div>
                             </form>
                           </li>
 
                           <li style="display:inline-block" class="navbar-form navbar-right">
-                            <a href="logout.php"><span class="badge">SignOut</span></a>
+                            <a href="../logout"><span class="badge">SignOut</span></a>
                           </li>
 
                           <li style="display:inline-block;" class="navbar-form navbar-right">
@@ -121,8 +166,8 @@
                                                         </p>
                                                     </div>
                                                     <div class="col-lg-8" style="color:#c0c0c0">
-                                                        <p class="text-left"><strong>【nick_name】</strong></p>
-                                                        <p class="text-left small">【mail】</p>   
+                                                        <p class="text-left"><strong><?php echo h($member['nick_name']);?></strong></p>
+                                                        <p class="text-left small"><?php echo h($member['email']);?></p>   
                                                     </div>
                                                 </div>
                                             </div>
@@ -155,7 +200,7 @@
                         <div class="full col-sm-9">
 
                           <!-- sidebar -->
-                          <div class="column col-sm-2 sidebar-offcanvas" id="sidebar">
+                          <div class="column col-sm-2 col-md-2 hidden-xs sidebar-offcanvas" id="sidebar">
                             
                             <div class="profile-sidebar">
                               <!-- SIDEBAR USERPIC -->
@@ -177,20 +222,20 @@
                                 <ul class="nav">
                                   <li class="active">
                                     <i class="glyphicon glyphicon-home"></i>
-                                    NAME:<br>【nick_name】<br>
+                                    NAME:<br><?php echo h($member['nick_name']);?><br>
                                   </li>
                                   <li>
 
                                     <i class="glyphicon glyphicon-user"></i>
-                                    BIRTH:<br>MM/DD/YY【birthday】<br>
+                                    BIRTH:<br><?php echo h($member['birthday']);?><br>
                                   </li>
                                   <li>
                                     <i class="glyphicon glyphicon-ok"></i>
-                                    SCHOOL:<br>【name】<br>
+                                    SCHOOL:<br><?php echo h($member['school_name']);?><br>
                                   </li>
                                   <li>
                                     <i class="glyphicon glyphicon-flag"></i>
-                                    INTRODUCTION:<br>【introduction】<br>
+                                    INTRODUCTION:<br><?php echo h($member['introduction']);?><br>
                                   </li>
                                 </ul>
                               </div>
