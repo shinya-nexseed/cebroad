@@ -10,31 +10,30 @@
 
 
 
-   <link rel="stylesheet" href="../webroot/assets/css/bootstrap.css">
-   <link rel="stylesheet" href="../webroot/assets/css/events.css">
+   <link rel="stylesheet" href="../webroot/assets/css/bootstrap.min.css">
+   <link rel="stylesheet" href="../webroot/assets/events/css/events.css">
+   <link rel="stylesheet" href="../webroot/assets/font-awesome/css/font-awesome.min.css">
+   <link href="../webroot/assets/events/css/events/styles.css" rel="stylesheet">
     <style type="text/css">
             @import url("http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,400italic");
     </style>
 
+
     <div class="container">
 		<div class="row">
-				<?php foreach ($rtn as $event): ?>
-					<div class="col-xs-12 col-sm-6 col-md-4 panel panel-primary">
-						<div class="panel-heading">
-							<h2 class="panel-title"><?php echo $event['event_name']; ?></h2>
-						</div>
-						<div class="panel-body">
-							<p class="day"><?php echo $event['date']; ?></p>
-							<img alt="sea" width="300" height="200" src="https://okinawa-labo.com/wp-content/uploads/2014/07/seaofoka.jpg" />
-							<div class="info">
-								<ul class="list-inline">
-									<li style="width:33%;">1</li>
-									<li style="width:34%;">1</li>
-									<li style="width:33%;">1</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-				<?php endforeach; ?>
+		    <div class="testvar hidden-xs col-sm-2 col-md-2">
+    		</div>
+			<?php foreach ($rtn as $event): ?>
+				<div class="col-sm-4 col-md-4">
+                    <div class="panel panel-default">
+                    	<div class="panel-thumbnail"><img class="img-responsive" src="https://okinawa-labo.com/wp-content/uploads/2014/07/seaofoka.jpg" /></div>
+                            <div class="panel-body">
+                                <p class="lead"><?php echo $event['event_name']; ?></p>
+                               	<p class="event_people"><i class="fa fa-users fa-lg"></i>:100</p>
+								<p class="event_like"><i class="fa fa-thumbs-o-up fa-lg"></i>:52</p>
+                            </div>
+                        </div>
+				</div>
+			<?php endforeach; ?>
 		</div>
 	</div>

@@ -5,5 +5,9 @@ textarea {
 	resize: none;
 }
 .testvar {
-	height: 1000px;
+	height: 2000px;
+}
+.pad_top {
+	padding-top: 20px;
+	padding-bottom: 20px;
 }
