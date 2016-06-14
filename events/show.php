@@ -1,3 +1,14 @@
+<?php 
+
+$sql = sprintf('SELECT * FROM `events` WHERE `organizer_id`=%d', mysqli_real_escape_string($db, $_SESSION['id'])
+      );
+    $record = mysqli_query($db, $sql) or die (mysqli_error($db));
+    $event = mysqli_fetch_assoc($record); 
+    var_dump($event);
+    var_dump($_SESSION);
+ ?>
+
+
 <div class="wrapper">
     <div class="box">
         <div class="row row-offcanvas row-offcanvas-left">
@@ -89,28 +100,27 @@
                         <!-- content -->                      
                       	<div class="row">
 
-                         <!-- イベントメイン写真 -->
-                         <div class="col-sm-12">
-                              <div class="panel panel-default">
-                                <!-- <div class="panel-thumbnail"> -->
-                                    <p class="text"><img src="../webroot/assets/images/mali.jpg" class="topimg img-responsive " width="100%" height="50%"></p>
-                                <!-- </div> -->
-                                <div class="panel-body">
-                                  <p class="lead">Event title</p>
-                                  <p>45 likes, 13 comming</p>
-                                  
-                                  <p>
-                                    <img src="../webroot/assets/images/photo1.jpg" class="img-circle pull-left">
-                                  </p>
-                                  <a href="" class="navbar-right"><button type="button" class="btn btn-success"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Like</button></a>
-                                  <a href="" class="navbar-right"><button type="button" class="btn btn-success"><i class="fa fa-hand-paper-o" aria-hidden="true"></i>Join</button></a>
-                              </div>
-                          </div>
-                         
+                          <!-- イベントメイン写真 -->
+                          <div class="col-sm-10 col-sm-offset-1">
+                            <div class="panel panel-default">
+                              <!-- <div class="panel-thumbnail"> -->
+                              <p><img src="../webroot/assets/images/<?php echo $event['event_name'].'.jpg'?>" class="img-responsive " width="100%" height="50%"></p>
+                              <!-- </div> -->
 
-                         </div>
-                         <!-- main col left --> 
-                         <div class="col-sm-4 col-sm-push-8">
+                              <div class="panel-body">
+                                <p class="lead">Event title</p>
+                                <p>45 likes, 13 comming</p>
+                                
+                                <p>
+                                  <img src="../webroot/assets/images/photo1.jpg" class="img-circle pull-left">
+                                </p>
+                                <a href="" class="navbar-right"><button type="button" class="btn btn-success"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Like</button></a>
+                                <a href="" class="navbar-right"><button type="button" class="btn btn-success"><i class="fa fa-hand-paper-o" aria-hidden="true"></i>Join</button></a>
+                              </div>
+                            </div>                         
+                          </div>
+                          <!-- main col left --> 
+                          <div class="col-sm-3 col-sm-push-8 ">
                            
                               <div class="panel panel-default">
                                 <!-- <div class="panel-thumbnail"></div> -->
@@ -161,13 +171,11 @@
                                	<div class="panel-body">
                                 	Bootstrap is front end frameworkto build custom web applications that are fast, responsive &amp; intuitive. It consist of CSS and HTML for typography, forms, buttons, tables, grids, and navigation along with custom-built jQuery plug-ins and support for responsive layouts. With dozens of reusable components for navigation, pagination, labels, alerts etc..                          </div>
                               </div> -->
-
-                           		
-                           
+ 
                           </div>
                           
                           <!-- main col right -->
-                          <div class="col-sm-8 col-sm-pull-4" >
+                          <div class="col-sm-7 col-sm-pull-3 col-sm-offset-1" >
                                
                                 <!-- <div class="well"> 
                                    <form class="form">
@@ -182,7 +190,7 @@
                                <div class="panel panel-default">
                                  <div class="panel-heading"><a href="#" class="pull-right">View all</a> <h4>Event dtails</h4></div>
                                   <div class="panel-body">
-                                    <p><img src="../webroot/assets/images/photo1.jpg" class="img-circle pull-right"> xxxxxxxxxxx xxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxx</p>
+                                    <p><img src="../webroot/assets/images/photo1.jpg" class="img-circle pull-right"> xxxxxxxxxxx xxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxxxx </p>
                                     <div class="clearfix"></div>
                                     <hr>Event category
                                   </div>
@@ -201,17 +209,11 @@
                                     </div>
                                   </div>
                                </div>
-                            
-                              
-
+                          
                                <div class="panel panel-default">
-                                 <div class="panel-heading"><a href="#" class="pull-right">View all</a> <h4>Portlet Heading</h4></div>
-                                  <div class="panel-body">
-                                    <ul class="list-group">
-                                    <li class="list-group-item">Modals</li>
-                                    <li class="list-group-item">Sliders / Carousel</li>
-                                    <li class="list-group-item">Thumbnails</li>
-                                    </ul>
+                                  <div class="panel-body">                                 
+                                      <img src="../webroot/assets/images/photo1.jpg" class="img-circle pull-left">
+                                      <p> xxxxxxxxxxx xxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxxxx </p> 
                                   </div>
                                </div>
                             
