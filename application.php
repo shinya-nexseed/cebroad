@@ -74,18 +74,14 @@
   <body>
     <div class="wrapper">
         <div class="box">
-            <div class="row row-offcanvas row-offcanvas-left">
-
+            <div class="row row-offcanvas row-offcanvas-left column" id="main">
                 <!-- main right col -->
                 <div class="column col-sm-12 col-xs-12" id="main">
                     
                     <!-- top nav -->
                     <div class="navbar navbar-blue navbar-static-top">  
-                          <a href="/cebroad/events/index" class="navbar-brand logo">C</a>
-
-
-
-                        <ul class="hidden-xs" style="list-style:none;">
+                      <a href="/cebroad/events/index" class="navbar-brand logo">C</a>
+                        <ul style="list-style:none;" class="hidden-xs">
                           <li style="display:inline-block" class="navbar-form navbar-left">
                             <form method="get">
                                 <div class="input-group input-group-sm" style="max-width:300px;">
@@ -123,36 +119,37 @@
                             <a href="../logout"><span class="badge">SignOut</span></a>
                           </li>
 
-                          <li style="display:inline-block;" class="navbar-form navbar-right">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="badge"><i class="fa fa-bell-o fa-2x" aria-hidden="true"></i></span></a>
-                              <ul class="dropdown-menu">
-                                        <li>
-                                            <div class="navbar-login">
-                                                <div class="row">
-                                                    <div class="col-lg-12" style="color:#c0c0c0">
-                                                        <p class="text-left"><strong>【nick_name】</strong> edit 【title】<a href="#">Detail>></a></p>
-                                                          
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
 
-                                        <li>
-                                            <div class="navbar-login">
-                                                <div class="row">
-                                                    <div class="col-lg-12" style="color:#c0c0c0">
-                                                        <p class="text-left">You are received Message from<strong>【nick_name】</strong> <a href="#">Detail>></a></p>
-                                                          
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                          </li>
+                            <li style="display:inline-block;" class="navbar-form navbar-right">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="badge"><i class="fa fa-bell-o fa-2x" aria-hidden="true"></i></span></a>
+                                <ul class="dropdown-menu">
+                                          <li>
+                                              <div class="navbar-login">
+                                                  <div class="row">
+                                                      <div class="col-lg-12" style="color:#c0c0c0">
+                                                          <p class="text-left"><strong>【nick_name】</strong> edit 【title】<a href="#">Detail>></a></p>
+                                                            
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </li>
 
+                                          <li>
+                                              <div class="navbar-login">
+                                                  <div class="row">
+                                                      <div class="col-lg-12" style="color:#c0c0c0">
+                                                          <p class="text-left">You are received Message from<strong>【nick_name】</strong> <a href="#">Detail>></a></p>
+                                                            
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </li>
+                                      </ul>
+                            </li>
+                         
                           <li style="display:inline-block;" class="navbar-right">
                               <ul class="nav navbar-right">
-                                <li class="dropdown">
+                                <li class="dropdown menu">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                       <img src="../images/01.jpg" class="img-responsive" style="height:100%; width:30px;" alt="">
                                     </a>
@@ -192,12 +189,87 @@
 
 
                           </ul>
+
+                          <div class="visible-xs">
+                            <li style="display:inline-block;">
+                              <ul class="nav navbar-right">
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"  class="navbar-right">
+                                      <img src="../images/01.jpg" class="img-responsive" style="height:100%; width:30px;" alt="">
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <div class="navbar-login">
+                                                <div class="row">
+                                                    <div class="col-lg-8">
+                                                        <p class="text-center">
+                                                           <form method="get">
+                                                              <div class="input-group input-group-sm" style="max-width:300px;">
+                                                                <input type="text" class="form-control" placeholder="Search Events as Title" name="srch-word" id="srch-term">
+                                                                <div class="input-group-btn">
+                                                                  <button class="btn btn-default" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                                                </div>
+                                                              </div>
+                                                          </form> 
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-lg-8">
+                                                        <p class="text-center">
+                                                           <form method="get">
+                                                              <div class="input-group input-group-sm" style="max-width:200px;">
+                                                                <select class="form-control" name="srch-term-categorys" class="form-control" >
+                                                                <option value="0" selected>Select Category</option>
+                                                                <?php
+                                                                  foreach ($categories as $category) {
+                                                                    echo '<option value="'.$category['id'].'">'.$category['name'].'</option>';
+                                                                  }
+                                                                    
+                                                                 ?>
+                                        
+                                                              </select>
+                                                              <div class="input-group-btn">
+                                                                <button class="btn btn-default" type="submit" name="srch-category"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                                              </div>
+                                                            </div>
+                                                          </form> 
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-lg-8" style="color:#c0c0c0">
+                                                        <p class="text-left"><strong><?php echo h($member['nick_name']);?></strong></p>
+                                                        <p class="text-left small"><?php echo h($member['email']);?></p>   
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="divider"></li>
+                                        <li>
+                                            <div class="navbar-login navbar-login-session">
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <p>
+                                                             <a href="/cebroad/users/edit"><button type="button" class="btn btn-success btn-sm">User Edit</button></a><br>
+                                                            <a href="/cebroad/events/add"><button type="button" class="btn btn-primary btn-sm">Make Event</button></a>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                          <a href="../logout"><span class="badge">SignOut</span></a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                          </li>
+
+
+                          </div>
                     </div>
 
                     <!-- /top nav -->
 
                     <div class="padding">
-                        <div class="full col-sm-9">
+                        <div class="full col-sm-12">
 
                           <!-- sidebar -->
                           <div class="column col-sm-2 col-md-2 hidden-xs sidebar-offcanvas" id="sidebar">
@@ -246,14 +318,14 @@
                           <!-- /sidebar -->
                           
                         <!-- content -->                      
-                        <div class="row">
-
+                        <div class="column col-sm-10">
+                          <div class="row">
                             <?php
                               require($resource.'/'.$action.'.php');
                             ?>     
-                          
+                          </div>
                         </div><!-- /col-9 -->
-                    </div><!-- /padding -->
+                    </div><!-- padding -->
                 </div>
                 <!-- /main -->
 
@@ -262,31 +334,6 @@
         </div>
     </div>
 
-
-    <!--post modal-->
-    <div id="postModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog">
-      <div class="modal-content">
-          <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-          Update Status
-          </div>
-          <div class="modal-body">
-              <form class="form center-block">
-                <div class="form-group">
-                  <textarea class="form-control input-lg" autofocus="" placeholder="What do you want to share?"></textarea>
-                </div>
-              </form>
-          </div>
-          <div class="modal-footer">
-              <div>
-              <button class="btn btn-primary btn-sm" data-dismiss="modal" aria-hidden="true">Post</button>
-                <ul class="pull-left list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
-          </div>  
-          </div>
-      </div>
-      </div>
-    </div>
       <!-- script references -->
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
         <script type="text/javascript" src="../webroot/assets/js/bootstrap.js"></script>
