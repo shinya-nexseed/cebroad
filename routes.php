@@ -9,6 +9,7 @@
 
 	if (isset($params[1])) {
 		$action = $params[1];
+		// if (strpos($action, '?'))
 	}
 
 	if (isset($params[2])) {
