@@ -8,11 +8,11 @@
         $error['peofile_picture_path'] = 'type';
       }
     }
-    
+
     // エラーがない場合
     if (empty($error)) {
       $_SESSION['join'] = $_POST;
-      header('Location: check');
+      header('Location: ../users/show');
       exit();
     }
   }
