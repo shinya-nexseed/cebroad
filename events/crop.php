@@ -12,8 +12,8 @@ $sql = sprintf('SELECT * FROM `events` WHERE `organizer_id`=%d', mysqli_real_esc
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
   //(付け足し)https://secure.php.net/manual/ja/function.imagecopyresized.php
-  //ファイルと神姫サイズ
-  $filename = 'webroot/assets/images/cala.jpg';
+  //ファイルと新規サイズ
+//  $filename = 'webroot/assets/images/cala.jpg';
   list($width,$height) = getimagesize($filename);
   //新規サイズを取得します
   $newwidth = 1000;
@@ -60,15 +60,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 </div>
 
     <!-- This is the image we're attaching Jcrop to -->
-    <img src="../webroot/assets/images/cala.jpg" id="cropbox" width="1000px"/>
+    <img src="" id="cropbox" width="1000px" style="display:none;">
 
     <!-- This is the form that our event handler fills -->
-    <form action="crop" method="post" onsubmit="return checkCoords();">
-      <input type="hidden" id="x" name="x" />
-      <input type="hidden" id="y" name="y" />
-      <input type="hidden" id="w" name="w" />
-      <input type="hidden" id="h" name="h" />
-      <input type="submit" value="Crop Image" class="btn btn-large btn-inverse" />
+    <form action="crop" method="post" onsubmit="return checkCoords();" enctype="multipart/form-data">
+      <input type="hidden" name="MAX_FILE_SIZE" value="5120">
+      <input type="file" name="picture" id="picture">
+      <input type="hidden" id="x" name="x">
+      <input type="hidden" id="y" name="y">
+      <input type="hidden" id="w" name="w">
+      <input type="hidden" id="h" name="h">
+      <input type="submit" value="Crop Image" class="btn btn-large btn-inverse">
     </form>
 
     <p>
@@ -83,4 +85,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
   </div>
   </div>
   </div>
+
+  <script>
+
+
+ $('#picture').change(function(){
+ //実際に画像のプレビューを行う関数
+     var file = $(this).prop('files')[0];
+     //png, jpg, jpegのどれにも一致しない場合注意文を表示
+     if ( file.type == 'image/png' || file.type == 'image/jpg' || file.type == 'image/jpeg') {
+         //空のimgタグにプレビューを挿入
+         var fr = new FileReader();
+         fr.onload = function() {
+             $('#cropbox').attr('src', fr.result ).css('display','inline');
+         }
+         fr.readAsDataURL(file);
+       }
+     });
+       // } else {
+       //   $('#' + previewId).attr('src', '').css('display','none');
+       //   $('#' + labelId).text('You can choose only jpg or png file');
+       // }
+
+  </script>
 
