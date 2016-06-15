@@ -4,29 +4,42 @@ $sql = sprintf('SELECT * FROM `events` WHERE `organizer_id`=%d', mysqli_real_esc
       );
     $record = mysqli_query($db, $sql) or die (mysqli_error($db));
     $event = mysqli_fetch_assoc($record); 
-    var_dump($event);
-    var_dump($_SESSION);
+    // var_dump($event);
+    // var_dump($_SESSION);
 
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
-  $targ_w = 400;
-  $targ_h = 200;
-  $jpeg_quality = 90;
+  //(付け足し)https://secure.php.net/manual/ja/function.imagecopyresized.php
+  //ファイルと神姫サイズ
+  $filename = 'webroot/assets/images/cala.jpg';
+  list($width,$height) = getimagesize($filename);
+  //新規サイズを取得します
+  $newwidth = 1000;
+  $newheight =$height*(1000/$width);
+  //読み込み
+  $thumb = ImageCreateTrueColor($newwidth, $newheight);
+  $source = imagecreatefromjpeg($filename);
+  //リサイズ
+  imagecopyresized($thumb,$source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+  //リサイズした画像の保存
+  // imagejpeg($thumb,'webroot/assets/images/'.$event['event_name'].'.jpg', $jpeg_quality);
 
-  $src = 'webroot/assets/images/mali.jpg';
-  $img_r = imagecreatefromjpeg($src);
-  $dst_r = ImageCreateTrueColor( $targ_w, $targ_h );
+  //クロッピング
+    $targ_w = 1000;
+    $targ_h = 500;
+    $jpeg_quality = 90;
+    // $src = 'webroot/assets/images/mali.jpg';
+    // $img_r = imagecreatefromjpeg($thumb);
+    $dst_r = ImageCreateTrueColor($targ_w, $targ_h);
+    imagecopyresampled($dst_r,$thumb,0,0,$_POST['x'],$_POST['y'],$targ_w,$targ_h,$_POST['w'],$_POST['h']);
 
-  imagecopyresampled($dst_r,$img_r,0,0,$_POST['x'],$_POST['y'],
-  $targ_w,$targ_h,$_POST['w'],$_POST['h']);
+    header('Content-type: image/jpeg');
+    // imagejpeg($dst_r,null,$jpeg_quality);
+    imagejpeg($dst_r,'webroot/assets/images/'.$event['event_name'].'.jpg', $jpeg_quality);
 
-  // header('Content-type: image/jpeg');
-  // // imagejpeg($dst_r,null,$jpeg_quality);
-  imagejpeg($dst_r,'webroot/assets/images/'.$event['event_name'].'.jpg', $jpeg_quality);
-
-  exit;
+    exit;
 }
 
 // If not a POST request, display page below:
@@ -47,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 </div>
 
     <!-- This is the image we're attaching Jcrop to -->
-    <img src="../webroot/assets/images/mali.jpg" id="cropbox" width="1000px" height="700px"/>
+    <img src="../webroot/assets/images/cala.jpg" id="cropbox" width="1000px"/>
 
     <!-- This is the form that our event handler fills -->
     <form action="crop" method="post" onsubmit="return checkCoords();">

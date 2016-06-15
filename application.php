@@ -22,7 +22,7 @@
     $(function(){
 
       $('#cropbox').Jcrop({
-        aspectRatio: 2,
+        aspectRatio: 2/1,
         onSelect: updateCoords
       });
 
