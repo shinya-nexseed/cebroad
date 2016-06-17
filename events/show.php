@@ -1,134 +1,74 @@
-<?php 
-
-$sql = sprintf('SELECT * FROM `events` WHERE `organizer_id`=%d', mysqli_real_escape_string($db, $_SESSION['id'])
-      );
-    $record = mysqli_query($db, $sql) or die (mysqli_error($db));
-    $event = mysqli_fetch_assoc($record); 
-    var_dump($event);
-    var_dump($_SESSION);
- ?>
-
-
-<div class="wrapper">
-    <div class="box">
-        <div class="row row-offcanvas row-offcanvas-left">
-                      
-          
-            <!-- sidebar -->
-            <div class="column col-sm-2 col-xs-1 sidebar-offcanvas" id="sidebar">
-              
-              	<ul class="nav">
-          			<li><a href="#" data-toggle="offcanvas" class="visible-xs text-center"><i class="glyphicon glyphicon-chevron-right"></i></a></li>
-            	</ul>
-               
-                <ul class="nav hidden-xs" id="lg-menu">
-                    <li class="active"><a href="#featured"><i class="glyphicon glyphicon-list-alt"></i> Featured</a></li>
-                    <li><a href="#stories"><i class="glyphicon glyphicon-list"></i> Stories</a></li>
-                    <li><a href="#"><i class="glyphicon glyphicon-paperclip"></i> Saved</a></li>
-                    <li><a href="#"><i class="glyphicon glyphicon-refresh"></i> Refresh</a></li>
-                </ul>
-                <ul class="list-unstyled hidden-xs" id="sidebar-footer">
-                    <li>
-                      <a href="http://www.bootply.com"><h3>Bootstrap</h3> <i class="glyphicon glyphicon-heart-empty"></i> Bootply</a>
-                    </li>
-                </ul>
-              
-              	<!-- tiny only nav-->
-              <ul class="nav visible-xs" id="xs-menu">
-                  	<li><a href="#featured" class="text-center"><i class="glyphicon glyphicon-list-alt"></i></a></li>
-                    <li><a href="#stories" class="text-center"><i class="glyphicon glyphicon-list"></i></a></li>
-                  	<li><a href="#" class="text-center"><i class="glyphicon glyphicon-paperclip"></i></a></li>
-                    <li><a href="#" class="text-center"><i class="glyphicon glyphicon-refresh"></i></a></li>
-                </ul>
-              
-            </div>
-            <!-- /sidebar -->
-          
-            <!-- main right col -->
-            <div class="column col-sm-10 col-xs-11" id="main">
-                
-                <!-- top nav -->
-              	<div class="navbar navbar-blue navbar-static-top">  
-                    <div class="navbar-header">
-                      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle</span>
-                        <span class="icon-bar"></span>
-          				<span class="icon-bar"></span>
-          				<span class="icon-bar"></span>
-                      </button>
-                      <a href="/" class="navbar-brand logo">b</a>
-                  	</div>
-                  	<nav class="collapse navbar-collapse" role="navigation">
-                    <form class="navbar-form navbar-left">
-                        <div class="input-group input-group-sm" style="max-width:360px;">
-                          <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
-                          <div class="input-group-btn">
-                            <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                          </div>
-                        </div>
-                    </form>
-                    <ul class="nav navbar-nav">
-                      <li>
-                        <a href="#"><i class="glyphicon glyphicon-home"></i> Home</a>
-                      </li>
-                      <li>
-                        <a href="#postModal" role="button" data-toggle="modal"><i class="glyphicon glyphicon-plus"></i> Post</a>
-                      </li>
-                      <li>
-                        <a href="#"><span class="badge">badge</span></a>
-                      </li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i></a>
-                        <ul class="dropdown-menu">
-                          <li><a href="">More</a></li>
-                          <li><a href="">More</a></li>
-                          <li><a href="">More</a></li>
-                          <li><a href="">More</a></li>
-                          <li><a href="">More</a></li>
-                        </ul>
-                      </li>
-                    </ul>
-                  	</nav>
-                </div>
-                <!-- /top nav -->
-              
-                <div class="padding">
-                    <div class="full col-sm-9">
+<!-- <div class="col-sm-12"> -->
                       
                         <!-- content -->                      
-                      	<div class="row">
+                        <div class="row">
 
-                          <!-- イベントメイン写真 -->
-                          <div class="col-sm-10 col-sm-offset-1">
-                            <div class="panel panel-default">
-                              <!-- <div class="panel-thumbnail"> -->
-                              <p><img src="../webroot/assets/images/<?php echo $event['event_name'].'.jpg'?>" class="img-responsive " width="100%" height="50%"></p>
-                              <!-- </div> -->
+                         <!-- イベントメイン写真 -->
+                        <div class="col-sm-12">
+                          <div class="panel panel-default">
+                                <!-- <div class="panel-thumbnail"> -->
+                            <p class="text"><img src="/cebroad/webroot/assets/images/mali.jpg" class="topimg img-responsive " width="100%" height="50%"></p>
+                                <!-- </div> -->
+                            <div class="panel-body">
+                              <p class="lead"><?php echo $event['event_name']; ?></p>
+                              <h4><i class="fa fa-users" aria-hidden="true"></i><?php echo $cnt_paticipant['cnt']?>  <i class="fa fa-thumbs-o-up" aria-hidden="true"></i><?php echo $cnt_like['cnt']?></h4>
+                                  
+                              <p>
+                                <img src="/cebroad/images/<? echo $organizer['profile_picture_path'];?>" class="img-circle pull-left">
+                              </p>
 
-                              <div class="panel-body">
-                                <p class="lead">Event title</p>
-                                <p>45 likes, 13 comming</p>
-                                
-                                <p>
-                                  <img src="../webroot/assets/images/photo1.jpg" class="img-circle pull-left">
-                                </p>
-                                <a href="" class="navbar-right"><button type="button" class="btn btn-success"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Like</button></a>
-                                <a href="" class="navbar-right"><button type="button" class="btn btn-success"><i class="fa fa-hand-paper-o" aria-hidden="true"></i>Join</button></a>
-                              </div>
-                            </div>                         
+
+                              <!-- いいねボタン -->
+                              <form method="post" action="" class="navbar-right">
+                                  <input type="hidden" name="like" value="1">
+                                  <?php if($table_like['cnt']>0){ ?>
+                                    <i class="fa fa-thumbs-o-up" aria-hidden="true"></i><input type="submit" class="btn btn-default" value="Cansel">
+                                  <?php }else { ?>
+                                    <i class="fa fa-thumbs-o-up" aria-hidden="true"></i><input type="submit" class="btn btn-success" value="Like">
+                                  <?php } ?>
+                              </form>
+
+                              <!-- 参加者ボタン -->
+                              <!-- ログインしているユーザーでないとき参加者ボタンを表示 -->
+                              <?php if($_SESSION['id']!=$event['organizer_id']){ ?>
+                                <form method="post" action="" class="navbar-right">
+                                    <input type="hidden" name="paticipant" value="1">
+                                  <!-- 1度でも押したことがある場合はキャンセルできるようにボタンの色を変更 -->
+                                  <?php if($table_paticipant['cnt']>0){ ?>
+                                      <i class="fa fa-users" aria-hidden="true"></i><input type="submit" class="btn btn-default" value="Cansel">  
+                                    <?php }else { ?>
+                                      <!-- 押したことがなく、定員に達している場合はボタンは非アクティブ状態 -->
+                                      <?php if($cnt_paticipant['cnt']<$event['capacity_nim']){?> 
+                                        <i class="fa fa-users" aria-hidden="true"></i><input type="submit" class="btn btn-success" value="Join">
+                                      <!-- 押したことがなく、定員に達していない場合はボタンはアクティブ状態 -->
+                                      <?php }else { ?>
+                                        <i class="fa fa-users" aria-hidden="true"></i><input type="submit" class="btn btn-success" disabled="disabled" value="Join">
+                                      <?php } ?>
+                                    <?php } ?>
+                                  <?php } else{?>
+                                  <!-- ログインしているユーザーのときは参加者ボタンを非アクティブ状態 -->
+                                    <div class="navbar-right">
+                                      <i class="fa fa-users" aria-hidden="true"></i><input type="submit" class="btn btn-success" disabled="disabled" value="Join">
+                                    </div>
+                                  <?php } ?>
+                                </form>
+                            </div>
                           </div>
-                          <!-- main col left --> 
-                          <div class="col-sm-3 col-sm-push-8 ">
+                        </div>
+
+                         <!-- </div> -->
+                         <!-- main col left -->
+                        <!-- <div calss="row"> -->
+                         <div class="col-sm-4 col-sm-push-8">
                            
                               <div class="panel panel-default">
                                 <!-- <div class="panel-thumbnail"></div> -->
                                 <div class="panel-body">
-                                  <p class="lead">Event details</p>
-                                  <p>xxxxxxx xxxxxxxxx xxxxxxxx</p>
+                                  <p class="lead">Date/Place</p>
+                                  <p>Date:<?php echo $event['date']; ?></p>
+                                  <p>Place:<?php echo $event['place_name']; ?></p>
                                   <p>
-                                    <img src="../webroot/assets/images/photo1.jpg" class="img-circle pull-right">
+                                    <img src="/cebroad/images/<? echo $organizer['profile_picture_path'];?>" class="img-circle pull-left">
                                   </p>
                                 </div>
                               </div>
@@ -137,164 +77,52 @@ $sql = sprintf('SELECT * FROM `events` WHERE `organizer_id`=%d', mysqli_real_esc
                               <div class="panel panel-default">
                                 <!-- <div class="panel-heading"><a href="#" class="pull-right"></a> <h4>Bootstrap Examples</h4></div> -->
                                   <div class="panel-body">
+                                    <p class="lead">Paticipants</p>
                                     <div class="list-group">
-                                      <img src="../webroot/assets/images/photo1.jpg" class="img-circle pull-right">
-                                      <img src="../webroot/assets/images/photo1.jpg" class="img-circle pull-right">
-                                      <img src="../webroot/assets/images/photo1.jpg" class="img-circle pull-right">
+                                      <?php foreach($event_participants as $event_participant){ ?>
+                                        <img src="/cebroad/images/<? echo $event_participant['profile_picture_path'];?>" class="img-circle pull-left">
+                                      <?php } ?>
                                     </div>
                                   </div>
                               </div>
-                           
-                              <!-- <div class="well"> 
-                                   <form class="form-horizontal" role="form">
-                                    <h4>What's New</h4>
-                                     <div class="form-group" style="padding:14px;">
-                                      <textarea class="form-control" placeholder="Update your status"></textarea>
-                                    </div>
-                                    <button class="btn btn-primary pull-right" type="button">Post</button><ul class="list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
-                                  </form>
-                              </div>
-                           
-                              <div class="panel panel-default">
-                                 <div class="panel-heading"><a href="#" class="pull-right">View all</a> <h4>More Templates</h4></div>
-                                  <div class="panel-body">
-                                    <img src="//placehold.it/150x150" class="img-circle pull-right"> <a href="#">Free @Bootply</a>
-                                    <div class="clearfix"></div>
-                                    There a load of new free Bootstrap 3 ready templates at Bootply. All of these templates are free and don't require extensive customization to the Bootstrap baseline.
-                                    <hr>
-                                    <ul class="list-unstyled"><li><a href="http://www.bootply.com/templates">Dashboard</a></li><li><a href="http://www.bootply.com/templates">Darkside</a></li><li><a href="http://www.bootply.com/templates">Greenfield</a></li></ul>
-                                  </div>
-                              </div>
-                           
-                              <div class="panel panel-default">
-                                <div class="panel-heading"><h4>What Is Bootstrap?</h4></div>
-                               	<div class="panel-body">
-                                	Bootstrap is front end frameworkto build custom web applications that are fast, responsive &amp; intuitive. It consist of CSS and HTML for typography, forms, buttons, tables, grids, and navigation along with custom-built jQuery plug-ins and support for responsive layouts. With dozens of reusable components for navigation, pagination, labels, alerts etc..                          </div>
-                              </div> -->
- 
                           </div>
                           
                           <!-- main col right -->
-                          <div class="col-sm-7 col-sm-pull-3 col-sm-offset-1" >
-                               
-                                <!-- <div class="well"> 
-                                   <form class="form">
-                                    <h4>Sign-up</h4>
-                                    <div class="input-group text-center">
-                                    <input type="text" class="form-control input-lg" placeholder="Enter your email address">
-                                      <span class="input-group-btn"><button class="btn btn-lg btn-primary" type="button">OK</button></span>
-                                    </div>
-                                  </form>
-                                </div> -->
-                      
+                          <div class="col-sm-8 col-sm-pull-4" >
+                            <div class="panel-detail">
                                <div class="panel panel-default">
-                                 <div class="panel-heading"><a href="#" class="pull-right">View all</a> <h4>Event dtails</h4></div>
+                                 <div class="panel-heading"><a href="#" class="pull-right">View all</a> <h4>Event details</h4></div>
                                   <div class="panel-body">
-                                    <p><img src="../webroot/assets/images/photo1.jpg" class="img-circle pull-right"> xxxxxxxxxxx xxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxxxx </p>
+                                    <p><img src="/cebroad/webroot/assets/images/photo1.jpg" class="img-circle pull-right"> <?php echo $event['detail']; ?></p>
                                     <div class="clearfix"></div>
-                                    <hr>Event category
+                                    <hr>Event category: <?php echo $event['name']; ?>
                                   </div>
                                </div>
+                            </div>
 
                                <div class="panel panel-default">
-                                 <div class="panel-heading"><h4>Comment</h4></div>
+                                 <div class="panel-heading"><h4>Comments</h4></div>
                                   <div class="panel-body">
-                                    <img src="../webroot/assets/images/photo1.jpg" class="img-circle pull-left">
                                     <div class="clearfix">
                                       <br>
-                                      <form>
-                                        <input type="text" class="form-control" placeholder="Add a comment.."><br>
-                                        <button class="btn btn-default pull-right">Post</button>
+                                      <form method="post">
+                                        <input type="text" name="comment" class="form-control" placeholder="Add a comment..">
+                                        <input type="submit" class="btn btn-default pull-right" value="Post">
                                       </form>
                                     </div>
+                                    <?php foreach($comments as $comment){ ?>
+                                      <!-- <img src=/cebroad/images/<? //echo $comment['profile_picture_path'];?> class="img-circle pull-left comment"> -->
+                                      <h5><?php echo $comment['nick_name']; ?></h5>
+                                      <p><?php echo $comment['comment']; ?><p>
+                                      <p class="navar-right"><?php echo $comment['created']; ?><p>
+
+                                      <form name="delete" method="post" action="">
+                                        <input type="hidden" name="comment_delete" value="<?php echo $comment['id']; ?>">
+                                        <p class="navar-right"><a href="javascript.delete.submit()">delete</a></p>
+                                      </form>
+                                    <?php } ?>
                                   </div>
                                </div>
-                          
-                               <div class="panel panel-default">
-                                  <div class="panel-body">                                 
-                                      <img src="../webroot/assets/images/photo1.jpg" class="img-circle pull-left">
-                                      <p> xxxxxxxxxxx xxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxxxx </p> 
-                                  </div>
-                               </div>
-                            
-                               <!-- <div class="panel panel-default">
-                                <div class="panel-thumbnail"><img src="/assets/example/bg_4.jpg" class="img-responsive"></div>
-                                <div class="panel-body">
-                                  <p class="lead">Social Good</p>
-                                  <p>1,200 Followers, 83 Posts</p>
-                                  
-                                  <p>
-                                    <img src="https://lh6.googleusercontent.com/-5cTTMHjjnzs/AAAAAAAAAAI/AAAAAAAAAFk/vgza68M4p2s/s28-c-k-no/photo.jpg" width="28px" height="28px">
-                                    <img src="https://lh4.googleusercontent.com/-6aFMDiaLg5M/AAAAAAAAAAI/AAAAAAAABdM/XjnG8z60Ug0/s28-c-k-no/photo.jpg" width="28px" height="28px">
-                                    <img src="https://lh4.googleusercontent.com/-9Yw2jNffJlE/AAAAAAAAAAI/AAAAAAAAAAA/u3WcFXvK-g8/s28-c-k-no/photo.jpg" width="28px" height="28px">
-                                  </p>
-                                </div>
-                              </div> -->
-                            
                           </div>
-                       </div><!--/row-->
-                      
-                        <!-- <div class="row">
-                          <div class="col-sm-6">
-                            <a href="#">Twitter</a> <small class="text-muted">|</small> <a href="#">Facebook</a> <small class="text-muted">|</small> <a href="#">Google+</a>
-                          </div>
-                        </div> -->
-                      
-                        <!-- <div class="row" id="footer">    
-                          <div class="col-sm-6">
-                            
-                          </div>
-                          <div class="col-sm-6">
-                            <p>
-                            <a href="#" class="pull-right">©Copyright 2013</a>
-                            </p>
-                          </div>
-                        </div> -->
-                      
-                      <!-- <hr>
-                      
-                      <h4 class="text-center">
-                      <a href="http://bootply.com/96266" target="ext">Download this Template @Bootply</a>
-                      </h4>
-                        
-                      <hr> -->
-                        
-                      
-                    </div><!-- /col-9 -->
-                </div><!-- /padding -->
-            </div>
-            <!-- /main -->
-          
-        </div>
-    </div>
-</div>
-
-
-<!--post modal-->
-<div id="postModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog">
-  <div class="modal-content">
-      <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-			Update Status
-      </div>
-      <div class="modal-body">
-          <form class="form center-block">
-            <div class="form-group">
-              <textarea class="form-control input-lg" autofocus="" placeholder="What do you want to share?"></textarea>
-            </div>
-          </form>
-      </div>
-      <div class="modal-footer">
-          <div>
-          <button class="btn btn-primary btn-sm" data-dismiss="modal" aria-hidden="true">Post</button>
-            <ul class="pull-left list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
-		  </div>	
-      </div>
-  </div>
-  </div>
-</div>
-	<!-- script references -->
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-		<script src="../webroot/assets/js/bootstrap.min.js"></script>
-		<script src="../webroot/assets/js/event_show_scripts.js"></script>
+                       </div><!-- /row -->
+                    <!-- </div>/col-9 -->
