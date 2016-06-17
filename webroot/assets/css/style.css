@@ -2,6 +2,10 @@ body{
 	font-family: 'Open Sans', sans-serif;
 }
 
+.panel-detail{
+	word-wrap: break-word;
+}
+
 #special{
 	position: absolute;
 	z-index: 100;
