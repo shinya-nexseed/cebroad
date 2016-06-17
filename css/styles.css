@@ -129,6 +129,13 @@ hr {
    padding-left:0;
    padding-right:0;
 }
+
+#main .img-circle .comment{
+  margin-top:18px;
+   height:30px;
+   width:30px;
+}
+
 #main .img-circle {
    margin-top:18px;
    height:70px;
