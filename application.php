@@ -9,7 +9,7 @@
 
 
     //ログインしているユーザーのデータをDBから取得
-    $sql=sprintf('SELECT *, schools.name AS school_name FROM `users` JOIN `schools` ON users.school_id=schools.id WHERE `id`=%d',
+    $sql=sprintf('SELECT *, schools.name AS school_name FROM `users` JOIN `schools` ON users.school_id=schools.id WHERE users.id=%d',
       mysqli_real_escape_string($db, $_SESSION['id'])
       );
     $record=mysqli_query($db, $sql)or die(mysqli_error($db));
@@ -44,7 +44,7 @@
 
 
       //対象イベントの参加者情報を取得
-      $sql=sprintf('SELECT * FROM `users` JOIN `paticipants` ON id`=paticipants.user_id WHERE paticipants.event_id='.$id);
+      $sql=sprintf('SELECT * FROM `users` JOIN `participants` ON `id`=participants.user_id WHERE participants.event_id='.$id);
 
 
 
@@ -84,7 +84,7 @@
 
 
       //対象のイベントIDの参加ボタンを押している数を取得する
-        $sql = sprintf('SELECT COUNT(*) AS cnt FROM paticipants WHERE event_id=%d',
+        $sql = sprintf('SELECT COUNT(*) AS cnt FROM participants WHERE event_id=%d',
           $id
           );
 
@@ -107,7 +107,7 @@
 
 
       //すでに参加ボタンを押しているかどうかを判定(参加ボタンのON/OFF中間テーブルのON/OFF、ボタンの色の切り替え用)
-        $sql = sprintf('SELECT COUNT(*) AS cnt FROM paticipants WHERE user_id=%d AND event_id=%d',
+        $sql = sprintf('SELECT COUNT(*) AS cnt FROM participants WHERE user_id=%d AND event_id=%d',
           $_SESSION['id'],
           $id
           );
@@ -146,7 +146,7 @@
        else if(isset($_POST['paticipant'])){
       
         if($table_paticipant['cnt']>0){//すでにデータが存在している場合
-          $sql = sprintf('DELETE FROM `paticipants` WHERE user_id=%d AND event_id=%d',
+          $sql = sprintf('DELETE FROM `participants` WHERE user_id=%d AND event_id=%d',
           $_SESSION['id'],
           $id
           );
@@ -155,11 +155,11 @@
 
         }
         else{//データが存在しない場合
-          $sql=sprintf('INSERT INTO `paticipants`(`user_id`, `event_id`) VALUES('.$_SESSION['id'].','.$id.')');
+          $sql=sprintf('INSERT INTO `participants`(`user_id`, `event_id`) VALUES('.$_SESSION['id'].','.$id.')');
           $record=mysqli_query($db, $sql)or die(mysqli_error($db));
           }
 
-          $sql = sprintf('SELECT COUNT(*) AS cnt FROM paticipants WHERE user_id=%d AND event_id=%d',
+          $sql = sprintf('SELECT COUNT(*) AS cnt FROM participants WHERE user_id=%d AND event_id=%d',
           $_SESSION['id'],
           $id
           );
@@ -184,7 +184,7 @@
 
       if(isset($_POST['comment_delete'])){
         //コメントを保存
-        $sql = sprintf('DELETE FROM `comments` WHERE `comment_id`='.$_POST['comment_delete']);
+        $sql = sprintf('DELETE FROM `comments` WHERE `id`='.$_POST['comment_delete']);
         $record = mysqli_query($db, $sql) or die(mysqli_error($db));
         echo $sql;
       }
@@ -207,12 +207,12 @@
   <title>Cebroad</title>
   <meta name="generator" content="Bootply" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href="/cebroad/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/cebroad/webroot/assets/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/cebroad/webroot/assets/font-awesome/css/font-awesome.css">
     <!--[if lt IE 9]>
       <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <link href="/cebroad/css/styles.css" rel="stylesheet">
+    <link href="/cebroad/webroot/assets/css/styles.css" rel="stylesheet">
 
   <script>
     $(document).ready(function(){

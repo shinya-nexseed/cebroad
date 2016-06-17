@@ -14,7 +14,7 @@
                               <h4><i class="fa fa-users" aria-hidden="true"></i><?php echo $cnt_paticipant['cnt']?>  <i class="fa fa-thumbs-o-up" aria-hidden="true"></i><?php echo $cnt_like['cnt']?></h4>
                                   
                               <p>
-                                <img src="/cebroad/images/<? echo $organizer['picture_path'];?>" class="img-circle pull-left">
+                                <img src="/cebroad/images/<? echo $organizer['profile_picture_path'];?>" class="img-circle pull-left">
                               </p>
 
 
@@ -68,7 +68,7 @@
                                   <p>Date:<?php echo $event['date']; ?></p>
                                   <p>Place:<?php echo $event['place_name']; ?></p>
                                   <p>
-                                    <img src="/cebroad/images/<? echo $organizer['picture_path'];?>" class="img-circle pull-left">
+                                    <img src="/cebroad/images/<? echo $organizer['profile_picture_path'];?>" class="img-circle pull-left">
                                   </p>
                                 </div>
                               </div>
@@ -80,7 +80,7 @@
                                     <p class="lead">Paticipants</p>
                                     <div class="list-group">
                                       <?php foreach($event_participants as $event_participant){ ?>
-                                        <img src=/cebroad/images/<? echo $event_participant['picture_path'];?> class="img-circle pull-left">
+                                        <img src="/cebroad/images/<? echo $event_participant['profile_picture_path'];?>" class="img-circle pull-left">
                                       <?php } ?>
                                     </div>
                                   </div>
@@ -111,13 +111,13 @@
                                       </form>
                                     </div>
                                     <?php foreach($comments as $comment){ ?>
-                                      <!-- <img src=/cebroad/images/<? //echo $comment['picture_path'];?> class="img-circle pull-left comment"> -->
+                                      <!-- <img src=/cebroad/images/<? //echo $comment['profile_picture_path'];?> class="img-circle pull-left comment"> -->
                                       <h5><?php echo $comment['nick_name']; ?></h5>
                                       <p><?php echo $comment['comment']; ?><p>
                                       <p class="navar-right"><?php echo $comment['created']; ?><p>
 
                                       <form name="delete" method="post" action="">
-                                        <input type="hidden" name="comment_delete" value="<?php echo $comment['comment_id'] ?>">
+                                        <input type="hidden" name="comment_delete" value="<?php echo $comment['id']; ?>">
                                         <p class="navar-right"><a href="javascript.delete.submit()">delete</a></p>
                                       </form>
                                     <?php } ?>
