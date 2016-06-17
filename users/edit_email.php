@@ -2,14 +2,14 @@
 //関数
   require('functions.php'); 
 
-//ログイン判定
-   //セッションにidが存在し、かつオンのtimeと3600秒足した値が現在時刻より小さい時に
-   //現在時刻より小さい時にログインしていると判定する
- //   if (isset($_SESSION['id']) && $_SESSION['time'] + 3600 > time()){
- //    //$_SESSIONに保存している時間更新
- //    //これがないとログインから１時間たったら再度ログインしないとindex.phpに入れなくなる。
- //    $_SESSION['time'] = time();
-	// }
+// ログイン判定
+//    セッションにidが存在し、かつオンのtimeと3600秒足した値が現在時刻より小さい時に
+//    現在時刻より小さい時にログインしていると判定する
+//    if (isset($_SESSION['id']) && $_SESSION['time'] + 3600 > time()){
+//     //$_SESSIONに保存している時間更新
+//     //これがないとログインから１時間たったら再度ログインしないとindex.phpに入れなくなる。
+//     $_SESSION['time'] = time();
+// 	}
 
 //ユーザー情報取得
   	$sql = sprintf('SELECT * FROM `users` WHERE `id`=%d', mysqli_real_escape_string($db, $_SESSION['id'])
@@ -17,38 +17,35 @@
     $record = mysqli_query($db, $sql) or die (mysqli_error($db));
     $user = mysqli_fetch_assoc($record); 
     
-
 //フォームからデータが送信された場合
     $error = Array();
     if(!empty($_POST)){
 	    //エラー項目の確認
+	    //Emailアドレスの空チェック
 	    if ($_POST['email'] == ''){
 	    	$error['email'] = 'blank';	
 	    }
 
+	    //正規表現チェック
     	if(!preg_match('/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/iD', $_POST['email'])){
     		$error['email'] = 'regex'; 
 		}
 
-		if(preg_match('/ /',$_POST['email'])){
-		  //$subjectのなかに半角スペースが含まれている場合
+		//$subjectのなかに半角スペースが含まれていないかチェック
+		if(preg_match('/ /',$_POST['email'])){ 
 			$error['email'] = 'space'; 
 		}
 
-		if(preg_match('/　/',$_POST['email'])){
-		  //$subjectのなかに全角スペースが含まれている場合
+		//$subjectのなかに全角スペースが含まれていないかチェック
+		if(preg_match('/　/',$_POST['email'])){ 
 			$error['email'] = 'capital_space';
 		}
 
+		//入力されたアドレスとDBのアドレスが一致するかチェック
     	if(sha1($_POST['password']) !== $user['password']){
         $error['password'] = 'incorrect'; 
     	}
 	}
-
-
-// var_dump($_POST);
-// var_dump($user);
-// var_dump(sha1($_POST['password']));
 
 //重複アカウントのチェック
 	if(!empty($_POST) && empty($error)){
@@ -66,25 +63,15 @@
 
 //エラーがなければ
 	if (!empty($_POST) && empty($error)){
-	    // //画像が選択されていれば
-	    if(!empty($fileName)){
-	        //画像のアップロード
-	        $picture = date('YmdHis').$_FILES['profile_picture_path']['name'];
-	    	move_uploaded_file($_FILES['profile_picture_path']['tmp_name'],'users/profile_pictures/'. $picture );
-	    } else {
-	     	$picture = $user['profile_picture_path'];
-		}
-
 	    //アップロード処理
 	    $sql = sprintf('UPDATE `users` SET `email`= "%s", modified = NOW() WHERE `id`=%d',
 	      mysqli_real_escape_string($db, $_POST['email']),
 	      mysqli_real_escape_string($db, $_SESSION['id'])
 	    );
-
+	    //SQL文実行
 		mysqli_query($db, $sql) or die(mysqli_error($db));
 		// header('Location:show');
 	}
-
 
 //hのショートカット
     function h($value){
@@ -97,77 +84,74 @@
     $record = mysqli_query($db, $sql) or die (mysqli_error($db));
     $user = mysqli_fetch_assoc($record); 
 
-// var_dump($user);
-
 ?>
 
+<!-- 以下application.php内で表示 -->
 <div class="container-fluid">
-     <div class="row">
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-3 col-md-offset-3 col-lg-offset-3 toppad" >   
-         	<!-- <div class="panel panel-info" id="panel-color"> -->
-            	<form method="post" action="" role="form" enctype="multipart/form-data">
-		            <div class="panel-body">
-		              	<div class="row">
-		              		<div class=" col-md-3 col-lg-3" align="center"> 
-		              			<img alt="User Pic" src="profile_pictures/<?php echo h($user['profile_picture_path']); ?>" class="img-circle img-responsive"><br>
-		              			<div class="list-group">
-									<a class="list-group-item" href="edit">Basic info.</a>
-									<a class="list-group-item" href="edit_password">Password</a>
-									<a class="list-group-item" href="edit_email">Email</a>
-								</div>
-		              		</div>
-			                <div class="col-sm-6 col-md-9 col-lg-9"> 
-			                  	<table class="table table-user-information">
-				                    <tbody>
-				                        <tr>
-					                        <td>Email:</td>
-					                        	<td><?php if(isset($user['email'])): ?>
-										            <input type="email" name="email" class="form-control" value="<?php echo h($user['email']); ?>">
-										            <?php else: ?>
-										            <input type="email" name="email" class="form-control" placeholder="例： kon@gmail.com" value="" ?>
-										            <?php endif; ?>
-										            <?php if(isset($error['email']) && $error['email'] == 'blank'): ?>
-		              									<p class="error">＊メールアドレスを入力してください</p>
-		          									<?php endif; ?>
-		          									<?php if(isset($error['email']) && $error['email'] == 'duplicate'): ?>
-									                	<p class="error">* 指定されたメールアドレスはすでに登録されています</p>
-									                <?php endif; ?>
-									                <?php if(isset($error['email']) && $error['email'] == 'regex'): ?>
-									                	<p class="error">* 正しいEmailアドレスを入力してください</p>
-									                <?php endif; ?>
-									                <?php if(isset($error['email']) && $error['email'] == 'space'): ?>
-									                	<p class="error">* Emailアドレスに「 」を入れないでください</p>
-									                <?php endif; ?>
-									                <?php if(isset($error['capital_space']) && $error['email'] == 'regex'): ?>
-									                	<p class="error">* Emailに「　」を入しないでください</p>
-									                <?php endif; ?>
-										        </td> 
-				                      	</tr>
-				                      	<rt>
-				                      		<td>Password:</td>
-						                      	<td>
-											            <input type="password" name="password" class="form-control" placeholder="" value="">
-											            <?php if(isset($error['password']) && $error['password'] == 'blank'): ?>
-											            	<p class="error">＊現在のパスワードを入力してください</p>
-											            <?php endif; ?>
-											            <?php if(isset($error['password']) && $error['password'] == 'incorrect'): ?>
-											            	<p class="error">＊登録されているパスワードと一致しません</p>
-											            <?php endif; ?>
-											    </td> 
-										</rt>
-				                      	<tr>
-				                      		<td>
-				                      			<br>
-				                      			<input type="submit" class="btn btn-mini" value="update" align="" onclick="gate();">
-				                      		</td>
-			                        	</tr>
-				                    </tbody>
-			                  	</table>			                 
-			                </div>
-		            	</div>
-	           		</div>
-	           	</form>
-	        <!-- </div> -->
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-9 col-xs-offset-0 col-sm-offset-0 col-md-offset-2 col-lg-offset-2 toppad"> 
+            <form method="post" action="" role="form" enctype="multipart/form-data">
+	            <div class="panel-body">
+	              	<div class="row">
+	              		<div class=" col-md-3 col-lg-3" align="center"> 
+	              			<img alt="User Pic" src="profile_pictures/<?php echo h($user['profile_picture_path']); ?>" class="img-responsive"><br>
+	              			<div class="list-group">
+								<a class="list-group-item" href="edit">Basic info.</a>
+								<a class="list-group-item" href="edit_password">Password</a>
+								<a class="list-group-item" href="edit_email">Email</a>
+							</div>
+	              		</div>
+		                <div class="col-sm-12 col-md-9 col-lg-9"> 
+		                  	<table class="table table-user-information">
+			                    <tbody>
+			                        <tr>
+				                        <td>Email:</td>
+			                        	<td><?php if(isset($user['email'])): ?>
+								            <input type="email" name="email" class="form-control" value="<?php echo h($user['email']); ?>">
+								            <?php else: ?>
+								            <input type="email" name="email" class="form-control" placeholder="例： kon@gmail.com" value="" ?>
+								            <?php endif; ?>
+								            <?php if(isset($error['email']) && $error['email'] == 'blank'): ?>
+              									<p class="error">＊Please input your email address</p>
+          									<?php endif; ?>
+          									<?php if(isset($error['email']) && $error['email'] == 'duplicate'): ?>
+							                	<p class="error">* The email address is already in use</p>
+							                <?php endif; ?>
+							                <?php if(isset($error['email']) && $error['email'] == 'regex'): ?>
+							                	<p class="error">* Your email address has an invalid email address format. Please correct and try again.</p>
+							                <?php endif; ?>
+							                <?php if(isset($error['email']) && $error['email'] == 'space'): ?>
+							                	<p class="error">* Your email address has an invalid email address format. Please correct and try again.</p>
+							                <?php endif; ?>
+							                <?php if(isset($error['capital_space']) && $error['email'] == 'regex'): ?>
+							                	<p class="error">* Your email address has an invalid email address format. Please correct and try again.</p>
+							                <?php endif; ?>
+								        </td> 
+			                      	</tr>
+			                      	<rt>
+			                      		<td>Password:</td>
+				                      	<td>
+									            <input type="password" name="password" class="form-control" placeholder="" value="">
+									            <?php if(isset($error['password']) && $error['password'] == 'blank'): ?>
+									            	<p class="error">＊Please input the current password</p>
+									            <?php endif; ?>
+									            <?php if(isset($error['password']) && $error['password'] == 'incorrect'): ?>
+									            	<p class="error">＊Please check that you've entered and confirmed your password</p>
+									            <?php endif; ?>
+									    </td> 
+									</rt>
+			                      	<tr>
+			                      		<td>
+			                      			<br>
+			                      			<input type="submit" class="btn btn-mini" value="update" align="" onclick="gate();">
+			                      		</td>
+		                        	</tr>
+			                    </tbody>
+		                  	</table>			                 
+		                </div>
+	            	</div>
+           		</div>
+	        </form>
     	</div>
 	</div>
 </div> 

@@ -2,21 +2,20 @@
 //関数
   require('functions.php'); 
 
-//ログイン判定
-   //セッションにidが存在し、かつオンのtimeと3600秒足した値が現在時刻より小さい時に
-   //現在時刻より小さい時にログインしていると判定する
- //   if (isset($_SESSION['id']) && $_SESSION['time'] + 3600 > time()){
- //    //$_SESSIONに保存している時間更新
- //    //これがないとログインから１時間たったら再度ログインしないとindex.phpに入れなくなる。
- //    $_SESSION['time'] = time();
-	// }
+// ログイン判定
+//    セッションにidが存在し、かつオンのtimeと3600秒足した値が現在時刻より小さい時に
+//    現在時刻より小さい時にログインしていると判定する
+//    if (isset($_SESSION['id']) && $_SESSION['time'] + 3600 > time()){
+//     //$_SESSIONに保存している時間更新
+//     //これがないとログインから１時間たったら再度ログインしないとindex.phpに入れなくなる。
+//     $_SESSION['time'] = time();
+// 	}
 
 //ユーザー情報取得
   	$sql = sprintf('SELECT * FROM `users` WHERE `id`=%d', mysqli_real_escape_string($db, $_SESSION['id'])
   		);
     $record = mysqli_query($db, $sql) or die (mysqli_error($db));
     $user = mysqli_fetch_assoc($record); 
-    
 
 //フォームからデータが送信された場合
     $error = Array();
@@ -29,59 +28,66 @@
 	    if ($_POST['gender'] == ''){
         $error['gender'] = 'blank';
     	}
-
-	    
 	}
-
-// var_dump($_POST);
-// var_dump($user);
-// // var_dump(sha1($_POST['password']));
 
 //画像ファイルが送信された場合
 	if(!empty($_FILES)){
 		$fileName = $_FILES['profile_picture_path']['name'];
-		    if (!empty($fileName)) {
-		      $ext = substr($fileName, -3);
-		      if ($ext != 'jpg' && $ext != 'gif' && $ext != 'png') {
-		        $error['profile_picture_path'] = 'type';
-		       }
-		    }
+	    if (!empty($fileName)) {
+	      $ext = substr($fileName, -3);
+	      if ($ext != 'jpg' && $ext != 'gif' && $ext != 'png') {
+	        $error['profile_picture_path'] = 'type';
+	       }
+	    }
 	}
 	
-
-
-//エラーがなければ
+//エラーがない場合
 	if (!empty($_POST) && empty($error)){
-	    // //画像が選択されていれば
-	    if(!empty($fileName)){
+		//画像が選択されていれば
+        if(!empty($fileName)){
 	        //画像のアップロード
 	        $picture = date('YmdHis').$_FILES['profile_picture_path']['name'];
-	    	move_uploaded_file($_FILES['profile_picture_path']['tmp_name'],'users/profile_pictures/'. $picture );
-	    } else {
-	     	$picture = $user['profile_picture_path'];
-		}
-
-	    //アップロード処理
-	    $sql = sprintf('UPDATE `users` SET `nick_name`="%s", `school_id`=%d, gender="%s", `profile_picture_path`="%s", `introduction`="%s", `birthday`="%s", `nationality_id`=%d, modified = NOW() WHERE `id`=%d',
-	      mysqli_real_escape_string($db, $_POST['nick_name']), 
-	      mysqli_real_escape_string($db, $_POST['school_id']),
-	      mysqli_real_escape_string($db, $_POST['gender']),
-	      mysqli_real_escape_string($db, $picture),
-	      mysqli_real_escape_string($db, $_POST['introduction']),
-	      mysqli_real_escape_string($db, $_POST['birthday']),
-	      mysqli_real_escape_string($db, $_POST['nationality_id']),
-	      mysqli_real_escape_string($db, $_SESSION['id'])
+	        move_uploaded_file($_FILES['profile_picture_path']['tmp_name'],'./users/profile_pictures/'.$picture);
+	        } else {
+	          $picture = $user['profile_picture_path'];
+        }
+	    //画像が選択されている場合のアップロード処理
+	    if(!empty($fileName)){
+		    $sql = sprintf('UPDATE `users` SET `nick_name`="%s", `school_id`=%d, gender="%s", `profile_picture_path`="%s", `introduction`="%s", `birthday`="%s", `nationality_id`=%d, modified = NOW() WHERE `id`=%d',
+			mysqli_real_escape_string($db, $_POST['nick_name']), 
+			mysqli_real_escape_string($db, $_POST['school_id']),
+			mysqli_real_escape_string($db, $_POST['gender']),
+			mysqli_real_escape_string($db, $picture),
+			mysqli_real_escape_string($db, $_POST['introduction']),
+			mysqli_real_escape_string($db, $_POST['birthday']),
+			mysqli_real_escape_string($db, $_POST['nationality_id']),
+			mysqli_real_escape_string($db, $_SESSION['id'])
 	    );
-
-		mysqli_query($db, $sql) or die(mysqli_error($db));
-		// header('Location:show');
+		    //SQL文実行
+			mysqli_query($db, $sql) or die(mysqli_error($db));
+			//Jcropの画面に遷移させる
+			header('Location:crop');
+		//画像が選択されていない場合のアップロード処理
+		}else{
+		    $sql = sprintf('UPDATE `users` SET `nick_name`="%s", `school_id`=%d, gender="%s",`introduction`="%s", `birthday`="%s", `nationality_id`=%d, modified = NOW() WHERE `id`=%d',
+			mysqli_real_escape_string($db, $_POST['nick_name']), 
+			mysqli_real_escape_string($db, $_POST['school_id']),
+			mysqli_real_escape_string($db, $_POST['gender']),
+			mysqli_real_escape_string($db, $_POST['introduction']),
+			mysqli_real_escape_string($db, $_POST['birthday']),
+			mysqli_real_escape_string($db, $_POST['nationality_id']),
+			mysqli_real_escape_string($db, $_SESSION['id'])
+		    );
+		    //SQL文実行
+			mysqli_query($db, $sql) or die(mysqli_error($db));
+			//ユーザー情報詳細表示ページへ遷移
+			header('Location:show');
+		}
 	}
 
-	
-
-
 //国籍情報取得
-    $sql = sprintf('SELECT * FROM `nationality` WHERE `nationality_id`=%d', mysqli_real_escape_string($db, $user['nationality_id'])
+    $sql = sprintf('SELECT * FROM `nationality` WHERE `nationality_id`=%d', 
+    	mysqli_real_escape_string($db, $user['nationality_id'])
       );
     $record = mysqli_query($db, $sql) or die (mysqli_error($db));
     $nationality_selected = mysqli_fetch_assoc($record); 
@@ -93,7 +99,8 @@
 
     
 //学校情報取得
-    $sql = sprintf('SELECT * FROM `schools` WHERE `id`=%d', mysqli_real_escape_string($db, $user['school_id'])
+    $sql = sprintf('SELECT * FROM `schools` WHERE `id`=%d', 
+    	mysqli_real_escape_string($db, $user['school_id'])
       );
     $record = mysqli_query($db, $sql) or die (mysqli_error($db));
     $school_selected = mysqli_fetch_assoc($record);    
@@ -109,27 +116,23 @@
     }
 
 //ユーザー情報取得
-  	$sql = sprintf('SELECT * FROM `users` WHERE `id`=%d', mysqli_real_escape_string($db, $_SESSION['id'])
+  	$sql = sprintf('SELECT * FROM `users` WHERE `id`=%d', 
+  		mysqli_real_escape_string($db, $_SESSION['id'])
   		);
     $record = mysqli_query($db, $sql) or die (mysqli_error($db));
     $user = mysqli_fetch_assoc($record); 
 
-// var_dump($user);
-
 ?>
 
+<!-- 以下application.php内で表示 -->
 <div class="container-fluid">
      <div class="row">
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-9 col-xs-offset-0 col-sm-offset-0 col-md-offset-2 col-lg-offset-2 toppad" >   
-         	<!-- <div class="panel panel-info" id="panel-color"> -->
-            	<!-- <div class="panel-heading" id="panel-color"> -->
-              		<!-- <h3 class="panel-title"><?php //echo h($user['nick_name']); ?></h3> -->
-            	<!-- </div> -->
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-9 col-xs-offset-0 col-sm-offset-0 col-md-offset-2 col-lg-offset-2 toppad">
         	<form method="post" action="" role="form" enctype="multipart/form-data">
 	            <div class="panel-body">
 	              	<div class="row">
 	              		<div class=" col-md-3 col-lg-3" align="center"> 
-	              			<img alt="User Pic" src="profile_pictures/<?php echo h($user['profile_picture_path']); ?>" class="img-circle img-responsive"><br>
+	              			<img alt="User Pic" src="profile_pictures/<?php echo h($user['profile_picture_path']); ?>" class="img-responsive"><br>	              			    
 	              			<div class="list-group">
 								<a class="list-group-item" href="edit">Basic info.</a>
 								<a class="list-group-item" href="edit_password">Password</a>
@@ -139,8 +142,8 @@
 		                <div class="col-sm-12 col-md-9 col-lg-9"> 
 		                  	<table class="table table-user-information">
 			                    <tbody>
-			                      <tr>
-			                        <td>Nick name:</td>
+				                    <tr>
+				                        <td>Nick name:</td>
 			                        	<td><?php if(isset($user['nick_name'])): ?>
 								              <input type="text" name="nick_name" class="form-control" value="<?php echo h($user['nick_name']); ?>">
 								              <?php else: ?>
@@ -150,9 +153,9 @@
 								                <p class="error">＊ニックネームを入力してください</p>
 								            <?php endif; ?>
 								        </td> 
-			                      </tr>
-			                      <tr>
-			                        <td>Gender:</td>
+				                    </tr>
+			                      　<tr>
+			                        	<td>Gender:</td>
 			                        	<td>
 			                        		<?php if(isset($user['gender'])): ?>
 								              <input type="radio" name="gender" value="male" <?php if($user['gender']== "male") echo "checked" ?>><label for="male">male</label>
@@ -165,10 +168,9 @@
 								                <p class="error">＊性別を入力してください</p>
 								            <?php endif; ?>
 			                        	</td>
-
-			                      </tr>
-			                      <tr>
-			                        <td>Birthday</td>
+			                      　</tr>
+			                      　<tr>
+			                        	<td>Birthday</td>
 				                        <td>
 				                        	<?php if(isset($user['birthday'])): ?>
 									              <input type="text" name="birthday" class="form-control" value="<?php echo h($user['birthday']); ?>">
@@ -176,8 +178,8 @@
 									              <input type="text" name="birthday" class="form-control" placeholder="例： 1986/09/01" value="" ?>
 									        <?php endif; ?>	
 				                        </td>
-			                      </tr>
-			                      <tr>
+			                      　</tr>
+			                      　<tr>
 			                        <td>Nationality</td>
 				                        <td>
 				                        	<select name="nationality_id">
@@ -190,7 +192,7 @@
 				                        		<?php endwhile; ?>
 				                        	</select>				              
 				                        </td>
-			                      </tr>
+			                      　</tr>
 			                        <tr>
 			                        <td>School name</td>
 				                        <td>
@@ -204,35 +206,29 @@
 											    <?php endwhile; ?>
 										    </select>
 				                        </td>
-			                      </tr>
-			                      <tr>
-			                        <td>Self-introduction</td>
+			                      　</tr>
+			                      　<tr>
+			                       		<td>Self-introduction</td>
 				                        <td>
 				                        	<?php if(isset($user['introduction'])): ?>
-								              	<textarea type="text" name="introduction" class="form-control" value="<?php echo h($user['introduction']); ?>"></textarea>
-								              <?php else: ?>
+								            	<textarea type="text" name="introduction" class="form-control"><?php echo h($user['introduction']); ?></textarea>
+								            <?php else: ?>
 								              	<textarea type="text" name="introduction" class="form-control" placeholder="例： Nice to meet you." value="" ?></textarea>
 								            <?php endif; ?>
 				                        </td>
-			                      </tr>
-			                      <tr>
-			                        <td>Picture</td>
-				                        <td>
-								             <input type="file" name="profile_picture_path" class="from-control">
-								             <?php if(isset($error['profile_picture_path']) && $error['profile_picture_path'] == 'type'): ?>
-							                	<p class="error">＊プロフィール写真は「.gif」「.jpg」「.png」の画像を指定してください</p>
-							                <?php endif; ?>
-							                <?php if(!empty($error)): ?>
-							                	<p class="error">＊画像を指定していた場合は、恐れ入りますが画像を改めて指定してください</p>
-							                <?php endif; ?>
-				                        </td>
-			                        </tr>
-			                        <tr>
-			                      		<td>
-			                      			<br>
-			                      			<input type="submit" class="btn btn-mini" value="update" align="">
-			                      		</td>
-			                        </tr>
+			                      　</tr>	
+			                     　 <tr>
+				                      	<td>Profile photo</td>
+				                      	<td>
+				                      		<input type="file" name="profile_picture_path" class="from-control">
+				                      	<td>
+			                      　</tr>		                      
+			                      　<tr>
+				                      	<td>
+				                      		<br>
+				                      		<input type="submit" class="btn btn-cebroad" value="update" align="">
+				                      	</td>
+			                      　</tr>
 			                    </tbody>
 		                  	</table>	
 		                </div>
