@@ -1,6 +1,6 @@
 <?php 
 
-	// $_SESSION['join']が存在しなければindex.phpに強制遷移させる
+	// $_SESSION['join']が存在しなければsignup.phpに強制遷移させる
   	if (!isset($_SESSION['join'])) {
    	header('Location: signup');
    	exit();
@@ -29,26 +29,49 @@ if (!empty($_POST)) {
     // ②sql文を実行する
     mysqli_query($db, $sql) or die(mysqli_error($db));
 
+    //ログイン処理
+    // ふたつのフォームに値は入力されていれば読まれる
+    if (!empty($_SESSION['join']['email']) && !empty($_SESSION['join']['password'])) {
+
+      // emailとパスワードが入力された値と一致するデータをSELECT文で取得
+      $sql = sprintf('SELECT * FROM users WHERE email="%s" AND password="%s"',
+        mysqli_real_escape_string($db, $_SESSION['join']['email']),
+        mysqli_real_escape_string($db, sha1($_SESSION['join']['password']))
+      );
+      // $recordにmysqli_query()関数を使用してデータを格納
+      $record = mysqli_query($db, $sql) or die(mysqli_error($db));
+
+      // SELECT文で取得したデータが存在するかどうかで条件分岐している
+      if ($table = mysqli_fetch_assoc($record)) {
+        // データが存在したとき (ログイン成功の処理)
+        // 次のページでログイン判定をするために使用するidをSESSIONで管理
+        $_SESSION['id'] = $table['id'];
+        $_SESSION['time'] = time();
+
+        // ログイン情報を記録する
+        // if ($_POST['save'] == 'on') {
+        //   // クッキーは、setcookie()関数を使用して、
+        //   // 保持する値と保持したい期間を引数に与える。
+        //   setcookie('email', $_POST['email'], time() + 60*60*24*14);
+        //   setcookie('password', $_POST['password'], time() + 60*60*24*14);
+        //   }
+
 
     // ③実行時に取得したデータを処理する (SELECTの場合のみ)
+        var_dump($_SESSION['join']);
+        echo $_SESSION['id'];
     unset($_SESSION['join']);
     header('Location: thanks');
     exit();
- }
+      }
+    }
+  }
 
   //htmlspecialcharsのショートカット
   function h($value){
     return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
   }
 ?>
-    <!-- Bootstrap -->
-    <link href="../webroot/assets/css/bootstrap.css" rel="stylesheet">
-    <link href="../webroot/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
-    <link href="../webroot/assets/css/form.css" rel="stylesheet">
-    <link href="../webroot/assets/css/timeline.css" rel="stylesheet">
-    <link href="../webroot/assets/css/signup.css" rel="stylesheet">
-    <link href="../webroot/assets/css/main.css" rel="stylesheet">
-  
       <div class="container">
           <div class="row">
             <div class="col-md-6 col-md-offset-3">
@@ -87,7 +110,7 @@ if (!empty($_POST)) {
                         <div class="row">
                           <div class="col-sm-6 col-sm-offset-3">
                             <form method="post">
-                      	       <input type="submit" class="btn btn-info" name="check-submit" id="check-submit" tabindex="4" class="form-control btn btn-check" value="Register">
+                      	       <input type="submit" name="check-submit" id="check-submit" tabindex="4" class="form-control btn btn-register" value="Register">
                             </form>
                           </div>
                         </div>
