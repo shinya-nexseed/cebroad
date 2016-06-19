@@ -1,3 +1,32 @@
+.comment{
+    margin-top: 10px;
+    margin-bottom: 30px;
+    margin-left: 85px;
+    margin-right: 20px;
+}
+
+.delete{
+    float:right;
+}
+
+#navbar-form {
+    width: auto;
+    padding-top: 0px;
+    padding-bottom: 0;
+    margin-top: 20px;
+    margin-right: 0;
+    margin-left: 0;
+    border: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+#navbar-right {
+    float: right!important;
+}
+
+.n
+
 #Demo1 img{
     width: auto;
     height: 300px;
@@ -137,7 +166,7 @@ hr {
 }
 
 #main .img-circle {
-   margin-top:18px;
+   margin-top:0px;
    height:70px;
    width:70px;
 }
@@ -164,8 +193,8 @@ hr {
   color:#ffffff;
   height:28px;
   width:28px;
-  margin:9px;
-  margin-right:2px;
+  margin:20px;
+  margin-right:15px;
   margin-left:15px;
   font-size:20px;
   font-weight:700;

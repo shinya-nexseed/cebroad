@@ -112,17 +112,20 @@
         </div>
         <?php foreach($comments as $comment){ ?>
         <!-- <img src=/cebroad/images/<? //echo $comment['profile_picture_path'];?> class="img-circle pull-left comment"> -->
-        <h5><?php echo $comment['nick_name']; ?></h5>
-        <p><?php echo $comment['comment']; ?><p>
-          <p class="navar-right"><?php echo $comment['created']; ?><p>
-
-            <form name="delete" method="post" action="">
+        <img src="/cebroad/images/<? echo $coment['profile_picture_path'];?>" class="img-circle pull-left">
+          <div class="comment">
+            <h5><?php echo $comment['nick_name']; ?></h5>
+            <p><?php echo $comment['comment']; ?></p>
+            <p><?php echo $comment['created'];?></p>
+            <form class="comment" name="delete" method="post" action="">
               <input type="hidden" name="comment_delete" value="<?php echo $comment['id']; ?>">
-              <p class="navar-right"><a href="javascript.delete.submit()">delete</a></p>
+              <a class="delete" href="javascript.delete.submit()"><i class="fa fa-trash" aria-hidden="true"></i></a>
             </form>
-            <?php } ?>
+            <hr>
           </div>
-        </div>
+        <?php } ?>
       </div>
-    </div><!-- /row -->
+    </div>
+  </div>
+</div><!-- /row -->
 <!-- </div>/col-9 -->
