@@ -26,8 +26,44 @@
     //実行結果として得られたデータを取得
     if($categories==false){
       break;
+      }
     }
-  }
+
+  //ログインしているユーザーが作成したイベントの表示用にデータを取得
+  $sql=sprintf('SELECT *FROM `events` WHERE `organizer_id`='.$_SESSION['id'].' ORDER BY `date` DESC');
+
+  $record=mysqli_query($db, $sql)or die(mysqli_error($db));
+
+  $event_users_makes=array();
+
+  while($event_users_makes[]=mysqli_fetch_assoc($record)){
+    //実行結果として得られたデータを取得
+    if($event_users_makes==false){
+      break;
+      }
+    }
+
+
+  //ログインしているユーザーが参加するイベントの表示用にデータを取得
+  $sql=sprintf('SELECT *FROM `events` 
+    INNER JOIN `participants` ON events.id=participants.event_id
+    WHERE participants.user_id='.$_SESSION['id'].
+    ' ORDER BY `date` DESC'
+    );
+
+  $record=mysqli_query($db, $sql)or die(mysqli_error($db));
+
+  $event_users_parts=array();
+
+  while($event_users_parts[]=mysqli_fetch_assoc($record)){
+    //実行結果として得られたデータを取得
+    if($event_users_parts==false){
+      break;
+      }
+    }
+
+
+
 
 
     if(!empty($id)){//events/showを読み込んで$idがあった場合
@@ -60,7 +96,7 @@
       }
 
       //対象イベントに対するコメントを取得
-      $sql=sprintf('SELECT *FROM `comments` JOIN `users` ON `user_id`=users.id WHERE event_id='.$id);
+      $sql=sprintf('SELECT *FROM `comments` JOIN `users` ON `user_id`=users.id WHERE event_id='.$id.' ORDER BY comments.created DESC');
 
       $record=mysqli_query($db, $sql)or die(mysqli_error($db));
       
@@ -239,12 +275,21 @@
                 <div class="column col-sm-12 col-xs-12" id="main">
                     
                     <!-- top nav -->
-                    <div class="navbar navbar-blue navbar-static-top">  
+                    <div class="navbar navbar-blue navbar-fixed-top">  
                       <a href="/cebroad/events/index" class="navbar-brand logo">C</a>
                         <ul style="list-style:none;" class="hidden-xs">
-                          <li style="display:inline-block" class="navbar-form navbar-left">
+                          <li style="display:inline-block; float:left;" class="navbar-form navbar-left">
+                            <div class="input-group input-group-sm" style="max-width:600px;">
                             <form method="get">
-                                <div class="input-group input-group-sm" style="max-width:300px;">
+                                <select class="form-control" name="srch-term-categories" class="form-control" >
+                                    <option value="0" selected>Select Category</option>
+                                    <?php
+                                      foreach ($categories as $category) {
+                                        echo '<option value="'.$category['id'].'">'.$category['name'].'</option>';
+                                      }
+                                        
+                                     ?>
+                                  </select>
                                   <input type="text" class="form-control" placeholder="Search Events as Title" name="srch-word" id="srch-term">
                                   <div class="input-group-btn">
                                     <button class="btn btn-default" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
@@ -253,34 +298,12 @@
                             </form>
                           </li>
 
-
-
-                          <li style="display:inline-block;" class="navbar-form navbar-left">
-                            <form method="get">
-                                <div class="input-group input-group-sm" style="max-width:200px;">
-                                  <select class="form-control" name="srch-term-categories" class="form-control" >
-                                    <option value="0" selected>Select Category</option>
-                                    <?php
-                                      foreach ($categories as $category) {
-                                        echo '<option value="'.$category['id'].'">'.$category['name'].'</option>';
-                                      }
-                                        
-                                     ?>
-            
-                                  </select>
-                                  <div class="input-group-btn">
-                                    <button class="btn btn-default" type="submit" name="srch-category"><i class="fa fa-search" aria-hidden="true"></i></button>
-                                  </div>
-                                </div>
-                            </form>
-                          </li>
-
-                          <li style="display:inline-block" class="navbar-form navbar-right">
+                          <li style="display:inline-block; float:left;" class="navbar-form navbar-right">
                             <a href="/cebroad/logout"><span class="badge">SignOut</span></a>
                           </li>
 
 
-                            <li style="display:inline-block;" class="navbar-form navbar-right">
+                            <li style="display:inline-block; float:left;" class="navbar-form navbar-right">
                               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="badge"><i class="fa fa-bell-o fa-2x" aria-hidden="true"></i></span></a>
                                 <ul class="dropdown-menu">
                                           <li>
@@ -311,7 +334,7 @@
                               <ul class="nav navbar-right">
                                 <li class="dropdown menu">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                      <img src="/cebroad/images/<?php echo $member['picture_path']; ?>" class="img-responsive" style="height:100%; width:30px;" alt="">
+                                      <img src="/cebroad/webroot/assets/images/<?php echo $member['profile_picture_path']; ?>" class="img-responsive img-circle" style="height:auto; width:30px;" alt="">
                                     </a>
                                     <ul class="dropdown-menu"　style="word-wrap: break-word;">
                                         <li>
@@ -319,7 +342,7 @@
                                                 <div class="row">
                                                     <div class="col-lg-4">
                                                         <p class="text-center">
-                                                            <img src="../images/01.jpg" class="img-responsive" style="height:100%; width:100px;" alt="">
+                                                            <img src="../images/01.jpg" class="img-responsive" style="height:auto; width:150px;" alt="">
                                                         </p>
                                                     </div>
                                                     <div class="col-lg-8" style="color:#c0c0c0">
@@ -352,10 +375,10 @@
 
                           <div class="visible-xs">
                             <!-- <li style="display:inline-block;"> -->
-                              <ul class="nav navbar-nav">
-                                <li class="dropdown navbar-right" style="display:inline-block;">
+                              <ul class="nav navbar-nav navbar-form navbar-right">
+                                <li class="dropdown" style="display:inline-block;">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"  class="navbar-right">
-                                      <img src="/cebroad/images/01.jpg" class="img-responsive" style="height:100%; width:30px;" alt="">
+                                      <img src="/cebroad/webroot/assets/images/01.jpg" class="img-responsive" style="height:100%; width:30px;" alt="">
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li>
@@ -437,43 +460,56 @@
                             <div class="profile-sidebar">
                               <!-- SIDEBAR USERPIC -->
                               <div class="profile-userpic">
-                                <img src="/cebroad/images/<?php echo $member['picture_path']; ?>" class="img-responsive" style="width:130px; height:100%;" alt=""><br>
+                                <img src="/cebroad/webroot/assets/images/<?php echo $member['profile_picture_path']; ?>" class="img-responsive" alt=""><br>
                               </div>
                               <!-- END SIDEBAR USERPIC -->
 
                               <!-- SIDEBAR BUTTONS -->
-                              <div class="profile-userbuttons">
                                 <a href="/cebroad/users/edit"><button type="button" class="btn btn-success btn-sm">User Edit</button></a>
                                 <a href="/cebroad/events/add"><button type="button" class="btn btn-primary btn-sm">Make Event</button></a>
                                 <br>
                                 <br>
+                              
+                              <div class="profile-event">
+                              <div class="panel panel-default">
+                                <!-- <div class="panel-heading"><a href="#" class="pull-right"></a> <h4>Bootstrap Examples</h4></div> -->
+                                  <div class="panel-body">
+                                    <p class="lead">You created</p>
+                                    <div class="list-group">
+                                      <?php foreach($event_users_makes as $event_users_make){ ?>
+                                        <p>
+                                        <?php
+                                        $date = substr($event_users_make['date'],5,5);
+                                        echo $date;
+                                        echo '：';
+                                        ?>
+                                        <a href="/cebroad/events/show/<?php echo $event_users_make['id']?>"><?php  echo $event_users_make['event_name'];?></a></p>
+                                      <?php } ?>
+                                    </div>
+                                  </div>
                               </div>
-                              <!-- END SIDEBAR BUTTONS -->
-                              <!-- SIDEBAR MENU -->
-                              <div class="profile-usermenu">
-                                <ul class="nav">
-                                  <li class="active">
-                                    <i class="glyphicon glyphicon-home"></i>
-                                    NAME:<br><?php echo h($member['nick_name']);?><br>
-                                  </li>
-                                  <li>
 
-                                    <i class="glyphicon glyphicon-user"></i>
-                                    BIRTH:<br><?php echo h($member['birthday']);?><br>
-                                  </li>
-                                  <li>
-                                    <i class="glyphicon glyphicon-ok"></i>
-                                    SCHOOL:<br><?php echo h($member['school_name']);?><br>
-                                  </li>
-                                  <li>
-                                    <i class="glyphicon glyphicon-flag"></i>
-                                    INTRODUCTION:<br><?php echo h($member['introduction']);?><br>
-                                  </li>
-                                </ul>
+                              <div class="panel panel-default">
+                                <!-- <div class="panel-heading"> profile-event<a href="#" class="pull-right"></a> <h4>Bootstrap Examples</h4></div> -->
+                                  <div class="panel-body">
+                                    <p class="lead">You are going</p>
+                                    <div class="list-group">
+                                      <?php foreach($event_users_parts as $event_users_part){ ?>
+                                        <p>
+                                        <?php
+                                        $date = substr($event_users_part['date'],5,5);
+                                        echo $date;
+                                        echo '：';
+                                        ?>
+                                        <a href="/cebroad/events/show/<?php echo $event_users_part['id']?>">
+                                        <?php echo $event_users_part['event_name'];?></a></p>
+                                      <?php } ?>
+                                    </div>
+                                  </div>
                               </div>
-                              <!-- END MENU -->
                             </div>
-                            
+                          </div>
+                          <!-- END SIDEBAR BUTTONS -->
                           </div>
                           <!-- /sidebar -->
                           
