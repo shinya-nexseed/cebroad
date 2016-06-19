@@ -4,10 +4,10 @@
 <div class="row">
 
   <!-- イベントメイン写真 -->
-  <div class="col-sm-12">
+  <div class="col-sm-10">
     <div class="panel panel-default">
       <!-- <div class="panel-thumbnail"> -->
-      <p class="text"><img src="/cebroad/webroot/assets/images/mali.jpg" class="topimg img-responsive " width="100%" height="50%"></p>
+      <img src="/cebroad/webroot/assets/images/mali.jpg" class="img-responsive" height="600">
       <!-- </div> -->
       <div class="panel-body">
         <p class="lead"><?php echo $event['event_name']; ?></p>
@@ -59,7 +59,7 @@
   <!-- </div> -->
   <!-- main col left -->
   <!-- <div calss="row"> -->
-  <div class="col-sm-4 col-sm-push-8">
+  <div class="col-sm-3 col-sm-push-7">
 
     <div class="panel panel-default">
       <!-- <div class="panel-thumbnail"></div> -->
@@ -88,7 +88,7 @@
   </div>
 
   <!-- main col right -->
-  <div class="col-sm-8 col-sm-pull-4" >
+  <div class="col-sm-7 col-sm-pull-3" >
     <div class="panel-detail">
       <div class="panel panel-default">
         <div class="panel-heading"><a href="#" class="pull-right">View all</a> <h4>Event details</h4></div>
