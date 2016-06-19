@@ -73,10 +73,10 @@
 		// header('Location:show');
 	}
 
-//hのショートカット
-    function h($value){
-      return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
-    }
+// //hのショートカット
+//     function h($value){
+//       return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+//     }
 
 //ユーザー情報取得
   	$sql = sprintf('SELECT * FROM `users` WHERE `id`=%d', mysqli_real_escape_string($db, $_SESSION['id'])

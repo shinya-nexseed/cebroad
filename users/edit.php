@@ -110,10 +110,10 @@
       );
     $schools = mysqli_query($db, $sql) or die (mysqli_error($db));
 
-//hのショートカット
-    function h($value){
-      return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
-    }
+// //hのショートカット
+//     function h($value){
+//       return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+//     }
 
 //ユーザー情報取得
   	$sql = sprintf('SELECT * FROM `users` WHERE `id`=%d', 
