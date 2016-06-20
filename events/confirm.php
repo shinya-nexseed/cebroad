@@ -23,7 +23,8 @@
  	$name2 = dirname(__FILE__).'/events_pictures/'.sha1(mt_rand() . microtime()).'.'.$a['pic2']['ext'];
  	$decoded2 = $a['pic2']['content'];
  	file_put_contents($name2, $decoded2, LOCK_EX);
- 	$a['pic2_path'] = $name2;
+ 	$path2 = mb_substr($name2, strpos($name2, 'cebroad')-1);
+ 	$a['pic2_path'] = $path2;
  		
  	} else if ($a['pic2']['error'] === 4) {
  		$$a['pic2_path'] = '';
@@ -33,7 +34,8 @@
  	$name3 = dirname(__FILE__).'/events_pictures/'.sha1(mt_rand() . microtime()).'.'.$a['pic3']['ext'];
  	$decoded3 = $a['pic3']['content'];
  	file_put_contents($name3, $decoded3, LOCK_EX);
- 	$a['pic3_path'] = $name3;
+ 	$path3 = mb_substr($name3, strpos($name3, 'cebroad')-1);
+ 	$a['pic3_path'] = $path3;
  		
  	} else if ($a['pic3']['error'] === 4) {
  		$a['pic3_path'] = '';

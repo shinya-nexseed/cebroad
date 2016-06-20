@@ -207,7 +207,7 @@ var_dump($errors);
         </div>
 
         <div class="col-sm-8 col-md-8">
-            <h1>Create a new event</h1>
+            <h1>Edit the event</h1>
             <h3 class="cebroad-pink">Red items are necessarily required</h3>
         </div>
 
