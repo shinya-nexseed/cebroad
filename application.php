@@ -35,6 +35,8 @@ if ( !function_exists('mime_content_type') ) {
       <a href="/cebroad/index">Go to the top page</a>
     <?php endif; ?>
 
+    ?>
+
 
 
 </body>

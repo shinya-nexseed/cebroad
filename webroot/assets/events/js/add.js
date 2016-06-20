@@ -68,7 +68,7 @@ $('.form-control').change(function() {
     if (       $('#title').val()         !=='' 
             && $('#date').val()          !=='' 
             && $('#starting_time').val() !=='' 
-            && $('#detail').val()       !==''
+            && $('#detail').val()        !==''
             && $('#place_name').val()    !==''
             && $('#lat').val()           !==''
             && $('#lng').val()           !=='') 

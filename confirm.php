@@ -1,25 +1,21 @@
 <?php 
- if (empty($_SESSION['events'])) {
- 	header('Location: /cebroad/events/index');
- }
  if (isset($_POST['submit'])) {
  	$a = array();
  	$a = $_SESSION['events'];
 
  	if($a['pic1']['error'] === 0) {
- 	$name1 = dirname(__FILE__).'/events_pictures/'.sha1(mt_rand() . microtime()).'.'.$a['pic1']['ext'];
- 	$decoded1 = $a['pic1']['content'];
+ 	$name1 = '/cebroad/events/events_pictures/'.sha1(mt_rand() . microtime()).'.'.$a['pic1']['ext'];
+ 	$decoded1 = base64_decode($a['pic1']['file']);
  	file_put_contents($name1, $decoded1, LOCK_EX);
- 	$path1 = mb_substr($name1, strpos($name1, 'cebroad')-1);
- 	$a['pic1_path'] = $path1;
+ 	$a['pic1_path'] = $name1;
  		
  	} else if ($a['pic1']['error'] === 4) {
  		$a['pic1_path'] = '';
  	}
 
  	if($a['pic2']['error'] === 0) {
- 	$name2 = dirname(__FILE__).'/events_pictures/'.sha1(mt_rand() . microtime()).'.'.$a['pic2']['ext'];
- 	$decoded2 = $a['pic2']['content'];
+ 	$name2 = '/cebroad/events/events_pictures/'.sha1(mt_rand() . microtime()).'.'.$a['pic2']['ext'];
+ 	$decoded2 = base64_decode($a['pic2']['file']);
  	file_put_contents($name2, $decoded2, LOCK_EX);
  	$a['pic2_path'] = $name2;
  		
@@ -28,8 +24,8 @@
  	}
 
  	if($a['pic3']['error'] === 0) {
- 	$name3 = dirname(__FILE__).'/events_pictures/'.sha1(mt_rand() . microtime()).'.'.$a['pic3']['ext'];
- 	$decoded3 = $a['pic3']['content'];
+ 	$name3 = '/cebroad/events/events_pictures/'.sha1(mt_rand() . microtime()).'.'.$a['pic3']['ext'];
+ 	$decoded3 = base64_decode($a['pic3']['file']);
  	file_put_contents($name3, $decoded3, LOCK_EX);
  	$a['pic3_path'] = $name3;
  		
@@ -60,7 +56,6 @@ $sql = sprintf("INSERT INTO events SET title='%s', detail='%s', date='%s', start
 	mysqli_real_escape_string($db, $_SESSION['id'])
 	);
 	mysqli_query($db, $sql) or die('Sorry, something wrong happened. Please try again.');
-	unset($_SESSION['events']);
 
 	//本来は自分の作ったイベント一覧のページに飛ばすが、一時的にindexにしている
 	header('Location:/cebroad/events/index');
@@ -117,7 +112,7 @@ if ($_SESSION['events']['pic3']['error'] === 0) {
 			<p>Detail:<?=h($_SESSION['events']['detail'])?></p>
 			<label>Map</label>
 			<br>
-			<img class="img-responsive events-pad" src="https://maps.googleapis.com/maps/api/staticmap?center=<?=h($lat)?>%2C<?=h($lng)?>&zoom=16&size=1000x600&key=AIzaSyDf24saS_c-qe8Qy4QPgVbTub1sJi02ov8&markers=<?=h($lat)?>%2C<?=h($lng)?>">
+			<img class="img-responsive events-pad" src="https://maps.googleapis.com/maps/api/staticmap?center=<?=h($lat)?>%2C<?=h($lng)?>&zoom=16&size=750x602&key=AIzaSyDf24saS_c-qe8Qy4QPgVbTub1sJi02ov8&markers=<?=h($lat)?>%2C<?=h($lng)?>">
 
 			<?=$pic1?>
 			<?=$pic2?>
