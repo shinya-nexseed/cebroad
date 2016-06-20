@@ -22,11 +22,9 @@
 
     $categories=array();
 
-    while($categories[]=mysqli_fetch_assoc($record)){
+    while($result=mysqli_fetch_assoc($record)){
     //実行結果として得られたデータを取得
-    if($categories==false){
-      break;
-      }
+      $categories[]=$result;
     }
 
   //ログインしているユーザーが作成したイベントの表示用にデータを取得
@@ -36,11 +34,9 @@
 
   $event_users_makes=array();
 
-  while($event_users_makes[]=mysqli_fetch_assoc($record)){
+  while($result=mysqli_fetch_assoc($record)){
     //実行結果として得られたデータを取得
-    if($event_users_makes==false){
-      break;
-      }
+    $event_users_makes[]=$result;
     }
 
 
@@ -55,178 +51,11 @@
 
   $event_users_parts=array();
 
-  while($event_users_parts[]=mysqli_fetch_assoc($record)){
+  while($result=mysqli_fetch_assoc($record)){
     //実行結果として得られたデータを取得
-    if($event_users_parts==false){
-      break;
-      }
+    $event_users_parts[]=$result;
     }
 
-
-
-
-
-    if(!empty($id)){//events/showを読み込んで$idがあった場合
-      //対象IDのイベントデータを取得
-      $sql=sprintf('SELECT * FROM `events` JOIN `event_categories` ON events.event_category_id=event_categories.id WHERE events.id='.$id);
-      $record=mysqli_query($db, $sql)or die(mysqli_error($db));
-      $event=mysqli_fetch_assoc($record);
-
-
-      //対象IDのイベントデータを取得
-      $sql=sprintf('SELECT * FROM `users` WHERE `id`='.$event['organizer_id']);
-      $record=mysqli_query($db, $sql)or die(mysqli_error($db));
-      $organizer=mysqli_fetch_assoc($record);
-
-
-      //対象イベントの参加者情報を取得
-      $sql=sprintf('SELECT * FROM `users` JOIN `participants` ON `id`=participants.user_id WHERE participants.event_id='.$id);
-
-
-
-      $record=mysqli_query($db, $sql)or die(mysqli_error($db));
-      
-      $event_participants=array();
-
-      while($event_participants[]=mysqli_fetch_assoc($record)){
-        //実行結果として得られたデータを取得
-        if($event_participants==false){
-          break;
-        }
-      }
-
-      //対象イベントに対するコメントを取得
-      $sql=sprintf('SELECT *FROM `comments` JOIN `users` ON `user_id`=users.id WHERE event_id='.$id.' ORDER BY comments.created DESC');
-
-      $record=mysqli_query($db, $sql)or die(mysqli_error($db));
-      
-      $comments=array();
-
-      while($comments[]=mysqli_fetch_assoc($record)){
-        //実行結果として得られたデータを取得
-        if($comments==false){
-          break;
-        }
-      }
-
-
-      //対象のイベントIDのいいねを押している数を取得する
-        $sql = sprintf('SELECT COUNT(*) AS cnt FROM likes WHERE event_id=%d',
-        $id
-        );
-
-        $record = mysqli_query($db, $sql) or die(mysqli_error($db));
-        $cnt_like = mysqli_fetch_assoc($record);
-
-
-      //対象のイベントIDの参加ボタンを押している数を取得する
-        $sql = sprintf('SELECT COUNT(*) AS cnt FROM participants WHERE event_id=%d',
-          $id
-          );
-
-
-        $record = mysqli_query($db, $sql) or die(mysqli_error($db));
-        $cnt_paticipant = mysqli_fetch_assoc($record);
-
-
-
-     //すでにいいねされているかどうかを判定(いいねボタン中間テーブルのON/OFF、ボタンの色の切り替え用)
-        $sql = sprintf('SELECT COUNT(*) AS cnt FROM likes WHERE user_id=%d AND event_id=%d',
-        $_SESSION['id'],
-        $id
-        );
-
-
-
-        $record = mysqli_query($db, $sql) or die(mysqli_error($db));
-        $table_like = mysqli_fetch_assoc($record);
-
-
-      //すでに参加ボタンを押しているかどうかを判定(参加ボタンのON/OFF中間テーブルのON/OFF、ボタンの色の切り替え用)
-        $sql = sprintf('SELECT COUNT(*) AS cnt FROM participants WHERE user_id=%d AND event_id=%d',
-          $_SESSION['id'],
-          $id
-          );
-
-        $record = mysqli_query($db, $sql) or die(mysqli_error($db));
-        $table_paticipant = mysqli_fetch_assoc($record);
-
-
-      //いいねデータ更新
-      if(isset($_POST['like'])){
-        if($table_like['cnt']>0){//すでにデータが存在している場合
-          $sql_like = sprintf('DELETE FROM `likes` WHERE user_id=%d AND event_id=%d',
-          $_SESSION['id'],
-          $id
-          );
-
-          $record=mysqli_query($db, $sql_like)or die(mysqli_error($db));
-        }
-        else{//データが存在しない場合
-          $sql_like=sprintf('INSERT INTO `likes`(`user_id`, `event_id`) VALUES('.$_SESSION['id'].','.$id.')');
-          $record=mysqli_query($db, $sql_like)or die(mysqli_error($db));
-          }
-
-          $sql = sprintf('SELECT COUNT(*) AS cnt FROM likes WHERE user_id=%d AND event_id=%d',
-        $_SESSION['id'],
-        $id
-        );
-
-
-
-        $record = mysqli_query($db, $sql) or die(mysqli_error($db));
-        $table_like = mysqli_fetch_assoc($record);
-          header('Location: /cebroad/'.$resource.'/'.$action.'/'.$id);
-     
-      }
-       else if(isset($_POST['paticipant'])){
-      
-        if($table_paticipant['cnt']>0){//すでにデータが存在している場合
-          $sql = sprintf('DELETE FROM `participants` WHERE user_id=%d AND event_id=%d',
-          $_SESSION['id'],
-          $id
-          );
-          $record=mysqli_query($db, $sql)or die(mysqli_error($db));
-
-
-        }
-        else{//データが存在しない場合
-          $sql=sprintf('INSERT INTO `participants`(`user_id`, `event_id`) VALUES('.$_SESSION['id'].','.$id.')');
-          $record=mysqli_query($db, $sql)or die(mysqli_error($db));
-          }
-
-          $sql = sprintf('SELECT COUNT(*) AS cnt FROM participants WHERE user_id=%d AND event_id=%d',
-          $_SESSION['id'],
-          $id
-          );
-
-
-        $record = mysqli_query($db, $sql) or die(mysqli_error($db));
-        $table_paticipant = mysqli_fetch_assoc($record);
-
-          header('Location: /cebroad/'.$resource.'/'.$action.'/'.$id);
-      }
-
-      //commentが送信された場合
-      if(isset($_POST['comment'])){
-        //コメントを保存
-        $sql = sprintf('INSERT INTO `comments`(`event_id`, `user_id`, `comment`, `delete_flag`, `created`) VALUES (%d,%d,"%s",0,now())',
-          $id,
-          $_SESSION['id'],
-          $_POST['comment']
-          );
-        $record = mysqli_query($db, $sql) or die(mysqli_error($db));
-      }
-
-      if(isset($_POST['comment_delete'])){
-        //コメントを保存
-        $sql = sprintf('DELETE FROM `comments` WHERE `id`='.$_POST['comment_delete']);
-        $record = mysqli_query($db, $sql) or die(mysqli_error($db));
-        echo $sql;
-      }
-  }
-
- 
   }else{
     //ログインしていない場合の処理
     header('Location: ../login');
@@ -334,7 +163,7 @@
                               <ul class="nav navbar-right">
                                 <li class="dropdown menu">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                      <img src="/cebroad/webroot/assets/images/<?php echo $member['profile_picture_path']; ?>" class="img-responsive img-circle" style="height:auto; width:30px;" alt="">
+                                      <img src="/cebroad/users/profile_pictures/<?php echo $member['profile_picture_path']; ?>" class="img-responsive img-circle" style="height:auto; width:30px;" alt="">
                                     </a>
                                     <ul class="dropdown-menu"　style="word-wrap: break-word;">
                                         <li>
@@ -347,7 +176,6 @@
                                                     </div>
                                                     <div class="col-lg-8" style="color:#c0c0c0">
                                                         <p class="text-left"><strong><?php echo h($member['nick_name']);?></strong></p>
-                                                        <p cl_pathass="text-left small"><?php echo h($member['email']);?></p>   
                                                     </div>
                                                 </div>
                                             </div>
@@ -378,7 +206,7 @@
                               <ul class="nav navbar-nav navbar-form navbar-right">
                                 <li class="dropdown" style="display:inline-block;">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"  class="navbar-right">
-                                      <img src="/cebroad/webroot/assets/images/01.jpg" class="img-responsive" style="height:100%; width:30px;" alt="">
+                                      <img src="/cebroad/users/profile_pictures/01.jpg" class="img-responsive" style="height:100%; width:30px;" alt="">
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li>
@@ -418,8 +246,7 @@
                                                         </p>
                                                     </div>
                                                     <div class="col-lg-8" style="color:#c0c0c0">
-                                                        <p class="text-left"><strong><?php echo h($member['nick_name']);?></strong></p>
-                                                        <p class="text-left small"><?php echo h($member['email']);?></p>   
+                                                        <p class="text-left"><strong><?php echo h($member['nick_name']);?></strong></p>  
                                                     </div>
                                                 </div>
                                             </div>
@@ -517,8 +344,17 @@
                         <div class="column col-sm-10">
                           <div class="row">
                             <?php
-                              require($resource.'/'.$action.'.php');
-                            ?>     
+                              // require($resource.'/'.$action.'.php');
+                            ?> 
+                            <?php
+                              $url = dirname(__FILE__).'/'.$resource.'/'.$action.'.php';
+                              if (@file_get_contents($url) !== false):?>
+                                <?php require($url); ?>
+                                <?php else: ?>
+                                  <h1>Sorry, we couldn't find that page.</h1>
+                                  <a href="/cebroad/events/index">Go to the top page</a>
+                                <?php endif; ?>
+                                
                           </div>
                         </div><!-- /col-9 -->
                     </div><!-- padding -->
