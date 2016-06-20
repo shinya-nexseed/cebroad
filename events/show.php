@@ -256,10 +256,14 @@ if ( !function_exists('mime_content_type') ) {
             <h5><?php echo $comment['nick_name']; ?></h5>
             <p><?php echo $comment['comment']; ?></p>
             <p><?php echo $comment['created'];?></p>
-            <form class="comment" name="delete" method="post" action="">
-              <input type="hidden" name="comment_delete" value="<?php echo $comment['id']; ?>">
+<!--             <form class="comment" name="delete" method="post" action="">
+              <input type="hidden" name="comment_delete" value="<?php //echo $comment['id']; ?>">
               <a class="delete" href="javascript.delete.submit()"><i class="fa fa-trash" aria-hidden="true"></i></a>
-            </form>
+            </form> -->
+            <!-- セッションIDとコメントのIDが一致した時にだけ削除ボタンを表示  -->
+            <?php if ($_SESSION['id']== $comment['user_id']):?>
+            <a href="/cebroad/events/delete/<?php echo $comment['id'];?>" style="color: #F33;">Delete</a>
+            <?php endif;?>
             <hr>
           </div>
         <?php } ?>
