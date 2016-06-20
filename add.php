@@ -14,6 +14,20 @@
       return array_reverse($errors);
     }
 
+//   try {
+//     $e = null;
+//     if ($name === '') {
+//         $e = e('名前が未入力です', $e);
+//     }
+//     if ($email === '') {
+//         $e = e('メールアドレスが未入力です', $e);
+//     }
+//     if ($e) {
+//         throw $e;
+//     }
+// } catch (Exception $e) {
+//     die(implode("<br />\n", exception_to_array($e)));
+// }
 
 
   if (!empty($_POST)) {
@@ -121,7 +135,7 @@
   }
 }
 
-  if (isset($_REQUEST['action']) && $_REQUEST['action'] === 'rewrite') {
+  if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'rewrite') {
     $_POST = $_SESSION['events'];
     $errors['rewrite'] = true;
   }
@@ -156,18 +170,18 @@
     if (!empty($_POST['capacity'])) {
       $title = $_POST['capacity'];
     }
-    // if (!empty($_POST['place'])) {
-    //   $place = $_POST['place'];
-    // }
-    // if (!empty($_POST['place_name'])) {
-    //   $place_name = $_POST['place_name'];
-    // }
-    // if (!empty($_POST['lat'])) {
-    //   $lat = $_POST['lat'];
-    // }
-    // if (!empty($_POST['lng'])) {
-    //   $lng = $_POST['lng'];
-    // }
+    if (!empty($_POST['place'])) {
+      $place = $_POST['place'];
+    }
+    if (!empty($_POST['place_name'])) {
+      $place_name = $_POST['place_name'];
+    }
+    if (!empty($_POST['lat'])) {
+      $lat = $_POST['lat'];
+    }
+    if (!empty($_POST['lng'])) {
+      $lng = $_POST['lng'];
+    }
     if (!empty($_POST['detail'])) {
       $detail = $_POST['detail'];
     }
@@ -193,7 +207,7 @@ var_dump($errors);
         </div>
 
         <div class="col-sm-8 col-md-8">
-            <h1>Create a new event</h1>
+            <h1>New event</h1>
             <h3 class="cebroad-pink">Red items are necessarily required</h3>
         </div>
 
@@ -241,7 +255,7 @@ var_dump($errors);
         <div class="col-sm-8 col-md-8">
             <label class="cebroad-pink">Place</label>
             <div class="form-group">
-                <input id="searchTextField" type="text" name="place" id="place" class="form-control" required>
+                <input id="searchTextField" type="text" name="place" id="place" class="form-control" value="<?=h($place)?>" required>
             </div>
         </div>
         
@@ -303,12 +317,11 @@ var_dump($errors);
 
         <div class="col-sm-8 col-md-8" class="events-pad";>
             <div class="form-group">
-                <a href="/cebroad/events/index">Back</a>
                 <input type="submit" id="confirm" class="btn btn-cebroad" disabled="disabled" value="confirm">
                 <img src="/cebroad/webroot/assets/events/gif/loading.gif" id="loading" style="display: none;">
             </div>
         </div>
- 
+
       </div>
     </form>
 </div>
