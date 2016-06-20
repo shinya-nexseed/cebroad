@@ -105,7 +105,7 @@ if (!empty($_POST)) {
                       <div class="form-group">
                         <div class="row">
                           <div class="col-sm-6 col-sm-offset-3">
-                            <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="CONFIRM">
+                            <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-cebroad" value="CONFIRM">
                             <input type="hidden" name="token" value="<?=$token?>">
                           </div>
                         </div>

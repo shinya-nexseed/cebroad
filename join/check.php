@@ -1,8 +1,10 @@
 <?php 
 
+  var_dump($_SESSION['join']);
+
 	// $_SESSION['join']が存在しなければindex.phpに強制遷移させる
   	if (!isset($_SESSION['join'])) {
-   	header('Location: signup');
+   	header('Location: /cebroad/join/index');
    	exit();
   	}
 
@@ -27,30 +29,64 @@ if (!empty($_POST)) {
       );
 
     // ②sql文を実行する
-    if(mysqli_query($db, $sql)) {
-       //true
-      if (isset($_SESSION['id']) && $_SESSION['time'] + 3600 > time()) {
-    //$_SESSIONに保存している時間更新
-    $_SESSION['time'] = time();//このコードが無ければ、ログイン後、一時間経つと勝手にログイン画面に遷移してしまう。毎回、リセットしてあげる必要。
-    //ログインしているユーザーのデータをDBから取得（$_SESSION['id']を使用して）
-    $sql = sprintf('SELECT * FROM users WHERE id=%d', mysqli_real_escape_string($db, $_SESSION['id'])
-      );
-    $record = mysqli_query($db, $sql) or die(mysqli_error($db));
-    $member = mysqli_fetch_assoc($record);
+    // mysqli_query($db, $sql) or die(mysqli_error($db));
+    mysqli_query($db, $sql) or die(mysqli_error($db));
 
-   }
+    // if(mysqli_query($db, $sql)) {
+       //true
+      // if (isset($_SESSION['id']) && $_SESSION['time'] + 3600 > time()) {
+    //$_SESSIONに保存している時間更新
+    // $_SESSION['time'] = time();//このコードが無ければ、ログイン後、一時間経つと勝手にログイン画面に遷移してしまう。毎回、リセットしてあげる必要。
+    //ログインしているユーザーのデータをDBから取得（$_SESSION['id']を使用して）
+    // $sql = sprintf('SELECT * FROM users WHERE id=%d', mysqli_real_escape_string($db, $_SESSION['id'])
+    //   );
+    // $record = mysqli_query($db, $sql) or die(mysqli_error($db));
+    // $member = mysqli_fetch_assoc($record);
+
+   // }
+    //ログイン処理
+    // ふたつのフォームに値は入力されていれば読まれる
+    if (!empty($_SESSION['join']['email']) && !empty($_SESSION['join']['password'])) {
+
+      // emailとパスワードが入力された値と一致するデータをSELECT文で取得
+      $sql = sprintf('SELECT * FROM users WHERE email="%s" AND password="%s"',
+        mysqli_real_escape_string($db, $_SESSION['join']['email']),
+        mysqli_real_escape_string($db, sha1($_SESSION['join']['password']))
+      );
+      // $recordにmysqli_query()関数を使用してデータを格納
+      $record = mysqli_query($db, $sql) or die(mysqli_error($db));
+
+      // SELECT文で取得したデータが存在するかどうかで条件分岐している
+      if ($table = mysqli_fetch_assoc($record)) {
+        // データが存在したとき (ログイン成功の処理)
+        // 次のページでログイン判定をするために使用するidをSESSIONで管理
+        $_SESSION['id'] = $table['id'];
+        $_SESSION['time'] = time();
+      }
+
+      $sql = sprintf("UPDATE `pre_users` SET `confirmed_flag`=1 WHERE email='%s'",
+        mysqli_real_escape_string($db, $_SESSION['join']['email'])
+      );
+      mysqli_query($db, $sql);
+
+
     } else {
       //sqlが正しく実行されず、データが入力されなかった場合
       header('Location: /cebroad/index');
       exit();
     }
 
+   
 
     // ③実行時に取得したデータを処理する (SELECTの場合のみ)
+    var_dump($_SESSION['join']);
+        echo $_SESSION['id'];
     unset($_SESSION['join']);
-    header('Location: thanks');
+    header('Location: /cebroad/join/thanks');
     exit();
- }
+    }
+
+
 
   //htmlspecialcharsのショートカット
   function h($value){
@@ -95,7 +131,7 @@ if (!empty($_POST)) {
                         <div class="row">
                           <div class="col-sm-6 col-sm-offset-3">
                             <form method="post">
-                      	       <input type="submit" name="check-submit" id="check-submit" tabindex="4" class="form-control btn btn-register" value="Register">
+                      	       <input type="submit" name="check-submit" id="check-submit" tabindex="4" class="form-control btn btn-cebroad" value="Register">
                             </form>
                           </div>
                         </div>
