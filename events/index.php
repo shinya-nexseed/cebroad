@@ -12,7 +12,11 @@
 		<div class="row">
 		    <div class="testvar hidden-xs col-sm-2 col-md-2">
     		</div>
-    		<div class="col-sm-8 col-md-8 events-pad">
+    	<div>
+    </div>
+    <div class="container">
+    	<div class="row">
+    		<div class="col-sm-12 col-md-12 events-pad">
     			<button class="btn btn-cebroad pull-right " onclick="location.href='/cebroad/events/add'">Create a new event</button>
     		</div>
 			<?php foreach ($rtn as $event): ?>

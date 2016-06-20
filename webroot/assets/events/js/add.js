@@ -1,3 +1,8 @@
+  $(document).ready(function(){
+  google.maps.event.addDomListener(window, 'load', initialize);
+  $('#confirm').attr('disabled', false);
+});
+
  function initialize() {
        //searchTextFieldを取得し変数に格納
      var input = document.getElementById('searchTextField');
@@ -25,8 +30,6 @@
             }
          });
  }
-
- google.maps.event.addDomListener(window, 'load', initialize);
 
  //Placeに何か変更があった場合confirmを無効にする
  $('#searchTextField').keydown(function() {

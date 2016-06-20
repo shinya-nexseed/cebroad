@@ -1,4 +1,6 @@
 <?php 
+
+ if (!isset($_SESSION['id']))
  if (empty($_SESSION['events'])) {
  	header('Location: /cebroad/events/index');
  }
@@ -51,8 +53,8 @@ $sql = sprintf("INSERT INTO events SET title='%s', detail='%s', date='%s', start
 	mysqli_real_escape_string($db, $a['starting_time']),
 	mysqli_real_escape_string($db, $a['closing_time']),
 	mysqli_real_escape_string($db, $a['place_name']),
-	mysqli_real_escape_string($db, $a['lat']),
-	mysqli_real_escape_string($db, $a['lng']),
+	mysqli_real_escape_string($db, $a['latitude']),
+	mysqli_real_escape_string($db, $a['longitude']),
 	mysqli_real_escape_string($db, $a['pic1_path']),
 	mysqli_real_escape_string($db, $a['pic2_path']),
 	mysqli_real_escape_string($db, $a['pic3_path']),
@@ -70,8 +72,8 @@ $sql = sprintf("INSERT INTO events SET title='%s', detail='%s', date='%s', start
 }
 
 $place_name = $_SESSION['events']['place_name'];
-$lat = $_SESSION['events']['lat'];
-$lng = $_SESSION['events']['lng'];
+$lat = $_SESSION['events']['latitude'];
+$lng = $_SESSION['events']['longitude'];
 $closing_time = '';
 $capacity =  '';
 $pic1 = '';

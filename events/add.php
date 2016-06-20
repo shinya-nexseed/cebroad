@@ -114,7 +114,7 @@
     
         $_SESSION['events'] = $_POST + $_FILES;
 
-        header('Location: confirm');
+        header('Location: /cebroad/events/confirm');
       exit();
     } catch (Exception $e) {
     exception_to_array($e);
@@ -156,18 +156,18 @@
     if (!empty($_POST['capacity'])) {
       $title = $_POST['capacity'];
     }
-    // if (!empty($_POST['place'])) {
-    //   $place = $_POST['place'];
-    // }
-    // if (!empty($_POST['place_name'])) {
-    //   $place_name = $_POST['place_name'];
-    // }
-    // if (!empty($_POST['lat'])) {
-    //   $lat = $_POST['lat'];
-    // }
-    // if (!empty($_POST['lng'])) {
-    //   $lng = $_POST['lng'];
-    // }
+    if (!empty($_POST['place'])) {
+       $place = $_POST['place'];
+    }
+    if (!empty($_POST['place_name'])) {
+      $place_name = $_POST['place_name'];
+    }
+    if (!empty($_POST['latitude'])) {
+      $lat = $_POST['latitude'];
+    }
+    if (!empty($_POST['longitude'])) {
+      $lng = $_POST['longitude'];
+    }
     if (!empty($_POST['detail'])) {
       $detail = $_POST['detail'];
     }
@@ -241,7 +241,7 @@ var_dump($errors);
         <div class="col-sm-8 col-md-8">
             <label class="cebroad-pink">Place</label>
             <div class="form-group">
-                <input id="searchTextField" type="text" name="place" id="place" class="form-control" required>
+                <input id="searchTextField" type="text" name="place" id="place" class="form-control" value="<?=h($place)?>" required>
             </div>
         </div>
         
@@ -293,8 +293,8 @@ var_dump($errors);
 
         <div class="form-group">
             <input id=place_name type="hidden" name="place_name" value="<?=h($place_name)?>">
-            <input id=lat type="hidden" name="lat" value="<?=h($lat)?>">
-            <input id=lng type="hidden" name="lng" value="<?=h($lng)?>">
+            <input id=lat type="hidden" name="latitude" value="<?=h($lat)?>">
+            <input id=lng type="hidden" name="longitude" value="<?=h($lng)?>">
         </div>
 
         <?php foreach($errors as $error): ?>
