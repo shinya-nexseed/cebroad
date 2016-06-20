@@ -1,8 +1,154 @@
-<!-- <div class="col-sm-12"> -->
+<?php 
 
-<!-- content -->                      
+//アクション名の後に$id(routs.php参照)が存在する場合に
+if(!empty($id)){
+//対象$idのイベントデータを取得（$idが2ならイベント2のidを取得）
+  $sql=sprintf('SELECT * FROM `events` JOIN `event_categories` ON events.event_category_id=event_categories.id WHERE events.id='.$id);
+  $record=mysqli_query($db, $sql)or die(mysqli_error($db));
+  $event=mysqli_fetch_assoc($record);
+
+
+//対象$idのイベントのオーガナイザー情報を取得
+  $sql=sprintf('SELECT * FROM `users` WHERE `id`='.$event['organizer_id']);
+  $record=mysqli_query($db, $sql)or die(mysqli_error($db));
+  $organizer=mysqli_fetch_assoc($record);
+
+
+//参加者情報を取得（usersのidと中間テーブルのuser_idを結合し、中間テーブルのevent_idが$idと一緒の時$event_participantsにusers情報を格納）
+  $sql=sprintf('SELECT * FROM `users` JOIN `participants` ON `id`=participants.user_id WHERE participants.event_id='.$id);
+  $record=mysqli_query($db, $sql)or die(mysqli_error($db));
+  $event_participants=array();
+  while($result=mysqli_fetch_assoc($record)){
+    $event_participants[]=$result;
+  }
+
+//コメント情報を取得（commentsのuser_idとusersのidを結合し、commentsテーブルのevent_idが$idと一緒の時$commentsにcomments情報を格納）
+  $sql=sprintf('SELECT * FROM `comments` LEFT JOIN `users` ON `comments`.`user_id`=`users`.`id` WHERE event_id='.$id.' ORDER BY comments.created DESC');
+  $record=mysqli_query($db, $sql)or die(mysqli_error($db));
+  $comments=array();
+  while($result=mysqli_fetch_assoc($record)){
+    $comments[]=$result;
+  }
+
+//対象$idイベンのlike数を取得
+  $sql = sprintf('SELECT COUNT(*) AS cnt FROM likes WHERE event_id=%d',
+    $id
+    );
+
+  $record = mysqli_query($db, $sql) or die(mysqli_error($db));
+  $cnt_like = mysqli_fetch_assoc($record);
+
+
+//対象$idイベントの参加ボタンが押された数をチェック
+  $sql = sprintf('SELECT COUNT(*) AS cnt FROM participants WHERE event_id=%d',
+    $id
+    );
+  $record = mysqli_query($db, $sql) or die(mysqli_error($db));
+  $cnt_paticipant = mysqli_fetch_assoc($record);
+
+
+//すでにLikeされているかどうかを判定(Likeボタン中間テーブルのON/OFF、ボタンの色の切り替え用)
+  $sql = sprintf('SELECT COUNT(*) AS cnt FROM likes WHERE user_id=%d AND event_id=%d',
+    $_SESSION['id'],
+    $id
+    );
+  $record = mysqli_query($db, $sql) or die(mysqli_error($db));
+  $table_like = mysqli_fetch_assoc($record);
+
+
+//すでに参加ボタンを押しているかどうかを判定(参加ボタンのON/OFF中間テーブルのON/OFF、ボタンの色の切り替え用)
+  $sql = sprintf('SELECT COUNT(*) AS cnt FROM participants WHERE user_id=%d AND event_id=%d',
+    $_SESSION['id'],
+    $id
+    );
+
+  $record = mysqli_query($db, $sql) or die(mysqli_error($db));
+  $table_paticipant = mysqli_fetch_assoc($record);
+
+
+//いいねデータ更新
+  if(isset($_POST['like'])){
+if($table_like['cnt']>0){//‚·‚Å‚Éƒf[ƒ^‚ª‘¶Ý‚µ‚Ä‚¢‚éê‡
+  $sql_like = sprintf('DELETE FROM `likes` WHERE user_id=%d AND event_id=%d',
+    $_SESSION['id'],
+    $id
+    );
+
+  $record=mysqli_query($db, $sql_like)or die(mysqli_error($db));
+}
+else{//データが存在しない場合
+  $sql_like=sprintf('INSERT INTO `likes`(`user_id`, `event_id`) VALUES('.$_SESSION['id'].','.$id.')');
+  $record=mysqli_query($db, $sql_like)or die(mysqli_error($db));
+}
+
+$sql = sprintf('SELECT COUNT(*) AS cnt FROM likes WHERE user_id=%d AND event_id=%d',
+  $_SESSION['id'],
+  $id
+  );
+$record = mysqli_query($db, $sql) or die(mysqli_error($db));
+$table_like = mysqli_fetch_assoc($record);
+header('Location: /cebroad/'.$resource.'/'.$action.'/'.$id);
+
+}
+else if(isset($_POST['paticipant'])){
+
+if($table_paticipant['cnt']>0){//すでにデータが存在している場合
+  $sql = sprintf('DELETE FROM `participants` WHERE user_id=%d AND event_id=%d',
+    $_SESSION['id'],
+    $id
+    );
+  $record=mysqli_query($db, $sql)or die(mysqli_error($db));
+
+
+}
+else{//データが存在しない場合
+  $sql=sprintf('INSERT INTO `participants`(`user_id`, `event_id`) VALUES('.$_SESSION['id'].','.$id.')');
+  $record=mysqli_query($db, $sql)or die(mysqli_error($db));
+}
+
+$sql = sprintf('SELECT COUNT(*) AS cnt FROM participants WHERE user_id=%d AND event_id=%d',
+  $_SESSION['id'],
+  $id
+  );
+
+
+$record = mysqli_query($db, $sql) or die(mysqli_error($db));
+$table_paticipant = mysqli_fetch_assoc($record);
+
+header('Location: /cebroad/'.$resource.'/'.$action.'/'.$id);
+}
+
+//commentが送信された場合
+if(isset($_POST['comment'])){
+//コメントを保存
+  $sql = sprintf('INSERT INTO `comments`(`event_id`, `user_id`, `comment`, `delete_flag`, `created`) VALUES (%d,%d,"%s",0,now())',
+    $id,
+    $_SESSION['id'],
+    $_POST['comment']
+    );
+  $record = mysqli_query($db, $sql) or die(mysqli_error($db));
+}
+
+// if(isset($_POST['comment_delete'])){
+// //コメントを保存
+//   $sql = sprintf('DELETE FROM `comments` WHERE `id`='.$_POST['comment_delete']);
+//   $record = mysqli_query($db, $sql) or die(mysqli_error($db));
+//   echo $sql;
+// }
+
+
+
+if ( !function_exists('mime_content_type') ) {
+  function mime_content_type($filename) {
+    $mime_type = exec('file -Ib '.$filename);
+    return $mime_type;
+  }
+}
+}
+ ?>
+
+<!-- content -->                   
 <div class="row">
-
   <!-- イベントメイン写真 -->
   <div class="col-sm-10">
     <div class="panel panel-default">
@@ -12,12 +158,7 @@
       <div class="panel-body">
         <p class="lead"><?php echo $event['event_name']; ?></p>
         <h4><i class="fa fa-users" aria-hidden="true"></i><?php echo $cnt_paticipant['cnt']?>  <i class="fa fa-thumbs-o-up" aria-hidden="true"></i><?php echo $cnt_like['cnt']?></h4>
-
-        <p>
-          <img src="/cebroad/images/<? echo $organizer['profile_picture_path'];?>" class="img-circle pull-left">
-        </p>
-
-
+        <p><img src="/cebroad/images/<? echo $organizer['profile_picture_path'];?>" class="img-circle pull-left"></p>
         <!-- いいねボタン -->
         <form method="post" action="" class="navbar-right">
           <input type="hidden" name="like" value="1">
@@ -27,9 +168,7 @@
           <i class="fa fa-thumbs-o-up" aria-hidden="true"></i><input type="submit" class="btn btn-success" value="Like">
           <?php } ?>
         </form>
-
-        <!-- 参加者ボタン -->
-        <!-- ログインしているユーザーでないとき参加者ボタンを表示 -->
+        <!-- 参加者ボタン - ログインしているユーザーでないとき参加者ボタンを表示 -->
         <?php if($_SESSION['id']!=$event['organizer_id']){ ?>
         <form method="post" action="" class="navbar-right">
           <input type="hidden" name="paticipant" value="1">
