@@ -85,7 +85,7 @@ if (!empty($_POST)) {
                 <div class="row">
                   <div class="col-lg-12">
                   <form id="register-form" action="" method="post" role="form" style="display: block;">
-                    <!--ニックネーム-->
+                    <!--メールアドレス-->
                         <div class="form-group">
                         <?php if (isset($_POST['email'])): ?>
                           <input type ="email" name="email" id="email" tabindex="1" class="form-control" placeholder="ex:cebroad@mail.com" value="<?=h($_POST['email'])?>">

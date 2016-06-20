@@ -28,6 +28,8 @@
 
 	if ($resource === 'index' || $resource === '') {
 		require('index.php');
+	} else if ($resource === 'signin') {
+		require('signin.php');
 	} else if ($resource === 'join') {
 		require('join/join_layout.php'); 
 	} else {

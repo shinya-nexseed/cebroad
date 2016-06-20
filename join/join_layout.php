@@ -13,7 +13,7 @@
   <meta charset="UTF-8">
   <title>Cebroad</title>
   <!-- Bootstrap -->
-    <link href="/cebroad/webroot/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="/cebroad/webroot/assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="/cebroad/webroot/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
     <link href="/cebroad/webroot/assets/css/form.css" rel="stylesheet">
     <link href="/cebroad/webroot/assets/css/timeline.css" rel="stylesheet">

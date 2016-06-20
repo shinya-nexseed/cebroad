@@ -1,20 +1,24 @@
 <?php 
 // メモ
 // join/register(メールアドレス登録)→pre_thanks→signup→check→thanks
-// if ($id === 0 || $id === '') {
-//   header('Location: /cebroad/index');
-//   exit();
-// } else {
-//   echo $id;
-//   echo 'どうなってるんですか';
-// }
+if ($id === 0 || $id === '') {
+  header('Location: /cebroad/index');
+  exit();
+} else {
+  echo $id;
+  echo 'どうなってるんですか';
+}
+  if ($id === 'rewrite') {
+    $mail = $_SESSION['join']['email'];
+  } else {
   $sql = sprintf('SELECT * FROM `pre_users` WHERE urltoken="%s"',
     mysqli_real_escape_string($db, $id)
     );
   $rtn = mysqli_query($db, $sql) or die(mysqli_error($db));
 
-  $pre_member = mysqli_fetch_assoc($rtn);
-  $mail = $pre_member['email'];
+  $pre_user = mysqli_fetch_assoc($rtn);
+  $mail = $pre_user['email'];
+  }
 
 // if(isset($school)){
   $sql = 'SELECT * FROM `schools`';
@@ -65,8 +69,8 @@
 //書き直し　http://192.168.33.10/seed_sns/join/signup?action=rewrite
     if (isset($id) && $id === 'rewrite') {//上記のパラメーターがあれば
 
-      $mail = $_SESSION['join']['email'];
       $_POST = $_SESSION['join'];
+      $mail = $_SESSION['join']['email'];
       $_POST['password'] = '';
       $_POST['confirm_password'] = '';
       $error['rewrite'] = true;
@@ -102,7 +106,7 @@
                         <?php endif; ?>
                         <!-- ニックネームが空欄だったら -->
                         <?php if(isset($error['nick_name']) && $error['nick_name'] === 'blank'): ?>
-                          <p class="error">* Please type your Nicknake.</p>
+                          <p class="error">* Please type your Nickname.</p>
                         <?php endif; ?>
                       </div>
                     <!--メールアドレス-->
