@@ -11,13 +11,9 @@
 <head>
   <meta charset="UTF-8">
   <title>Cebroad</title>
-  <link href="../webroot/assets/css/users_show.css" rel="stylesheet">
-  <link href="../webroot/assets/css/bootstrap.min.css" rel="stylesheet">
-  <script src="../webroot/assets/js/jquery.min.js"></script>
-  <script src="../webroot/assets/js/jquery.Jcrop.js"></script>
-  <link rel="stylesheet" href="../webroot/assets/css/demo_files/jcrop_main.css" type="text/css" />
-  <link rel="stylesheet" href="../webroot/assets/css/demo_files/jcrop_demos.css" type="text/css" />
-  <link rel="stylesheet" href="../webroot/assets/css/jquery.Jcrop.css" type="text/css" />
+  <link href="/cebroad/webroot/assets/css/bootstrap.min.css" rel="stylesheet">
+  <script src="/cebroad/webroot/assets/js/jquery.min.js"></script>
+  <script src="/cebroad/webroot/assets/js/jquery.Jcrop.js"></script>
   <script type="text/javascript">
     $(function(){
 
@@ -52,6 +48,11 @@
       display: block;
     }
   </style>
+    <?php
+    function h($value){
+      return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+    }
+  ?>
 </head>
 <body>
   <?php
