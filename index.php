@@ -498,7 +498,7 @@
 		
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="webroot/assets/js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
-        <script src="webroot/assets/js/bootstrap.min.js"></script>
+        <script src="webroot/assets/js/bootstrap.js"></script>
         <script src="webroot/assets/js/owl.carousel.min.js"></script>
         <script src="webroot/assets/js/wow.js"></script>
         <script src="webroot/assets/js/main.js"></script>
