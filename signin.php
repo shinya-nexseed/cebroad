@@ -111,13 +111,13 @@ if(!empty($_POST)) {
                   <p>&raquo;  <a href="/cebroad/join/regist_form">TO THE REGISTERATION SCREEN</a></p>
                   <br>
                   <h3>Please input your Email address and password to sign in ♪</h3>
-                    <!--ニックネーム-->
+                    <!--メールアドレス-->
                       <div class="form-group">
 
                           <?php if(!empty($_POST['email'])):?>
-                            <input type="text" name="email" id="email" tabindex="1" class="form-control" placeholder="email" value="<?=h($_POST['email'])?>" required>
+                            <input type="text" name="email" id="email" tabindex="1" class="form-control" placeholder="ex:cebroad@mail.com" value="<?=h($_POST['email'])?>" required>
                           <?php else: ?>
-                            <input type="text" name="email" id="email" tabindex="1" class="form-control" placeholder="email" required>
+                            <input type="text" name="email" id="email" tabindex="1" class="form-control" placeholder="ex:cebroad@mail.com" required>
                           <?php endif; ?>
 
                           <?php if(!empty($errors['email'])):?>

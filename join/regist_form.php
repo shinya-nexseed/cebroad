@@ -94,7 +94,7 @@ if (!empty($_POST)) {
                         <?php endif; ?> 
                         <!-- メールアドレスが空欄だったら -->
                         <?php if(isset($error['email']) && $error['email'] === 'blank'): ?>
-                          <p class="error">* Please type your Email Address.</p>
+                          <p class="error">* Please input your Email Address.</p>
                         <?php endif; ?>
                         <!--すでにメールアドレスが存在していたら-->  
                         <?php if (isset($error['email']) && $error['email'] === 'duplicate'): ?>

@@ -105,7 +105,7 @@ if ($id === 0 || $id === '') {
                         <?php endif; ?>
                         <!-- ニックネームが空欄だったら -->
                         <?php if(isset($error['nick_name']) && $error['nick_name'] === 'blank'): ?>
-                          <p class="error">* Please type your Nickname.</p>
+                          <p class="error">* Please input your Nickname.</p>
                         <?php endif; ?>
                       </div>
                     <!--メールアドレス-->
@@ -118,10 +118,10 @@ if ($id === 0 || $id === '') {
                           <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" value="">
                         <?php endif; ?>
                         <?php if(isset($error['password']) && $error['password'] === 'blank'): ?>
-                          <p class="error">* Please type Password.</p>
+                          <p class="error">* Please input Password.</p>
                         <?php endif; ?>
                         <?php if(isset($error['password']) && $error['password'] === 'length'): ?>
-                         <p class="error">* Please type Password more than 4 letters.</p>
+                         <p class="error">* Please input Password more than 4 letters.</p>
                         <?php endif; ?>
                       </div>
                     <!--2つのパスワードが一致するか確認-->
@@ -132,7 +132,7 @@ if ($id === 0 || $id === '') {
                             <input type="password" name="confirm_password" id="confirm_password" tabindex="2" class="form-control" placeholder="Confirm Password" value="">
                         <?php endif; ?>
                         <?php if(isset($error['confirm_password']) && $error['confirm_password'] === 'blank'): ?>
-                          <p class="error">* Please type Password.</p>
+                          <p class="error">* Please input Password.</p>
                         <?php endif; ?>
                         <?php if (isset($error['confirm_password']) && $error['confirm_password'] === 'incorrect'): ?>
                           <p class="error">* The 2 Passwords do not match.</p>

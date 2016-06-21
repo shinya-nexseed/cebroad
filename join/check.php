@@ -1,6 +1,6 @@
 <?php 
 
-  var_dump($_SESSION['join']);
+  // var_dump($_SESSION['join']);
 
 	// $_SESSION['join']が存在しなければindex.phpに強制遷移させる
   	if (!isset($_SESSION['join'])) {
