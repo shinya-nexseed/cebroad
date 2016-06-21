@@ -3,15 +3,15 @@
     //セッションにidが存在し、かつオンのtimeと3600秒足した値が現在時刻より小さい時に
     //現在時刻より小さい時にログインしていると判定する
     if (isset($_SESSION['id']) && $_SESSION['time'] + 3600 > time()){
-    //$_SESSIONに保存している時間更新
-    //これがないとログインから１時間たったら再度ログインしないとindex.phpに入れなくなる。
-    $_SESSION['time'] = time();
-    //event/show.phpへ遷移
-    header('Location: events/show.php'); 
-    exit(); 
+        //$_SESSIONに保存している時間更新
+        //これがないとログインから１時間たったら再度ログインしないとindex.phpに入れなくなる。
+        $_SESSION['time'] = time();
+        //event/show.phpへ遷移
+        header('Location: events/show.php'); 
+        exit(); 
     }else{
-        echo'ログイン判定(ログインしていない場合にサイトトップ表示)';
-        echo'<br>';
+        // echo'ログイン判定(ログインしていない場合にサイトトップ表示)';
+        // echo'<br>';
     }
  ?>
 <!DOCTYPE html>
