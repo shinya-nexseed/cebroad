@@ -48,6 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
 //SQL文実行
   mysqli_query($db, $sql) or die(mysqli_error($db));
+  header('Location:show');
   exit;
 
 }
@@ -66,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         <img src="../users/profile_pictures/<?php echo $user['profile_picture_path'] ?>" id="cropbox" width="480px">
 
         <!-- This is the form that our event handler fills-->
-        <form action="crop" method="post" onsubmit="return checkCoords();" enctype="multipart/form-data">
+        <form action="" method="post" onsubmit="return checkCoords();" enctype="multipart/form-data">
           <input type="hidden" id="x" name="x">
           <input type="hidden" id="y" name="y">
           <input type="hidden" id="w" name="w">
