@@ -6,7 +6,6 @@
 	$action = "";
 	$id = 0;
 	$post = array();
-
 	if (isset($params[1])) {
 		$action = $params[1];
 	}

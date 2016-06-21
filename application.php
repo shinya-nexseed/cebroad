@@ -26,14 +26,16 @@ if ( !function_exists('mime_content_type') ) {
   <link rel="stylesheet" href="/cebroad/webroot/assets/events/css/events.css">
 </head>
 <body>
+
   <?php
-   $url = dirname(__FILE__).'/'.$resource.'/'.$action.'.php';
-     if (@file_get_contents($url)):?>
-    <?php require($url); ?>
-    <?php else: ?>
-      <h1>Sorry, we couldn't find that page.</h1>
-      <a href="/cebroad/index">Go to the top page</a>
-    <?php endif; ?>
+
+    $url = dirname(__FILE__).'/'.$resource.'/'.$action.'.php';
+
+          if (@file_get_contents($url)) {
+             require($url);
+          } else {
+            include('notfound.php');
+          }
 
     ?>
 

@@ -76,7 +76,7 @@ if ($id !== 'rewrite') {
       }
     }
 
-    for ($i=1; $i<4; $i++) {
+    for ($i=0; $i<4; $i++) {
 
     $pic = 'pic'.$i;
     // 未定義である・複数ファイルである・$_FILES Corruption 攻撃を受けた
@@ -111,6 +111,32 @@ if ($id !== 'rewrite') {
             $e = e('picture'.$i.'のファイル形式が不正です', $e);
           }
 
+    $image = '';
+    switch ($ext) {
+      case 'png':
+        $image = imagecreatefrompng($_FILES[$pic]['tmp_name']);
+        break;
+      case 'jpg' or 'jpeg':
+        $image = imagecreatefromjpeg($_FILES[$pic]['tmp_name']);
+        break;
+  }
+    list($width, $height) = getimagesize($_FILES[$pic]['tmp_name']);
+
+    $new_width = 800;
+
+    $new_height = 600;
+
+    $new_image = ImageCreateTrueColor($new_width, $new_height);
+ 
+    ImageCopyResampled($new_image, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
+
+    ImageJPEG($new_image, $_FILES[$pic]['tmp_name'], 100);
+ 
+    ImageDestroy($image);
+
+    ImageDestroy($new_image);
+
+
       $_FILES[$pic]['content'] = file_get_contents($_FILES[$pic]['tmp_name']);
       $_FILES[$pic]['ext'] = $ext;
     } else if ($_FILES[$pic]['error'] !== 4) {
@@ -137,12 +163,15 @@ if ($id !== 'rewrite') {
   }
 }
 
+  $sql = "SELECT * FROM event_categories";
+  $rtn = mysqli_query($db, $sql) or die('Sorry, something wrong happened. Please retry.');
 
   $title = '';
   $date = '';
   $starting_time = '';
   $closing_time = '';
   $capacity = '';
+  $category = '';
   $place = '';
   $place_name = '';
   $lat = '';
@@ -171,6 +200,9 @@ if ($id !== 'rewrite') {
     if (!empty($_POST['capacity'])) {
       $title = $_POST['capacity'];
     }
+    if (!empty($_POST['category'])) {
+      $category = $_POST['category'];
+    }
     if (!empty($_POST['place'])) {
       $place = $_POST['place'];
     }
@@ -192,7 +224,7 @@ if ($id !== 'rewrite') {
 
 $now = date('Y-m-d');
 $year = date('Y-m-d', strtotime("+1year"));
-var_dump($errors);
+//var_dump($errors);
  ?>
 <script src="/cebroad/webroot/assets/js/jquery-1.12.4.min.js"></script>
 <script src="http://maps.googleapis.com/maps/api/js?libraries=places&output?json&region=ph&language=en&key=AIzaSyDf24saS_c-qe8Qy4QPgVbTub1sJi02ov8"></script>
@@ -245,6 +277,19 @@ var_dump($errors);
                 <a id="time_button" onclick="closingTime()">Add closing time</a>
             </div> -->
 
+        <div class="col-sm-4 col-md-4">
+            <label class="cebroad-pink">Category</label>
+            <div class="form-group">
+                <select name="category" id="category" class="form-control">
+                  <?php while ($cat = mysqli_fetch_assoc($rtn)): ?>
+                  <option value="<?=$cat['id']?>" 
+                  <?php if ($category === $cat['id'])?>
+                  ><?=$cat['name']?></option>
+                  <<?php endwhile; ?>
+                </select>
+            </div>
+        </div>
+        
         </div>
 
 
@@ -270,10 +315,23 @@ var_dump($errors);
         </div>
 
         <div class="col-sm-8 col-md-8">
+            <label>Thumbnail picture</label>
+            <input class="pic" name="pic0" id="pic0" type="file" style="display:none">
+            <div class="input-group">
+              <input type="text" id="photoCover0" class="form-control" placeholder="Select jpg or png(Maximum of 10MB)">
+              <span class="input-group-btn"><button type="button" class="btn btn-cebroad" onclick="$('#pic0').click();">Browse</button></span>
+            </div>
+            <label id="label0" class="cebroad-pink"></label>
+            <div class="events-pad">
+              <img src="" id="preview0" style="display:none; width: 300px;">
+            </div>
+        </div>
+
+        <div class="col-sm-8 col-md-8">
             <label>Picture1</label>
             <input class="pic" name="pic1" id="pic1" type="file" style="display:none">
             <div class="input-group">
-              <input type="text" id="photoCover1" class="form-control" placeholder="Select jpg or png">
+              <input type="text" id="photoCover1" class="form-control" placeholder="Select jpg or png(Maximum of 10MB)">
               <span class="input-group-btn"><button type="button" class="btn btn-cebroad" onclick="$('#pic1').click();">Browse</button></span>
             </div>
             <label id="label1" class="cebroad-pink"></label>
@@ -286,7 +344,7 @@ var_dump($errors);
             <label>Picture2</label>
             <input class="pic" name="pic2" id="pic2" type="file" style="display:none">
             <div class="input-group">
-              <input type="text" id="photoCover2" class="form-control" placeholder="Select jpg or png">
+              <input type="text" id="photoCover2" class="form-control" placeholder="Select jpg or png(Maximum of 10MB)">
               <span class="input-group-btn"><button type="button" class="btn btn-cebroad" onclick="$('#pic2').click();">Browse</button></span>
             </div>
             <label id="label2" class="cebroad-pink"></label>
@@ -299,7 +357,7 @@ var_dump($errors);
             <label>Picture3</label>
             <input class="pic" name="pic3" id="pic3" type="file" style="display:none">
             <div class="input-group">
-              <input type="text" id="photoCover3" class="form-control" placeholder="Select jpg or png">
+              <input type="text" id="photoCover3" class="form-control" placeholder="Select jpg or png(Maximum of 10MB)">
               <span class="input-group-btn"><button type="button" class="btn btn-cebroad" onclick="$('#pic3').click();">Browse</button></span>
             </div>
             <label id="label3" class="cebroad-pink"></label>

@@ -20,7 +20,7 @@
 
     				<div class="col-sm-4 col-md-4">				
                         <div class="panel panel-default">
-                        	<div class="panel-thumbnail"><img class="img-responsive" src="<?=h($event['picture_path_1'])?>"></div>
+                        	<div class="panel-thumbnail"><img class="img-responsive" src="<?=h($event['thumbnail_path'])?>"></div>
                                 <div class="panel-body">
                                     <a href="/cebroad/events/show/<?=h($event['id'])?>"><p class="lead"><?=h($event['title'])?></p></a>
                                     <p><?=h($event['date'])?></p>

@@ -14,9 +14,9 @@
 
      var autocomplete = new google.maps.places.Autocomplete(input, options);
      google.maps.event.addListener(autocomplete, 'place_changed', function () {
+         $('#loading').css('display', 'inline');
          var place = autocomplete.getPlace();
          //場所名と緯度経度を取得
-         $('#loading').css('display', 'inline');
          $('#place_name').attr('value', place.name);
          $('#lat').attr('value', place.geometry.location.lat());
          $('#lng').attr('value', place.geometry.location.lng());
