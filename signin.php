@@ -6,19 +6,24 @@ session_start();
 // $_SESSION = array();//セッションの初期化（リダイレクト処理確認時のデバッグに使用）
 
 //自動ログイン処理
-if(isset($_COOKIE['email'])&&$_COOKIE['email']!=''){
-  $_POST['email']=$_COOKIE['email'];
-  $_POST['password']=$_COOKIE['password'];
-  $_POST['save']='on';
-}
-
+// if(isset($_COOKIE['email']) && $_COOKIE['email'] !== '') {
+//   $_POST['email'] = $_COOKIE['email'];
+//   $_POST['password'] = $_COOKIE['password'];
+//   $_POST['save'] = 'on';
+// }
+$errors = array();
 //ログインボタンを押した際に読まれる
-if(!empty($_POST)){
-	//ログインの処理
+if(!empty($_POST)) {
 
-	//二つのフォームに値が入力されていれば読まれる
-	if($_POST['email']!='' && $_POST['password']!=''){
+  if (empty($_POST['email'])) {
+    $errors['email'] = '*Please input your email address.';
+  }
+  if (empty($_POST['password'])) {
+    $errors['password'] = '*Please input your password.';
+  }
 
+
+  if (count($errors) === 0) {
 		//emailとパスワードが入力された値と一致するデータをSELECT文で取得
 		$sql = sprintf('SELECT * FROM users WHERE email="%s" AND password="%s"',
 			mysqli_real_escape_string($db, $_POST['email']),
@@ -26,35 +31,36 @@ if(!empty($_POST)){
 		$record = mysqli_query($db, $sql) or die (mysqli_error($db));
 
 		//SELECT文で取得したデータが存在するかどうかで条件分岐している
-		if($table = mysqli_fetch_assoc($record)){
+		if($table = mysqli_fetch_assoc($record)) {
 			//データが存在したときログイン成功
-			$_SESSION['id']=$table['user_id'];//次のページでログイン判定をするために使用するidをSESSIONで管理
-			$_SESSION['time']=time();
+			$_SESSION['id'] = $table['id'];//次のページでログイン判定をするために使用するidをSESSIONで管理
+			//$_SESSION['time'] = time();
 			
 
       //ログイン情報を記録する
-      if(isset($_POST['save'])&&$_POST['save']=='on'){
-        //cookieはsetcookie関数を使用して、
-        //保持する値と保持したい期間を引数に与える
-        setcookie('email',$_POST['email'],time()+60*60*24*14);//期間は14日間
-        setcookie('password',$_POST['password'],time()+60*60*24*14);
-        //【関数】setcookie('キー',値、期限)
-        //↓
-        //$_COOKIE = array('email'=>$_POST['email'],'password'=>$_POST['password']);
-      }
+      // if(isset($_POST['save']) && $_POST['save'] === 'on') {
+      //   //cookieはsetcookie関数を使用して、
+      //   //保持する値と保持したい期間を引数に与える
+      //   setcookie('email',$_POST['email'],time()+60*60*24*14);//期間は14日間
+      //   setcookie('password',$_POST['password'],time()+60*60*24*14);
+      //   //【関数】setcookie('キー',値、期限)
+      //   //↓
+      //   //$_COOKIE = array('email'=>$_POST['email'],'password'=>$_POST['password']);
+      // }
 
       header('Location: events/index');
       exit();
-
-
-		}else{
-			//データが存在しないときログイン失敗
-			$error['login']='failed';
-		}
-	} else{//データが入力されていないとき
-		$error['login']='blank';
-	}
+    } else {
+      $errors['login'] = '*You failed to sign in. Please check your email address and password.';
+    }
+  }
 }
+
+  
+
+  function h($value){
+    return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+  }
 ?>
 
 <!DOCTYPE html>
@@ -101,17 +107,41 @@ if(!empty($_POST)){
               <div class="panel-body">
 
                   <form id="register-form" action="" method="post" role="form" style="display: block;">
+                  <p>If you do not register yet, please register.</p>
+                  <p>&raquo;  <a href="/cebroad/join/regist_form">TO THE REGISTERATION SCREEN</a></p>
+                  <br>
+                  <h3>Please input your Email address and password to sign in ♪</h3>
                     <!--ニックネーム-->
                       <div class="form-group">
-                          <input type="text" name="email" id="email" tabindex="1" class="form-control" placeholder="email">
+
+                          <?php if(!empty($_POST['email'])):?>
+                            <input type="text" name="email" id="email" tabindex="1" class="form-control" placeholder="email" value="<?=h($_POST['email'])?>" required>
+                          <?php else: ?>
+                            <input type="text" name="email" id="email" tabindex="1" class="form-control" placeholder="email" required>
+                          <?php endif; ?>
+
+                          <?php if(!empty($errors['email'])):?>
+                            <p class="error"><?php echo $errors['email'];?></p>
+                          <?php endif;?>
                       </div>
                     <!--パスワード-->
                       <div class="form-group">
-                          <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password">
+                        <?php if (!empty($_POST['password'])): ?>
+                          <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" value="<?=h($_POST['password'])?>" required>
+                        <?php else: ?>
+                          <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" required>
+                        <?php endif; ?>
+
+                        <?php if(!empty($errors['password'])):?>
+                            <p class="error"><?php echo $errors['password'];?></p>
+                          <?php endif;?>
                       </div>
                       <div class="form-group">
                         <div class="row">
                           <div class="col-sm-8 col-md-8 col-lg-8 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
+                            <?php if (!empty($errors['login'])): ?>
+                              <label class="error"><?=$errors['login']?></label>
+                            <?php endif; ?>
                             <button type="submit" name="register-submit" id="register-submit" class="form-control btn btn-cebroad" value="check">SIGN IN</button>
                           </div>
                         </div>
