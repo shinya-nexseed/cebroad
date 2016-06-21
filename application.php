@@ -11,8 +11,15 @@
 <head>
   <meta charset="UTF-8">
   <title>Cebroad</title>
-    <link href="../webroot/assets/css/users_show.css" rel="stylesheet">
-    <link href="../webroot/assets/css/bootstrap.css" rel="stylesheet">
+  <link href="../webroot/assets/css/users_show.css" rel="stylesheet">
+  <link href="../webroot/assets/css/bootstrap.css" rel="stylesheet">
+
+  <?php
+    function h($value){
+      return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+    }
+  ?>
+
 </head>
 <body>
   <?php

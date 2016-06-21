@@ -47,7 +47,6 @@ $school = mysqli_fetch_assoc($record);
 
 ?>
 
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html>
 <head>
@@ -107,48 +106,6 @@ $school = mysqli_fetch_assoc($record);
         	</div>
     	</div>
 	</div>
-	<div class="panel-body">
-		<div class="row">
-			<div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="profile_pictures/<?php echo h($user['profile_picture_path']); ?>" class="img-responsive"> </div>
-			<div class=" col-md-9 col-lg-9 "> 
-				<table class="table table-user-information">
-					<tbody>
-						<tr>
-							<td>Nick name:</td>
-							<td><?php echo h($user['nick_name']); ?></td> 
-						</tr>
-						<tr>
-							<td>Gender:</td>
-							<td><?php echo h($user['gender']); ?></td>	 
-						</tr>
-						<tr>
-							<td>Birthday</td>
-							<td><?php echo h($user['birthday']); ?></td>
-						</tr>
-						<tr>
-							<td>Nationality</td>
-							<td><?php echo h($nationality['nationality']); ?></td>
-						</tr>
-						<tr>
-							<td>School name</td>
-							<td><?php echo h($school['name']); ?></td>
-						</tr>
-						<tr>
-							<td>Self-introduction</td>
-							<td><?php echo h($user['introduction']); ?></td>
-						</tr>
-					</tbody>
-				</table>	
-			</form>		                 
-		</div>
-	</div>
-</div>
-<div>
-	<a data-original-title="Broadcast Message" data-toggle="tooltip" type="button" style="float:right;" id="btn-warning" class="btn btn-sm 
-	" href="edit"><i class="glyphicon glyphicon-edit"></i></a>
-</div>
-
-</div>
-</div>
+	
 
 
