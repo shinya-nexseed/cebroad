@@ -148,12 +148,12 @@ if ( !function_exists('mime_content_type') ) {
  ?>
 
 <!-- content -->                   
-<div class="row">
+<div class="row" id="main">
   <!-- イベントメイン写真 -->
   <div class="col-sm-10">
     <div class="panel panel-default">
       <!-- <div class="panel-thumbnail"> -->
-      <img src="/cebroad/webroot/assets/images/mali.jpg" class="img-responsive" height="600">
+      <img src="/cebroad/webroot/assets/images/sand.jpg" class="img-responsive" height="600">
       <!-- </div> -->
       <div class="panel-body">
         <p class="lead"><?php echo $event['event_name']; ?></p>
