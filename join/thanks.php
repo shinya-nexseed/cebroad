@@ -5,82 +5,83 @@
     // exit();
     // }
  echo $_SESSION['id'];
-  $sql = 'SELECT * FROM `nationalities`';
-  $nationalities = mysqli_query($db, $sql) or die(mysqli_error($db));
+   //国籍テーブルから国籍名を取得
+      $sql = 'SELECT * FROM `nationalities`';
+      $nationalities = mysqli_query($db, $sql) or die(mysqli_error($db));
 
- // ログイン判定
-  if (isset($_SESSION['id']) && $_SESSION['time'] + 3600 > time()) {
-    $_SESSION['time'] = time();
-    $sql = sprintf('SELECT * FROM `users` WHERE `id`=%d',
-      mysqli_real_escape_string($db, $_SESSION['id'])
-      );
-    $record = mysqli_query($db, $sql) or die (mysqli_error());
-    $member = mysqli_fetch_assoc($record);
-  } else {
-    header('Location: /cebroad/join/signup');
-    exit();
-  }
-  $error = array();
-  if (!empty($_POST)) {
-
-    if ($_POST['gender'] === '0') {
-      $_POST['gender'] = '';
-    }
-    if (!isset($_POST['birthday'])) {
-      $_POST['birthday'] = '';
-    }
-    if ($_POST['nationality_id'] === '0') {
-      $_POST['nationality_id'] = '';
+   // ログイン判定
+    if (isset($_SESSION['id']) && $_SESSION['time'] + 3600 > time()) {
+      $_SESSION['time'] = time();
+      $sql = sprintf('SELECT * FROM `users` WHERE `id`=%d',
+        mysqli_real_escape_string($db, $_SESSION['id'])
+        );
+      $record = mysqli_query($db, $sql) or die (mysqli_error());
+      $user = mysqli_fetch_assoc($record);
+    } else {
+      header('Location: /cebroad/join/signup');
+      exit();
     }
 
-  //プロフィール写真のエラーチェック
-    if ($_FILES['profile_picture_path']['error'] === 0) {
-      $fileName = $_FILES['profile_picture_path']['name'];
-      if (isset($fileName)) {
-          $ext = substr($fileName, -3);
-          if ($ext !== 'jpg' && $ext !== 'gif' && $ext !== 'png') {
-            $error['peofile_picture_path'] = 'type';
-
-            //move_uploaded_file関数でアップロード
-          }
+    $error = Array();
+    if (!empty($_POST)) {
+      //項目が空で送信された場合の処理
+      if ($_POST['gender'] === '0') {
+        $_POST['gender'] = '';
       }
-    } else if ($_FILES['profile_picture_path']['error'] === 4) {
-      $_FILES['profile_picture_path'] = '';
+      if (!isset($_POST['birthday'])) {
+        $_POST['birthday'] = '';
+      }
+      if ($_POST['nationality_id'] === '0') {
+        $_POST['nationality_id'] = '';
+      }
+      //画像サイズが送信された場合
+    if(!empty($_FILES)){
+        $fileName = $_FILES['profile_picture_path']['name'];
+        if (!empty($fileName)) {
+            $ext = substr($fileName, -3);
+            if ($ext !== 'jpg' && $ext !== 'gif' && $ext !== 'png') {
+              $error['profile_picture_path'] = 'type';
+
+              //move_uploaded_file関数でアップロード
+            }
+        }
     }
-
-    
-
-    //エラーがなければ
-      if (empty($error)) {
-    //フォームからデータが送信された場合
-        echo 'エラーなし';
+      //エラーがなければ
+      if (!empty($_POST) && empty($error)) {
+        //画像が選択されていれば
+        if(!empty($fileName)){
+          //画像のアップロード
+              $picture = date('YmdHis').$_FILES['profile_picture_path']['name'];
+              move_uploaded_file($_FILES['profile_picture_path']['name'],'../users/profile_pictures/'.$picture);
+                } else {
+              $picture = $user['profile_picture_path'];
+                } 
+    //画像が選択されている場合のアップロード処理
+  if(!empty($fileName)){
         //①更新用sql文
         $sql = sprintf("UPDATE `users` SET `gender`=%d, `profile_picture_path`='%s', `birthday`='%s', `nationality_id`=%d WHERE id=%d",
           mysqli_real_escape_string($db, $_POST['gender']),
-          mysqli_real_escape_string($db, $_FILES['profile_picture_path']),
+          mysqli_real_escape_string($db, $picture),
           mysqli_real_escape_string($db,$_POST['birthday']),
           mysqli_real_escape_string($db, $_POST['nationality_id']),
           mysqli_real_escape_string($db, $_SESSION['id'])
         );
         echo $sql;
 
-      // ②sql文を実行する
-      mysqli_query($db, $sql) or die(mysqli_error($db));
+        //②sql文を実行する
+        mysqli_query($db, $sql) or die(mysqli_error($db));
 
+        //Jcropの画面に遷移させる
+        header('Location: crop');
 
-
-    // ③実行時に取得したデータを処理する (SELECTの場合のみ)
-    // unset($_SESSION['join']);
-    // header('Location: thanks');
-    // exit();
-      // エラーがない場合
-      // if (empty($error)) {
-      //   $_SESSION['join'] = $_POST;
+      }else if ($_FILES['profile_picture_path']['error'] === 4) {
+        $_FILES['profile_picture_path'] = '';
+      }
 
       header('Location: /cebroad/users/show');
       exit();
         }
-  }
+      }
 ?> 
         <div class="container">
           <div class="row">
@@ -95,20 +96,14 @@
               <div class="panel-body">
                 <div class="row">
                   <div class="col-lg-12">
-                  <!-- 登録完了を表示 -->
-                <div class="form-group">
-                <div class="col-sm-10">
-                  Thank you for your registration.
-                </div>
-                </div>
-                
-        <form id="register-form" action="" method="post" role="form" enctype="multipart/form-data" style="display: block;">
+        <form class="thanks-form" id="register-form" action="" method="post" role="form" enctype="multipart/form-data" style="display: block;">
+
           <!-- プロフィール写真 -->
           <div class="form-group">
             <label class="col-sm-4 control-label">Profile Picture</label>
               <div class="col-sm-8">
                 <input type="file" name="profile_picture_path" class="form-control">
-                <?php if (isset($error['profile_picture_path']) && $error['profile_picture_path'] === 'type'): ?>
+                <?php if (isset($error['profile_picture_path']) === 'type'): ?>
                   <p class="error">* You can choose 「.gif」「.jpg」「.png」file only.</p>
                 <?php endif; ?>
               </div>
@@ -116,8 +111,8 @@
 
           <!-- 性別 -->
             <div class="form-group">
-              <label class="col-sm-2 control-label">Gender</label>
-                <div class="col-sm-10">
+              <label class="col-sm-4 control-label">Gender</label>
+                <div class="col-sm-8">
                   <select class="form-control" name="gender">
                     <option value="0">Select Your Gender</option>
                     <option value="1">Male</option>
@@ -127,8 +122,8 @@
             </div>
           <!-- 誕生日 -->
             <div class="form-group">
-              <label class="col-sm-2 control-label">Birthday</label>
-                <div class="col-sm-10">
+              <label class="col-sm-4 control-label">Birthday</label>
+                <div class="col-sm-8">
                   <input type="date" name="birthday" class="form-control">
                   <!-- placeholder="Example:1990/01/01" -->
                 </div>
@@ -136,8 +131,8 @@
           <!-- 国籍 -->
           <!-- 国籍テーブルから外部キーとして取得 -->
             <div class="form-group">
-              <label class="col-sm-2 control-label">Nationality</label>
-                <div class="col-sm-10">
+              <label class="col-sm-4 control-label">Nationality</label>
+                <div class="col-sm-8">
                   <select class="form-control" name="nationality_id">
                         <option value="0">Select your nationality</option>
                       <?php while ($nationality = mysqli_fetch_assoc($nationalities)) { ?>
@@ -146,11 +141,11 @@
                   </select>
                 </div>
             </div>
-            <div class="col-md-6 col-md-offset-3">
+            <div class="col-md-8 col-md-offset-4">
               <input type="submit" class="btn btn-cebroad"  name="register-submit" action='' value="Add Information">
             </div>
         </form> 
-                  <div class="col-md-6 col-md-offset-3">
+                  <div class="thanks-div col-md-8 col-md-offset-4">
                     <a href="/cebroad/events/index" class="btn btn-cebroad">EVENTS</a>
                   </div>
                 </div>

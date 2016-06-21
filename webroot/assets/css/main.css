@@ -68,3 +68,12 @@ li {
 .btn-cebroad:active {
   background: rgb(235, 42, 80);
 }
+
+/* フォームの高さ */
+.thanks-form .form-group {
+  height: 50px;
+}
+
+.thanks-div {
+  margin-top: 20;
+}
