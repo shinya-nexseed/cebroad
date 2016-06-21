@@ -1,9 +1,45 @@
+#Demo1 img{
+    width: auto;
+    height: 300px;
+    overflow: hidden;
+    text-align: center;
+}
+​
+.text {
+  position: relative;
+  width: 100%;
+  height: 50%;
+  overflow: hidden;
+}
+​
+.topimg {
+  position:absolute;
+  top:-10px;
+  left:-20px;
+}
+​
+.menu{
+  background-color:#000000; 
+}
+
+
 /* custom template */
 
 .profile-image{
   width:100px;
   height:100%;
 }
+
+.profile-userpic{
+  width:150px;
+  height:150px;
+  text-align: center;
+}
+
+/*.profile-userbuttons{
+  text-align: center;
+}
+*/
 
 html, body {
    height: 100%;
@@ -79,12 +115,15 @@ hr {
 
 .navbar-blue {
     border-width:0;
-	background-color:#000000;
-    color:#ffffff;
+	 background-color:#000000;
+    color:rgba(1, 0, 0, 0.5);
     font-family:arial,sans-serif;
     top:0;
+    left:0;
     position:fixed;
     width:inherit;
+    list-style-type: none;
+    padding-left: 0;
 }
 
 .navbar-blue li > a,.navbar-toggle  {
@@ -104,22 +143,32 @@ hr {
    padding-left:0;
    padding-right:0;
 }
+
+#main .img-circle .comment{
+  margin-top:18px;
+   height:30px;
+   width:30px;
+}
+
 #main .img-circle {
-   margin-top:18px;
+   /*margin-top:18px;*/
    height:70px;
    width:70px;
 }
 
 #sidebar {
-    padding:0px;
+  padding:0px;
 	padding-top:15px;
 }
 
 #sidebar, #sidebar a, #sidebar-footer a {
-    color:#696969;
-    background-color:transparent;
+  color:#696969;
+  background-color:transparent;
 	/*text-shadow:0 0 2px #000000;*/
-    padding-left:5px;
+  /*padding-left:10px;*/
+  padding-right:15px;
+  border-right : 1px solid #ffffff;
+  /*text-align: center;*/
 }
 #sidebar .nav li>a:hover {
     background-color:#393939;
@@ -128,8 +177,8 @@ hr {
 .logo {
   display:block;
   padding:3px;
-  background-color:#fff;
-  color:#000000;
+  background-color:rgb(255, 42, 80);
+  color:#ffffff;
   height:28px;
   width:28px;
   margin:9px;
@@ -184,12 +233,12 @@ h1,h2,h3 {
 }
   
 .badge{
-   color:#000000;
-   background-color:#fff;
+   color:#ffffff;
+   background-color:rgb(255, 42, 80);
 }
 .badge:hover, .badge-inverse{
-   background-color:#000000;
-   color:#fff;
+   background-color:#ffffff;
+   color:rgb(255, 42, 80);
 }
     
 .jumbotron {
