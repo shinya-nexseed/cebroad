@@ -101,7 +101,7 @@ function h($value){
 	            	</div>
            		</div>
 	            <div class="panel-footer">
-                    <a data-original-title="Broadcast Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning" href="edit"><i class="glyphicon glyphicon-edit"></i></a>
+                    <a data-original-title="Broadcast Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning" style="background-color:#ff2a50;" href="edit"><i class="glyphicon glyphicon-edit"></i></a>
 	            </div>            
         	</div>
     	</div>
