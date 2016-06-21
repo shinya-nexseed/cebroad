@@ -57,39 +57,7 @@
     $event_users_parts[]=$result;
     }
 
-  //通知機能で表示するデータを取得
-  $sql=sprintf(
-    'SELECT users.nick_name AS partner, events.event_name AS event, notification_topics.topic AS topic, events.id AS event_id, notifications.topic_id AS topic_id ,notifications.created AS created, notifications.id AS id
-    FROM `notifications` 
-    LEFT JOIN `users` ON users.id=notifications.partner_id
-    LEFT JOIN `notification_topics` ON notifications.topic_id=notification_topics.id
-    LEFT JOIN `events` ON notifications.event_id=events.id
-    WHERE notifications.user_id=%d
-    AND `click_flag`=0 ORDER BY notifications.created DESC',
-    $_SESSION['id']
-    );
-
-  $record=mysqli_query($db, $sql)or die(mysqli_error($db));
-
-  $notifications=array();
-
-  while($result=mysqli_fetch_assoc($record)){
-    //実行結果として得られたデータを取得
-    $notifications[]=$result;
-    }
-
-  //通知内容からevent_idが呼び出されたとき、クリックした履歴としてフラグを0⇒1にする
-  if(isset($_POST['event_id'])){
-    $sql=sprintf('UPDATE `notifications` SET `click_flag`=1 WHERE `id`='.$_POST['id']);
-    $record=mysqli_query($db, $sql)or die(mysqli_error($db));
-
-    header('Location: /cebroad/events/show/'.$_POST['event_id']);
-  }
-
-  //通知画面に残っている項目数を表示するためにカウントする
-  $sql=sprintf('SELECT COUNT(*) AS cnt FROM notifications WHERE click_flag=0 AND user_id='.$_SESSION['id']);
-  $record=mysqli_query($db, $sql)or die(mysqli_error($db));
-  $cnt_notification=mysqli_fetch_assoc($record);
+  
 
 
   }else{
@@ -169,36 +137,9 @@
 
 
                             <li style="display:inline-block; float:left;" class="navbar-form navbar-right">
-                              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="badge"><i class="fa fa-bell-o fa-2x" aria-hidden="true"></i></span></a><span class="badge"><?php echo $cnt_notification['cnt']; ?></span>
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="badge"><i class="fa fa-bell-o fa-2x" aria-hidden="true"></i></span></a>
                                 <ul class="dropdown-menu">
-                                    <?php foreach ($notifications as $notification) { ?>
-                                          <li>
-                                              <div class="navbar-login">
-                                                  <div class="row">
-                                                      <div class="col-lg-12" style="color:#c0c0c0">
-                                                           <p class="text-left">
-                                                            <?php if($notification['topic_id']==1||$notification['topic_id']==2){?>
-                                                             <strong>                                     <?php echo $notification['partner'] ?></strong>
-                                                             <?php echo $notification['topic'] ?>
-                                                             <strong><?php echo $notification['event'] ?>
-                                                           </strong>
-                                                            <?php } ?>
-                                                            <?php if($notification['topic_id']==3||$notification['topic_id']==4){?>
-                                                             <strong>                                     <?php echo $notification['event'] ?></strong>
-                                                             <?php echo $notification['topic'] ?>
-                                                            <?php } ?>
-                                                           </p>
-                                                           <form method="post" action="/cebroad/events/show/<?php echo $notification['event_id']; ?>">
-                                                           <input type="hidden" name="event_id" value="<?php echo $notification['event_id']; ?>">
-                                                           <input type="hidden" name="id" value="<?php echo $notification['id']; ?>">
-                                                           <input type="submit" class="text-right btn btn-default btn-xs" value="Detail>>">
-                                                           </form>
-                                                           <p class="text-right"><?php echo $notification['created'] ?></p>
-                                                      </div>
-                                                  </div>
-                                              </div>
-                                          </li>
-                                    <?php }?> 
+                                    
                                       </ul>
                             </li>
                          
