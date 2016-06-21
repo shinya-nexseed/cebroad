@@ -23,12 +23,14 @@ if(!empty($id)){
   }
 
 //コメント情報を取得（commentsのuser_idとusersのidを結合し、commentsテーブルのevent_idが$idと一緒の時$commentsにcomments情報を格納）
-  $sql=sprintf('SELECT * FROM `comments` LEFT JOIN `users` ON `comments`.`user_id`=`users`.`id` WHERE event_id='.$id.' ORDER BY comments.created DESC');
+  $sql=sprintf('SELECT * FROM `comments` JOIN `users` ON comments.user_id=users.person_id WHERE event_id='.$id.' ORDER BY comments.created DESC');
   $record=mysqli_query($db, $sql)or die(mysqli_error($db));
   $comments=array();
   while($result=mysqli_fetch_assoc($record)){
     $comments[]=$result;
   }
+
+ var_dump($comments);
 
 //対象$idイベンのlike数を取得
   $sql = sprintf('SELECT COUNT(*) AS cnt FROM likes WHERE event_id=%d',
