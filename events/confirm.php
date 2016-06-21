@@ -8,7 +8,8 @@
  	$a = array();
  	$a = $_SESSION['events'];
 
- 	if($a['pic1']['error'] === 0) {
+
+ 	if ($a['pic1']['error'] === 0) {
  	$name1 = dirname(__FILE__).'/events_pictures/'.sha1(mt_rand() . microtime()).'.'.$a['pic1']['ext'];
  	$decoded1 = $a['pic1']['content'];
  	file_put_contents($name1, $decoded1, LOCK_EX);
@@ -16,10 +17,10 @@
  	$a['pic1_path'] = $path1;
  		
  	} else if ($a['pic1']['error'] === 4) {
- 		$a['pic1_path'] = '';
+ 		$a['pic1_path'] = '/cebroad/webroot/assets/events/img/default.jpg';
  	}
 
- 	if($a['pic2']['error'] === 0) {
+ 	if ($a['pic2']['error'] === 0) {
  	$name2 = dirname(__FILE__).'/events_pictures/'.sha1(mt_rand() . microtime()).'.'.$a['pic2']['ext'];
  	$decoded2 = $a['pic2']['content'];
  	file_put_contents($name2, $decoded2, LOCK_EX);
@@ -27,10 +28,10 @@
  	$a['pic2_path'] = $path2;
  		
  	} else if ($a['pic2']['error'] === 4) {
- 		$$a['pic2_path'] = '';
+ 		$a['pic2_path'] = '';
  	}
 
- 	if($a['pic3']['error'] === 0) {
+ 	if ($a['pic3']['error'] === 0) {
  	$name3 = dirname(__FILE__).'/events_pictures/'.sha1(mt_rand() . microtime()).'.'.$a['pic3']['ext'];
  	$decoded3 = $a['pic3']['content'];
  	file_put_contents($name3, $decoded3, LOCK_EX);
@@ -122,9 +123,11 @@ if ($_SESSION['events']['pic3']['error'] === 0) {
 			<label>Map</label>
 			<br>
 			<img class="img-responsive events-pad" src="https://maps.googleapis.com/maps/api/staticmap?center=<?=h($lat)?>%2C<?=h($lng)?>&zoom=16&size=1000x600&key=AIzaSyDf24saS_c-qe8Qy4QPgVbTub1sJi02ov8&markers=<?=h($lat)?>%2C<?=h($lng)?>">
-
+			<label>Picture1</label>
 			<?=$pic1?>
+			<label>Picture2</label>
 			<?=$pic2?>
+			<label>Picture3</label>
 			<?=$pic3?>
 		</div>
 		<form method="post">

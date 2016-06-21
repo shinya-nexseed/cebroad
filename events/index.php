@@ -4,7 +4,6 @@
 	$rtn = array();
 	while($result = mysqli_fetch_assoc($records)) {
 	  $rtn[] = $result;
-
 	 }
  ?>
 
@@ -18,6 +17,7 @@
         			<button class="btn btn-cebroad pull-right " onclick="location.href='/cebroad/events/add'">Create a new event</button>
         		</div>
     			<?php foreach ($rtn as $event): ?>
+
     				<div class="col-sm-4 col-md-4">				
                         <div class="panel panel-default">
                         	<div class="panel-thumbnail"><img class="img-responsive" src="<?=h($event['picture_path_1'])?>"></div>

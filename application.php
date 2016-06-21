@@ -3,7 +3,7 @@
   require('dbconnect.php');
   // 仮ログインデータ
   // DBのusersテーブルにid = 1のデータを登録しておく
-  $_SESSION['id'] = 1;
+  //$_SESSION['id'] = 1;
   function h($val) {
   return htmlspecialchars($val, ENT_QUOTES, 'UTF-8');
 }
@@ -28,7 +28,7 @@ if ( !function_exists('mime_content_type') ) {
 <body>
   <?php
    $url = dirname(__FILE__).'/'.$resource.'/'.$action.'.php';
-     if (@file_get_contents($url) !== false):?>
+     if (@file_get_contents($url)):?>
     <?php require($url); ?>
     <?php else: ?>
       <h1>Sorry, we couldn't find that page.</h1>

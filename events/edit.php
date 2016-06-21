@@ -1,13 +1,19 @@
 <?php 
-$sql = sprintf("SELECT * FROM events WHERE id=%d",
-		mysqli_real_escape_string($db, $id)
-	);
-$rtn = mysqli_query($db, $sql) or die('Failed to connect a detabase');
-$event = mysqli_fetch_assoc($rtn);
-
-if ((int)$_SESSION['id'] !== (int)$event['organizer_id']) {
-	header('Location: /cebroad/events/index');
+if (!isset($_SESSION['id'])) {
+  header('Location: /cebroad/index');
 }
+if ($id !== 'rewrite') {
+  $sql = sprintf("SELECT * FROM events WHERE id=%d",
+  		mysqli_real_escape_string($db, $id)
+  	);
+  $rtn = mysqli_query($db, $sql) or die('Failed to connect a detabase');
+  $event = mysqli_fetch_assoc($rtn);
+
+  if ((int)$_SESSION['id'] !== (int)$event['organizer_id']) {
+  	header('Location: /cebroad/events/index');
+  }
+}
+
 
   $errors = Array();
   
@@ -60,7 +66,7 @@ if ((int)$_SESSION['id'] !== (int)$event['organizer_id']) {
 
     }
 
-    if (empty($_POST['place_name']) || empty($_POST['lat']) || empty($_POST['lng'])) {
+    if (empty($_POST['place_name']) || empty($_POST['latitude']) || empty($_POST['longitude'])) {
         $e = e('Please specify a place.', $e);
     }
 
@@ -124,17 +130,13 @@ if ((int)$_SESSION['id'] !== (int)$event['organizer_id']) {
     
         $_SESSION['events'] = $_POST + $_FILES;
 
-        header('Location: /cebroad/events/confirm');
+      header('Location: /cebroad/events/confirm');
       exit();
     } catch (Exception $e) {
     exception_to_array($e);
   }
 }
 
-  if (isset($_REQUEST['action']) && $_REQUEST['action'] === 'rewrite') {
-    $_POST = $_SESSION['events'];
-    $errors['rewrite'] = true;
-  }
 
   $title = '';
   $date = '';
@@ -147,9 +149,10 @@ if ((int)$_SESSION['id'] !== (int)$event['organizer_id']) {
   $lng =  '';
   $detail = '';
 
+
   if ($id === 'rewrite') {
     $_POST = $_SESSION['events'];
-  } else if (!isset($_POST['post_check'])){
+  } else if (!isset($_POST['post_check'])) {
   	$_POST = $event;
   }
 
@@ -262,7 +265,7 @@ var_dump($errors);
         <div class="col-sm-8 col-md-8">
             <div class="form-group">
                 <label class="cebroad-pink">detail</label>
-                <textarea name="detail" id="detail" class="form-control" rows="6" required><?=h($detail)?></textarea>
+                <textarea name="detail" id="detail" class="form-control" rows="10" required><?=h($detail)?></textarea>
             </div>
         </div>
 
@@ -320,11 +323,11 @@ var_dump($errors);
             <div class="form-group">
                 <a href="/cebroad/events/index">Back</a>
                 <input type="submit" id="confirm" class="btn btn-cebroad" disabled="disabled" value="confirm">
-                <img src="/cebroad/webroot/assets/events/gif/loading.gif" id="loading" style="display: none;">
+                <img src="/cebroad/webroot/assets/events/img/loading.gif" id="loading" style="display: none;">
             </div>
         </div>
  
       </div>
     </form>
 </div>
-<script src="/cebroad/webroot/assets/events/js/add.js"></script>
+<script src="/cebroad/webroot/assets/events/js/events.js"></script>

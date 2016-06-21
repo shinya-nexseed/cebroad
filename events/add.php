@@ -50,7 +50,7 @@
 
     }
 
-    if (empty($_POST['place_name']) || empty($_POST['lat']) || empty($_POST['lng'])) {
+    if (empty($_POST['place_name']) || empty($_POST['latitude']) || empty($_POST['longitude'])) {
         $e = e('Please specify a place.', $e);
     }
 
@@ -95,6 +95,32 @@
             $e = e('picture'.$i.'のファイル形式が不正です', $e);
           }
 
+
+    $image = '';
+    switch ($ext) {
+      case 'png':
+        $image = imagecreatefrompng($_FILES[$pic]['tmp_name']);
+        break;
+      case 'jpg' or 'jpeg':
+        $image = imagecreatefromjpeg($_FILES[$pic]['tmp_name']);
+        break;
+  }
+    list($width, $height) = getimagesize($_FILES[$pic]['tmp_name']);
+
+    $new_width = 800;
+
+    $new_height = 600;
+
+    $new_image = ImageCreateTrueColor($new_width, $new_height);
+ 
+    ImageCopyResampled($new_image, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
+
+    ImageJPEG($new_image, $_FILES[$pic]['tmp_name'], 100);
+ 
+    ImageDestroy($image);
+
+    ImageDestroy($new_image);
+
       $_FILES[$pic]['content'] = file_get_contents($_FILES[$pic]['tmp_name']);
       $_FILES[$pic]['ext'] = $ext;
     } else if ($_FILES[$pic]['error'] !== 4) {
@@ -117,20 +143,19 @@
         header('Location: /cebroad/events/confirm');
       exit();
     } catch (Exception $e) {
-    exception_to_array($e);
+    die(var_dump(exception_to_array($e)));
   }
 }
 
-  if (isset($_REQUEST['action']) && $_REQUEST['action'] === 'rewrite') {
-    $_POST = $_SESSION['events'];
-    $errors['rewrite'] = true;
-  }
+  $sql = "SELECT * FROM event_categories";
+  $rtn = mysqli_query($db, $sql) or die('Sorry, something wrong happened. Please retry.');
 
   $title = '';
   $date = '';
   $starting_time = '';
   $closing_time = '';
   $capacity = '';
+  $category = '1';
   $place = '';
   $place_name = '';
   $lat = '';
@@ -155,6 +180,9 @@
     }
     if (!empty($_POST['capacity'])) {
       $title = $_POST['capacity'];
+    }
+    if (!empty($_POST['category'])) {
+      $title = $_POST['category'];
     }
     if (!empty($_POST['place'])) {
        $place = $_POST['place'];
@@ -230,14 +258,26 @@ var_dump($errors);
 
         </div>
 
+        <div class="col-sm-4 col-md-4">
+            <label class="cebroad-pink">Category</label>
+            <div class="form-group">
+                <select name="category" id="category" class="form-control">
+                  <?php while ($cat = mysqli_fetch_assoc($rtn)): ?>
+                  <option value="<?=$cat['id']?>" 
+                  <?php if ($category === $cat['id'])?>
+                  ><?=$cat['name']?></option>
+                  <<?php endwhile; ?>
+                </select>
+            </div>
+        </div>
 
         <div class="col-sm-4 col-md-4">
             <label>Capacity</label>
             <div class="form-group">
-                <input type="number" name="capacity" id="capacity" class="form-control " min="1" value="<?=h($capacity)?>">
+                <input type="number" name="capacity" id="capacity" class="form-control" min="1" value="<?=h($capacity)?>">
             </div>
         </div>
-
+        
         <div class="col-sm-8 col-md-8">
             <label class="cebroad-pink">Place</label>
             <div class="form-group">
@@ -248,11 +288,11 @@ var_dump($errors);
         <div class="col-sm-8 col-md-8">
             <div class="form-group">
                 <label class="cebroad-pink">detail</label>
-                <textarea name="detail" id="detail" class="form-control" rows="6" value="<?=h($detail)?>" required></textarea>
+                <textarea name="detail" id="detail" class="form-control" rows="6" required><?=h($detail)?></textarea>
             </div>
         </div>
 
-        <div class="col-sm-8 col-md-8">
+        <div class="col-sm-8 col-md-8"> 
             <label>Picture1</label>
             <input class="pic" name="pic1" id="pic1" type="file" style="display:none">
             <div class="input-group">
@@ -305,11 +345,11 @@ var_dump($errors);
             <div class="form-group">
                 <a href="/cebroad/events/index">Back</a>
                 <input type="submit" id="confirm" class="btn btn-cebroad" disabled="disabled" value="confirm">
-                <img src="/cebroad/webroot/assets/events/gif/loading.gif" id="loading" style="display: none;">
+                <img src="/cebroad/webroot/assets/events/img/loading.gif" id="loading" style="display: none;">
             </div>
         </div>
  
       </div>
     </form>
-</div>
-<script src="/cebroad/webroot/assets/events/js/add.js"></script>
+  </div>
+<script src="/cebroad/webroot/assets/events/js/events.js"></script>
