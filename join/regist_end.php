@@ -51,10 +51,10 @@ if (count($errors) === 0){
 	$mail = 'pre_member@cebroad.sakura.ne.jp';
 	$subject = "[Cebroad]Call for registration";
  
-$body = <<< EOM
+	$body = <<< EOM
 
-Please click on the link for your registration within 24hours. Thank you.
-{$url}
+	Please click on the link for your registration within 24hours. Thank you.
+	{$url}
 EOM;
  
 	mb_language('ja');
@@ -108,7 +108,7 @@ EOM;
                 <?php if (count($errors) === 0): ?>
                 	<p><?=$message?></p>
                 <?php elseif (count($errors) > 0): ?>
-                <p>Failed to send an email.</p>
+                	<p>Failed to send an email.</p>
             	<?php endif; ?>
 
 

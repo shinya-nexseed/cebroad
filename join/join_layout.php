@@ -4,7 +4,7 @@
   // 仮ログインデータ
   // DBのusersテーブルにid = 1のデータを登録しておく
   //$_SESSION['id'] = 1;
-  echo 'join_layout通過ほげ';
+  // echo 'join_layout通過ほげ';
 ?>
 
 <!DOCTYPE html>
