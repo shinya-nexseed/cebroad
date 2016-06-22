@@ -403,6 +403,7 @@ var_dump($a);
                 <label class="cebroad-pink">detail</label>
                 <textarea name="detail" id="detail" class="form-control" rows="10" required placeholder="500 character limit"><?=h($detail)?></textarea>
                 <p id="detail_count"></p>
+                <p class="cebroad-pink">Type the name of the event location then you see options below the form. You might not see correct options in case the internet is slow. In that case please reload the page.</p>
             </div>
         </div>
 

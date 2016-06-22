@@ -322,6 +322,7 @@ $year = date('Y-m-d', strtotime("+1year"));
             <div class="form-group">
                 <label class="cebroad-pink">Place</label>
                 <input id="searchTextField" type="text" name="place" id="place" class="form-control" value="<?=h($place)?>" required>
+                <p class="cebroad-pink">Type the name of the event location then you see options below the form. You might not see correct options in case the internet is slow. In that case please reload the page.</p>
             </div>
         </div>
         <img src="/cebroad/webroot/assets/events/img/loading.gif" id="loading" style="display: none;">
