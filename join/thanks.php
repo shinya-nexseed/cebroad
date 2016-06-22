@@ -22,7 +22,9 @@
       exit();
     }
 
+    //アップデート処理
     $error = Array();
+
     if (!empty($_POST)) {
       //項目が空で送信された場合の処理
       if ($_POST['gender'] === '0') {
@@ -41,18 +43,16 @@
             $ext = substr($fileName, -3);
             if ($ext !== 'jpg' && $ext !== 'gif' && $ext !== 'png') {
               $error['profile_picture_path'] = 'type';
-
-              //move_uploaded_file関数でアップロード
             }
         }
     }
       //エラーがなければ
-      if (!empty($_POST) && empty($error)) {
+      if (empty($error)) {
         //画像が選択されていれば
         if(!empty($fileName)){
           //画像のアップロード
           $picture = date('YmdHis').$_FILES['profile_picture_path']['name'];
-          move_uploaded_file($_FILES['profile_picture_path']['name'],'../users/profile_pictures/'.$picture);
+          move_uploaded_file($_FILES['profile_picture_path']['tmp_name'],'./users/profile_pictures/'.$picture);
         } else {
           $picture = $user['profile_picture_path'];
         } 
@@ -92,7 +92,7 @@
 
       }
 
-      header('Location: /cebroad/users/show');
+      // header('Location: /cebroad/users/show');
       exit();
         }
       }
