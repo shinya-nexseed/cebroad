@@ -14,11 +14,11 @@
 
             <div class="col-sm-10 col-md-10">
         		<div class="col-sm-12 col-md-12 events-pad">
-        			<button class="btn btn-cebroad pull-right " onclick="location.href='/cebroad/events/add'">Create a new event</button>
+        			<button class="btn btn-cebroad pull-right "onclick="location.href='/cebroad/events/add'">Create a new event</button>
         		</div>
     			<?php foreach ($rtn as $event): ?>
 
-    				<div class="col-sm-4 col-md-4">				
+    				<div class="col-sm-6 col-md-4">				
                         <div class="panel panel-default">
                         	<div class="panel-thumbnail"><img class="img-responsive" src="<?=h($event['picture_path_0'])?>"></div>
                                 <div class="panel-body">

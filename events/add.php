@@ -1,7 +1,6 @@
 <?php
   $errors = array();
   $error_messages = array();
-  echo $_SESSION['id'];
   
   //例外を返す関数
   function e($message, $previous = null) {
@@ -239,7 +238,6 @@
 
 $now = date('Y-m-d');
 $year = date('Y-m-d', strtotime("+1year"));
-//var_dump($errors);
  ?>
 <script src="/cebroad/webroot/assets/js/jquery-1.12.4.min.js"></script>
 <script src="http://maps.googleapis.com/maps/api/js?libraries=places&output?json&region=ph&language=en&key=AIzaSyDf24saS_c-qe8Qy4QPgVbTub1sJi02ov8"></script>
@@ -272,7 +270,7 @@ $year = date('Y-m-d', strtotime("+1year"));
         <div class="col-sm-4 col-md-4">            
             <div class="form-group">
                 <label class="cebroad-pink">Date</label>
-                <input type="date" name="date" id="date" class="form-control " min="<?php echo $now; ?>" max="<?php echo $year; ?>" value="<?=h($date)?>" required>
+                <input type="date" name="date" id="date" class="form-control " min="<?=$now?>" max="<?=$year?>" value="<?=h($date)?>" required>
             </div>
         </div>
 
