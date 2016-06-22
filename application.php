@@ -322,7 +322,7 @@
                           
                           <?php
                             if (DEBUG) { // development
-                                $url = dirname(__FILE__).'/views/'.$resource.'/'.$action.'.php';
+                                $url = dirname(__FILE__).$resource.'/'.$action.'.php';
                             } else { // production
                                 $dir_path_org = dirname(__FILE__);
                                 $dir_path = str_replace('/portfolio','',$dir_path_org);
