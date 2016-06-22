@@ -1,4 +1,7 @@
 <?php
+	session_start();
+	define('DEBUG', FALSE); //環境切り替え用 TRUEで開発環境モード
+
 	$params = explode('/', $_GET['url']);
 	$resource = $params[0];
 	$action = "";
@@ -13,17 +16,17 @@
 	if (isset($_POST) && !empty($_POST)) {
 		$post = $_POST;
 	}
-	if ($resource === 'index' || $resource === '') {
-		require('index.php');
-	} else {
-		if($resource === 'login'){
-			require('login.php');
-		}
-		else if($resource === 'logout'){
-			require('logout.php');
-		}
-		else{
-		require('application.php'); 
-		}
-	}
+
+  if ($resource === 'index' || $resource === '') {
+    require('index.php');
+  } else {
+    if($resource === 'login'){
+      require('login.php');
+    }
+    else if($resource === 'logout'){
+      require('logout.php');
+    } else{
+      require('application.php');
+    }
+  }
 ?>
