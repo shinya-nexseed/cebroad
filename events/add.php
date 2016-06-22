@@ -1,5 +1,7 @@
 <?php
-  $errors = Array();
+  $errors = array();
+  $error_messages = array();
+  echo $_SESSION['id'];
   
   //例外を返す関数
   function e($message, $previous = null) {
@@ -13,63 +15,97 @@
       } while ($e = $e->getPrevious());
       return array_reverse($errors);
     }
+  //第一引数(日付や時刻)を第二引数の日付・時刻フォーマットと照合し一致すればtrueを返す関数
+  function validateDateTime($date, $format = 'Y-m-d H:i:s') {
+    $d = DateTime::createFromFormat($format, $date);
+    return $d && $d->format($format) === $date;
+    }
 
 
 
   if (!empty($_POST)) {
   try{
     $e = null;
-    if (isset($_POST['title'])) {
-        $title = trim(mb_convert_kana($_POST['title'], "s", 'UTF-8'));
-        if ($title === '') {
-            $e = e('Please input a title.', $e);
-        } else {
-          $_POST['title'] = $title;
-        }
+    if (!isset($_POST['title'])) {
+      $e = e('Please input a title.', $e);
     } else {
-        $e = e('Please input a title.', $e);
+        $_POST['title'] = trim(mb_convert_kana($_POST['title'], "s", 'UTF-8'));
+        if ($_POST['title'] === '') {
+            $e = e('Please input a title.', $e);
+            } else if (strlen($_POST['title']) > 50) {
+              $e = e('The title is over 50 characters.', $e);
+        }
     }
 
 
-    if (isset($_POST['detail'])) {
-        $detail = trim(mb_convert_kana($_POST['detail'], "s", 'UTF-8'));
-        if ($detail === '') {
-            $e = e('Please input a detail.', $e);
-        } else {
-          $_POST['detail'] = $detail;
-        }
+    if (!isset($_POST['detail'])) {
+      $e = e('Please input a detail.', $e);
     } else {
-        $e = e('Please input a detail.', $e);
+        $_POST['detail'] = trim(mb_convert_kana($_POST['detail'], "s", 'UTF-8'));
+        if ($_POST['detail'] === '') {
+            $e = e('Please input a detail.', $e);
+              } else if (strlen($_POST['detail']) > 500) {
+                $e = e('The detail is over 500 characters.', $e);
+            }
+        }
+
+    if (empty($_POST['date'])) {
+      $e = e('Please input a date.', $e);
+    } else {
+      if (!validateDateTime($_POST['date'], 'Y-m-d')) {
+        $e = e('The form of the date is wrong.', $e);
+      }
     }
 
     if (empty($_POST['starting_time'])) {
-        $e = e('Please specify a starting time.', $e);
+        $e = e('Please input a starting time.', $e);
+    } else {
+      if (!validateDateTime($_POST['starting_time'], 'H:i')) {
+        $e = e('The form of starting time is wrong.', $e);
+      }
     }
 
     if (!empty($_POST['closing_time'])) {
-
+      if (!validateDateTime($_POST['closing_time'], 'H:i')) {
+        $e = e('The form of closing time is wrong.', $e);
+      }
     }
 
     if (empty($_POST['place_name']) || empty($_POST['latitude']) || empty($_POST['longitude'])) {
-        $e = e('Please specify a place.', $e);
+        $e = e('Please input a place.', $e);
+    } else {
+      if (gettype(floatval($_POST['latitude'])) !== 'double' || gettype(floatval($_POST['longitude'])) !== 'double') {
+        $e = e('The parameter of place is wrong.', $e);
+      }
     }
 
     if (!empty($_POST['capacity'])) {
+      $_POST['capacity'] = ltrim(mb_convert_kana($_POST['capacity'], "n", 'UTF-8'), '0');
       if (!ctype_digit(strval($_POST['capacity']))) {
           $e = e('The value of the capacity is invalid.', $e);
+        } else if (strlen($_POST['capacity'] > 5)) {
+            $e = e('The capacity is over 5 digit.', $e);
+        }
+      }
+
+    if (empty($_POST['category'])) {
+      $e = e('Please select a category.', $e);
+    } else {
+        if (!ctype_digit(strval($_POST['category']))) {
+          $e = e('The value of the category is invalid.', $e);
       }
     }
 
     for ($i=0; $i<4; $i++) {
 
     $pic = 'pic'.$i;
-    // 未定義である・複数ファイルである・$_FILES Corruption 攻撃を受けた
+    // 未定義である・1つのinputタグに対し複数ファイルである・$_FILES Corruption 攻撃を受けた
     // どれかに該当していれば不正なパラメータとして処理する
     if (
         !isset($_FILES[$pic]['error']) ||
         !is_int($_FILES[$pic]['error'])
     ) {
-        $e = e('picture'.$i.'のパラメータが不正です', $e);
+        $e = e('The parameter of picture'.$i.' is wrong.', $e);
     }
     if ($_FILES[$pic]['error'] === 0) {
 
@@ -77,7 +113,7 @@
     // ここで定義するサイズ上限のオーバーチェック
     // (必要がある場合のみ)
     if ($_FILES[$pic]['size'] > 10485760) {
-        $e = e('picture'.$i.'のファイルサイズが大きすぎます', $e);
+        $e = e('The filesize of picture'.$i.' is over 10MB.', $e);
     }
 
 
@@ -92,7 +128,7 @@
             ),
             true
         )) {
-            $e = e('picture'.$i.'のファイル形式が不正です', $e);
+            $e = e('The extension of picture'.$i.'is wrong.', $e);
           }
 
 
@@ -127,9 +163,9 @@
       switch($_FILES[$pic]['error']) {
         case UPLOAD_ERR_INI_SIZE:  // php.ini定義の最大サイズ超過
         case UPLOAD_ERR_FORM_SIZE: //form定義の最大サイズ超過
-          $e = e('picture'.$i.'のファイルサイズが大きすぎます。');
+          $e = e('The filesize of picture'.$i.' is over 10MB.', $e);
         default:
-          $e = e('picture'.$i.'にその他のエラーが発生しました。');
+          $e = e('Something wrong happened with picture'.$i.'.', $e);
       }
     }
   }
@@ -143,7 +179,7 @@
         header('Location: /cebroad/events/confirm');
       exit();
     } catch (Exception $e) {
-    die(var_dump(exception_to_array($e)));
+    $error_messages = exception_to_array($e);
   }
 }
 
@@ -179,7 +215,7 @@
       $closing_time = $_POST['closing_time'];
     }
     if (!empty($_POST['capacity'])) {
-      $title = $_POST['capacity'];
+      $capacity = $_POST['capacity'];
     }
     if (!empty($_POST['category'])) {
       $category = $_POST['category'];
@@ -228,27 +264,28 @@ $year = date('Y-m-d', strtotime("+1year"));
         <div class="col-sm-8 col-md-8">
             <div class="form-group">
                 <label class="cebroad-pink">Title</label>
-                <input type="text" name="title" id="title" class="form-control" required value="<?=h($title)?>">
+                <input type="text" name="title" id="title" class="form-control" required value="<?=h($title)?>" placeholder="50 character limit">
+                <p id="title_count"></p>
             </div>
         </div>
 
-        <div class="col-sm-4 col-md-4">
-            <label class="cebroad-pink">Date</label>
+        <div class="col-sm-4 col-md-4">            
             <div class="form-group">
+                <label class="cebroad-pink">Date</label>
                 <input type="date" name="date" id="date" class="form-control " min="<?php echo $now; ?>" max="<?php echo $year; ?>" value="<?=h($date)?>" required>
             </div>
         </div>
 
 
-        <div class="col-sm-2 col-md-2">
-            <label class="cebroad-pink">Starting time</label>
+        <div class="col-sm-2 col-md-2">            
             <div class="form-group">
+                <label class="cebroad-pink">Starting time</label>
                 <input type="time" name="starting_time" id="starting_time" class="form-control" value="<?=h($starting_time)?>" required>
             </div>
         </div>
-        <div class="col-sm-2 col-md-2">
-                <label id="closing_time_label">Closing time</label>
+        <div class="col-sm-2 col-md-2">                
                 <div class="form-group">
+                    <label>Closing time</label>
                     <input type="time" name="closing_time" id="closing_time" class="form-control" id="closing_time" value="<?=h($closing_time)?>">
                 </div>
 
@@ -258,9 +295,9 @@ $year = date('Y-m-d', strtotime("+1year"));
 
         </div>
 
-        <div class="col-sm-4 col-md-4">
-            <label class="cebroad-pink">Category</label>
+        <div class="col-sm-4 col-md-4">            
             <div class="form-group">
+                <label class="cebroad-pink">Category</label>
                 <select name="category" id="category" class="form-control">
                   <?php while ($cat = mysqli_fetch_assoc($rtn)): ?>
                   <option value="<?=$cat['id']?>" 
@@ -273,16 +310,17 @@ $year = date('Y-m-d', strtotime("+1year"));
             </div>
         </div>
 
-        <div class="col-sm-4 col-md-4">
-            <label>Capacity</label>
+        <div class="col-sm-4 col-md-4">          
             <div class="form-group">
-                <input type="number" name="capacity" id="capacity" class="form-control" min="1" value="<?=h($capacity)?>">
+                <label>Capacity</label>
+                <input type="number" name="capacity" id="capacity" class="form-control" min="1" value="<?=h($capacity)?>" placeholder="5 digit limit">
+                <p id="capacity_count"></p>
             </div>
         </div>
         
-        <div class="col-sm-8 col-md-8">
-            <label class="cebroad-pink">Place</label>
+        <div class="col-sm-8 col-md-8">            
             <div class="form-group">
+                <label class="cebroad-pink">Place</label>
                 <input id="searchTextField" type="text" name="place" id="place" class="form-control" value="<?=h($place)?>" required>
             </div>
         </div>
@@ -291,12 +329,13 @@ $year = date('Y-m-d', strtotime("+1year"));
         <div class="col-sm-8 col-md-8">
             <div class="form-group">
                 <label class="cebroad-pink">detail</label>
-                <textarea name="detail" id="detail" class="form-control" rows="6" required><?=h($detail)?></textarea>
+                <textarea name="detail" id="detail" class="form-control" rows="6" required placeholder="500 character limit"><?=h($detail)?></textarea>
+                <p id="detail_count"></p>
             </div>
         </div>
 
         <div class="col-sm-8 col-md-8">
-            <label>Thumbnail picture</label>
+            <label>Thumbnail picture(Picture0)</label>
             <input class="pic" name="pic0" id="pic0" type="file" style="display:none">
             <div class="input-group">
               <input type="text" id="photoCover0" class="form-control" placeholder="Select jpg or png(Maximum of 10MB)">
@@ -352,9 +391,9 @@ $year = date('Y-m-d', strtotime("+1year"));
             <input id=lat type="hidden" name="latitude" value="<?=h($lat)?>">
             <input id=lng type="hidden" name="longitude" value="<?=h($lng)?>">
         </div>
-
-        <?php foreach($errors as $error): ?>
-          <p class="cebroad-pink"><?=$error?></p>
+        <?php foreach($error_messages as $error): ?>
+          <label class="cebroad-pink"><?=$error?></label>
+          <br>
         <?php endforeach; ?>
 
         <div class="col-sm-8 col-md-8" class="events-pad";>

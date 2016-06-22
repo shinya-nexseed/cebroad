@@ -6,51 +6,26 @@
 
  $a = array();
  $a = $_SESSION['events'];
+
  if (isset($_POST['submit'])) {
-
- 	 	if ($a['pic0']['error'] === 0) {
- 	$name0 = dirname(__FILE__).'/events_pictures/'.sha1(mt_rand() . microtime()).'.jpg';
- 	$decoded0 = $a['pic0']['content'];
- 	file_put_contents($name0, $decoded0, LOCK_EX);
- 	$path0 = mb_substr($name0, strpos($name0, 'cebroad')-1);
- 	$a['pic0_path'] = $path0;
+ 	for ($i=0; $i<4; $i++) {
+ 	 	if ($a['pic'.$i]['error'] === 0) {
+ 	$name = dirname(__FILE__).'/events_pictures/'.sha1(mt_rand() . microtime()).'.jpg';
+ 	if (file_put_contents($name, $a['pic'.$i]['content'], LOCK_EX)) {
+ 		${"path".$i} = mb_substr($name, strpos($name, 'cebroad')-1);
+ 		$a["pic".$i."_path"] = ${"path".$i};
+ 	} else {
+ 		die("Failed to upload pictures. I'm afraid please retry.");
+ 	}
  		
- 	} else if ($a['pic0']['error'] === 4) {
+ 	} else if ($a['pic'.$i]['error'] === 4) {
+ 		if ($i === 0) {
  		$a['pic0_path'] = '/cebroad/webroot/assets/events/img/default.jpg';
+ 		} else {
+ 		 $a["pic".$i."_path"] = '';
+ 		} 
  	}
-
- 	if ($a['pic1']['error'] === 0) {
- 	$name1 = dirname(__FILE__).'/events_pictures/'.sha1(mt_rand() . microtime()).'.jpg';
- 	$decoded1 = $a['pic1']['content'];
- 	file_put_contents($name1, $decoded1, LOCK_EX);
- 	$path1 = mb_substr($name1, strpos($name1, 'cebroad')-1);
- 	$a['pic1_path'] = $path1;
- 		
- 	} else if ($a['pic1']['error'] === 4) {
- 		$a['pic1_path'] = '';
- 	}
-
- 	if ($a['pic2']['error'] === 0) {
- 	$name2 = dirname(__FILE__).'/events_pictures/'.sha1(mt_rand() . microtime()).'.jpg';
- 	$decoded2 = $a['pic2']['content'];
- 	file_put_contents($name2, $decoded2, LOCK_EX);
- 	$path2 = mb_substr($name2, strpos($name2, 'cebroad')-1);
- 	$a['pic2_path'] = $path2;
- 		
- 	} else if ($a['pic2']['error'] === 4) {
- 		$a['pic2_path'] = '';
- 	}
-
- 	if ($a['pic3']['error'] === 0) {
- 	$name3 = dirname(__FILE__).'/events_pictures/'.sha1(mt_rand() . microtime()).'.jpg';
- 	$decoded3 = $a['pic3']['content'];
- 	file_put_contents($name3, $decoded3, LOCK_EX);
- 	$path3 = mb_substr($name3, strpos($name3, 'cebroad')-1);
- 	$a['pic3_path'] = $path3;
- 		
- 	} else if ($a['pic3']['error'] === 4) {
- 		$a['pic3_path'] = '';
- 	}
+ }
 
  	if(!isset($a['closing_time'])) {
  		$a['closing_time'] = '';
@@ -59,7 +34,7 @@
   	if(!isset($a['capacity'])) {
  		$a['capacity'] = '';
  	}
-$sql = sprintf("INSERT INTO events SET title='%s', detail='%s', date='%s', starting_time='%s', closing_time='%s', place_name='%s', latitude='%s', longitude='%s', thumbnail_path='%s', picture_path_1='%s', picture_path_2='%s', picture_path_3='%s', capacity_num=%d, organizer_id=%d, event_category_id=%d, created=now()",
+$sql = sprintf("INSERT INTO events SET title='%s', detail='%s', date='%s', starting_time='%s', closing_time='%s', place_name='%s', latitude='%s', longitude='%s', picture_path_0='%s', picture_path_1='%s', picture_path_2='%s', picture_path_3='%s', capacity_num=%d, organizer_id=%d, event_category_id=%d, created=now()",
 	mysqli_real_escape_string($db, $a['title']),
 	mysqli_real_escape_string($db, $a['detail']),
 	mysqli_real_escape_string($db, $a['date']),
@@ -76,15 +51,17 @@ $sql = sprintf("INSERT INTO events SET title='%s', detail='%s', date='%s', start
 	mysqli_real_escape_string($db, $_SESSION['id']),
 	mysqli_real_escape_string($db, $a['category'])
 	);
-	mysqli_query($db, $sql) or die('Sorry, something wrong happened. Please try again.');
+	mysqli_query($db, $sql) or die('<h1>Sorry, something wrong happened. Please retry.</h1>');
 
 	unset($_SESSION['events']);
 
-	//本来は自分の作ったイベント一覧のページに飛ばすが、一時的にindexにしている
-	header('Location:/cebroad/events/index');
-	exit();
+	$sql = sprintf("SELECT id FROM events WHERE organizer_id=%d ORDER BY created DESC",
+	mysqli_real_escape_string($db, $_SESSION['id']));
+	$rtn = mysqli_query($db, $sql) or die('<h1>Sorry, something wrong happened. Please retry.</h1>');
+	$new_event = mysqli_fetch_assoc($rtn);
 
-// 	//exit();
+	header('Location: /cebroad/events/show/'.$new_event['id']);
+	exit();
 }
 
 
@@ -100,7 +77,7 @@ $pic2 = '';
 $pic3 = '';
 
 $sql = "SELECT * FROM event_categories";
-$rtn = mysqli_query($db, $sql) or die('Sorry, something wrong happened. Please retry.');
+$rtn = mysqli_query($db, $sql) or die('<h1>Sorry, something wrong happened. Please retry.</h1>');
 
 while ($cat = mysqli_fetch_assoc($rtn)) {
 	if ($cat['id'] === $a['category']) {
@@ -115,28 +92,12 @@ if (!empty($a['capacity'])) {
 	$capacity = 'Capacity:'.$a['capacity'];
 }
 
-if ($a['pic0']['error'] === 0) {
-	$base64_0 = base64_encode($a['pic0']['content']);
-	$a['pic0']['file'] = $base64_0;
-	$pic0 = "<img class='img-responsive events-pad' src=\"data:image/jpeg;base64,${base64_0}\">";
-}
-
-if ($a['pic1']['error'] === 0) {
-	$base64_1 = base64_encode($a['pic1']['content']);
-	$a['pic1']['file'] = $base64_1;
-	$pic1 = "<img class='img-responsive events-pad' src=\"data:image/jpeg;base64,${base64_1}\">";
-}
-if ($a['pic2']['error'] === 0) {
-	$tmp_name2 = $a['pic2']['tmp_name'];
-	$base64_2 = base64_encode($a['pic2']['content']);
-	$a['pic2']['file'] = $base64_2;
-	$pic2 = "<img class='img-responsive events-pad' src=\"data:image/jpeg;base64,${base64_2}\">";
-}
-if ($a['pic3']['error'] === 0) {
-	$tmp_name3 = $a['pic3']['tmp_name'];
-	$base64_3 = base64_encode($a['pic3']['content']);
-	$a['pic3']['file'] = $base64_3;
-	$pic3 = "<img class='img-responsive events-pad' src=\"data:image/jpeg;base64,${base64_3}\">";
+for ($i=0; $i<4; $i++){
+if ($a['pic'.$i]['error'] === 0) {
+	$base64 = base64_encode($a['pic'.$i]['content']);
+	$a['pic'.$i]['file'] = $base64;
+	${"pic".$i} = "<img class='img-responsive events-pad' src=\"data:image/jpeg;base64,${base64}\">";
+	}
 }
 
 ?>

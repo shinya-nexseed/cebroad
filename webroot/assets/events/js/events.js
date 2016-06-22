@@ -1,6 +1,10 @@
   $(document).ready(function(){
   google.maps.event.addDomListener(window, 'load', initialize);
   $('#confirm').attr('disabled', false);
+  $('#title_count').text($('#title').val().length);
+  $('#capacity_count').text($('#capacity').val().length);
+  $('#detail_count').text($('#detail').val().length);
+
 });
 
  function initialize() {
@@ -81,4 +85,35 @@ $('.form-control').change(function() {
               $('#confirm').attr('disabled', true);
             }
         });
-    
+
+    $('#title').bind('keydown keyup keypress change',function(){
+        var thisValueLength = $(this).val().length;
+        $('#title_count').text(thisValueLength);
+        if(thisValueLength > 50) {
+            $('#title_count').addClass('cebroad-pink');
+        } else {
+            $('#title_count').removeClass('cebroad-pink');
+        }
+    });
+
+    $('#capacity').bind('keydown keyup keypress change',function(){
+        var thisValueLength = $(this).val().length;
+        $('#capacity_count').text(thisValueLength);
+        if(thisValueLength > 5) {
+            $('#capacity_count').addClass('cebroad-pink');
+        } else {
+            $('#capacity_count').removeClass('cebroad-pink');
+        }
+    });
+
+    $('#detail').bind('keydown keyup keypress change',function(){
+        var thisValueLength = $(this).val().length;
+        $('#detail_count').text(thisValueLength);
+        if(thisValueLength > 500) {
+            $('#detail_count').addClass('cebroad-pink');
+        } else {
+            $('#detail_count').removeClass('cebroad-pink');
+        }
+    });
+
+
