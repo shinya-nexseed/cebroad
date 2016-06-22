@@ -3,7 +3,12 @@
 //アクション名の後に$id(routs.php参照)が存在する場合に
 if(!empty($id)){
 //対象$idのイベントデータを取得（$idが2ならイベント2のidを取得）
-  $sql=sprintf('SELECT * FROM `events` JOIN `event_categories` ON events.event_category_id=event_categories.id WHERE events.id='.$id);
+  // ★★★
+    // seed snsを元に書き方を修正。
+    // 今回の場合はジョインの仕方と、WHEREを入れる場所が違ったためSQL文として成り立たなかった
+    // またsprintf()関数の使い方も少し違っていた (代入した居場所に%dがなかった)
+   ////////////
+  $sql=sprintf('SELECT * FROM `events` e, `event_categories` c WHERE e.event_category_id=c.id AND e.id=%d',$id);
   $record=mysqli_query($db, $sql)or die(mysqli_error($db));
   $event=mysqli_fetch_assoc($record);
 
@@ -15,7 +20,10 @@ if(!empty($id)){
 
 
 //参加者情報を取得（usersのidと中間テーブルのuser_idを結合し、中間テーブルのevent_idが$idと一緒の時$event_participantsにusers情報を格納）
-  $sql=sprintf('SELECT * FROM `users` JOIN `participants` ON `id`=participants.user_id WHERE participants.event_id='.$id);
+  // ★★★
+    // ドットを使って文字連結するのであればsprintf()関数は不要
+   ////////////
+  $sql='SELECT * FROM `users` JOIN `participants` ON `id`=participants.user_id WHERE participants.event_id='.$id;
   $record=mysqli_query($db, $sql)or die(mysqli_error($db));
   $event_participants=array();
   while($result=mysqli_fetch_assoc($record)){
@@ -23,14 +31,17 @@ if(!empty($id)){
   }
 
 //コメント情報を取得（commentsのuser_idとusersのidを結合し、commentsテーブルのevent_idが$idと一緒の時$commentsにcomments情報を格納）
-  $sql=sprintf('SELECT * FROM `comments` JOIN `users` ON comments.user_id=users.person_id WHERE event_id='.$id.' ORDER BY comments.created DESC');
+  // ★★★
+    // seed snsを元に書き方を修正。
+    // 今回の場合はジョインの仕方と、WHEREを入れる場所が違ったためSQL文として成り立たなかった
+    // またsprintf()関数の使い方も少し違っていた (代入した居場所に%dがなかった)
+   ////////////
+  $sql=sprintf('SELECT u.*, c.* FROM `comments` c, `users` u WHERE c.user_id=u.id AND event_id=%d AND c.delete_flag=0 ORDER BY c.created DESC', $id);
   $record=mysqli_query($db, $sql)or die(mysqli_error($db));
   $comments=array();
   while($result=mysqli_fetch_assoc($record)){
     $comments[]=$result;
   }
-
- var_dump($comments);
 
 //対象$idイベンのlike数を取得
   $sql = sprintf('SELECT COUNT(*) AS cnt FROM likes WHERE event_id=%d',

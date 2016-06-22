@@ -15,7 +15,10 @@ if ($table['user_id'] == $_SESSION['id']){
   mysqli_query($db, $sql) or die(mysqli_error($db)); 
 }
 
-// header('Location: /cebroad/events/show/');
+var_dump($table);
+header('Location:/cebroad/events/show/'.$table['event_id']);
 exit();
+
+
 
 ?>
