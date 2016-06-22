@@ -1,19 +1,17 @@
 <?php
     require('../dbconnect.php');
 
-    //クリックされたときの対象IDのroomのデータを表示する
-    // $sql=sprintf('SELECT * FROM `rooms` WHERE organizer_id=%d AND participant_id=%d AND event_id=%d',
-    //   mysqli_real_escape_string($db, $_POST['organizer_id']),
-    //   mysqli_real_escape_string($db, $_POST['participant_id']),
-    //   mysqli_real_escape_string($db, $id)
-    //   );
-
-    // $records = mysqli_query($db, $sql) or die(mysqli_error($db));
-    // $room = mysqli_fetch_assoc($records);
+    if (isset($_POST['message_val'])) {
+        $sql = sprintf('INSERT INTO message SET message="%s", sender_id=1, room_id=%d, created=NOW()',
+            $_POST['message_val'],
+            $_POST['room_id']
+        );
+        mysqli_query($db, $sql) or die(mysqli_error($db));
+    }
     
     //対象のルームのIDからメッセージを一覧化する
     $messages = array();
-    $sql='SELECT * FROM `message` WHERE room_id=' . $_POST['room_id'];
+    $sql='SELECT r.*, m.* FROM `message` m, `rooms` r WHERE m.room_id=r.id AND room_id=' . $_POST['room_id'];
     $records = mysqli_query($db, $sql) or die(mysqli_error($db));
     
     while($result=mysqli_fetch_assoc($records)){
