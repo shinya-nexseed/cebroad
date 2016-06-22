@@ -30,19 +30,6 @@ if(!empty($id)){
     $event_participants[]=$result;
   }
 
-//コメント情報を取得（commentsのuser_idとusersのidを結合し、commentsテーブルのevent_idが$idと一緒の時$commentsにcomments情報を格納）
-  // ★★★
-    // seed snsを元に書き方を修正。
-    // 今回の場合はジョインの仕方と、WHEREを入れる場所が違ったためSQL文として成り立たなかった
-    // またsprintf()関数の使い方も少し違っていた (代入した居場所に%dがなかった)
-   ////////////
-  $sql=sprintf('SELECT u.*, c.* FROM `comments` c, `users` u WHERE c.user_id=u.id AND event_id=%d AND c.delete_flag=0 ORDER BY c.created DESC', $id);
-  $record=mysqli_query($db, $sql)or die(mysqli_error($db));
-  $comments=array();
-  while($result=mysqli_fetch_assoc($record)){
-    $comments[]=$result;
-  }
-
 //対象$idイベンのlike数を取得
   $sql = sprintf('SELECT COUNT(*) AS cnt FROM likes WHERE event_id=%d',
     $id
@@ -141,6 +128,19 @@ if(isset($_POST['comment'])){
     );
   $record = mysqli_query($db, $sql) or die(mysqli_error($db));
 }
+
+//コメント情報を取得（commentsのuser_idとusersのidを結合し、commentsテーブルのevent_idが$idと一緒の時$commentsにcomments情報を格納）
+  // ★★★
+    // seed snsを元に書き方を修正。
+    // 今回の場合はジョインの仕方と、WHEREを入れる場所が違ったためSQL文として成り立たなかった
+    // またsprintf()関数の使い方も少し違っていた (代入した居場所に%dがなかった)
+   ////////////
+  $sql=sprintf('SELECT u.*, c.* FROM `comments` c, `users` u WHERE c.user_id=u.id AND event_id=%d AND c.delete_flag=0 ORDER BY c.created DESC', $id);
+  $record=mysqli_query($db, $sql)or die(mysqli_error($db));
+  $comments=array();
+  while($result=mysqli_fetch_assoc($record)){
+    $comments[]=$result;
+  }
 
 // if(isset($_POST['comment_delete'])){
 // //コメントを保存
