@@ -68,7 +68,6 @@
   //データベースから切断
   $dbh = null;
 ?>
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -155,7 +154,7 @@
                                                 <div class="row">
                                                     <div class="col-lg-4">
                                                         <p class="text-center">
-                                                            <img src="../images/01.jpg" class="img-responsive" style="height:auto; width:150px;" alt="">
+                                                            <img src="/cebroad/users/profile_pictures/<?php echo $member['profile_picture_path']; ?>" class="img-responsive" style="height:auto; width:150px;" alt="">
                                                         </p>
                                                     </div>
                                                     <div class="col-lg-8" style="color:#c0c0c0">
@@ -190,7 +189,7 @@
                               <ul class="nav navbar-nav navbar-form navbar-right">
                                 <li class="dropdown" style="display:inline-block;">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"  class="navbar-right">
-                                      <img src="/cebroad/users/profile_pictures/01.jpg" class="img-responsive" style="height:100%; width:30px;" alt="">
+                                      <img src="/cebroad/users/profile_pictures/<?php echo $member['profile_picture_path']; ?>" class="img-responsive" style="height:100%; width:30px;" alt="">
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li>
@@ -271,7 +270,7 @@
                             <div class="profile-sidebar">
                               <!-- SIDEBAR USERPIC -->
                               <div class="profile-userpic">
-                                <img src="/cebroad/webroot/assets/images/<?php echo $member['profile_picture_path']; ?>" class="img-responsive" alt=""><br>
+                                <img src="/cebroad/users/profile_pictures/<?php echo $member['profile_picture_path']; ?>" class="img-responsive" alt=""><br>
                               </div>
                               <!-- END SIDEBAR USERPIC -->
 
