@@ -1,15 +1,17 @@
 <?php 
 // メモ
 // join/register(メールアドレス登録)→pre_thanks→signup→check→thanks
-if ($id === 0 || $id === '') {
+if ($id === '0' || $id === '') {
   header('Location: /cebroad/index');
   exit();
+} 
+// else {
+//   echo $id;
+// }
+
+if ($id === 'rewrite') {
+  $mail = $_SESSION['join']['email'];
 } else {
-  echo $id;
-}
-  if ($id === 'rewrite') {
-    $mail = $_SESSION['join']['email'];
-  } else {
   $sql = sprintf('SELECT * FROM `pre_users` WHERE urltoken="%s"',
     mysqli_real_escape_string($db, $id)
     );
@@ -17,7 +19,12 @@ if ($id === 0 || $id === '') {
 
   $pre_user = mysqli_fetch_assoc($rtn);
   $mail = $pre_user['email'];
+  $confirmed_flag = $pre_user['confirmed_flag']; // 0か1
+
+  if ($confirmed_flag === '1') {
+  exit('<h1>This URL is invalid.</h1>');
   }
+}
 
 // if(isset($school)){
   $sql = 'SELECT * FROM `schools`';
@@ -57,13 +64,13 @@ if ($id === 0 || $id === '') {
   //       }
   // }
   // エラーがない場合
-  if (empty($error)) {
-    $_SESSION['join'] = $_POST;
-    $_SESSION['join']['email'] = $mail;
-    header('Location: /cebroad/join/check');
-    exit();
+    if (empty($error)) {
+      $_SESSION['join'] = $_POST;
+      $_SESSION['join']['email'] = $mail;
+      header('Location: /cebroad/join/check');
+      exit();
+    }
   }
-}
 
 //書き直し　http://192.168.33.10/seed_sns/join/signup?action=rewrite
     if (isset($id) && $id === 'rewrite') {//上記のパラメーターがあれば
@@ -144,9 +151,9 @@ if ($id === 0 || $id === '') {
                         <option value="0">Select your school</option>
 
                       <?php while ($school = mysqli_fetch_assoc($schools)): ?>
-                        <option value="<?=h($school['school_id'])?>" <?php if (isset($_POST['school_id']) && $school['school_id'] === $_POST['school_id']) {
+                        <option value="<?=h($school['id'])?>" <?php if (isset($_POST['school_id']) && $school['id'] === $_POST['school_id']) {
                           echo 'selected';
-                          } ?>><?=h($school['school_name'])?></option>
+                          } ?>><?=h($school['name'])?></option>
                       <?php endwhile; ?>
 
                         </select>

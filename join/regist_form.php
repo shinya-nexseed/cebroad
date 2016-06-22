@@ -8,12 +8,11 @@ $token = $_SESSION['join']['token'];
 //クリックジャッキング対策
 header('X-FRAME-OPTIONS: SAMEORIGIN');
 
-
-
   //htmlspecialcharsのショートカット
-  function h($value){
-    return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
-  }
+function h($value){
+  return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+}
+
 $error = Array();
 if (!empty($_POST)) {
     if ($_POST['email'] === '') {
@@ -49,7 +48,8 @@ if (!empty($_POST)) {
         header('Location: regist_end');
       }
     }
-  }
+}
+  
 ?>
  
 <!--メールアドレス-->
@@ -86,7 +86,7 @@ if (!empty($_POST)) {
                   <div class="col-lg-12">
                   <form id="register-form" action="" method="post" role="form" style="display: block;">
                     <!--メールアドレス-->
-                        <div class="form-group">
+                      <div class="form-group">
                         <?php if (isset($_POST['email'])): ?>
                           <input type ="email" name="email" id="email" tabindex="1" class="form-control" placeholder="ex:cebroad@mail.com" value="<?=h($_POST['email'])?>">
                         <?php else: ?>

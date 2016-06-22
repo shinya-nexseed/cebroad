@@ -4,7 +4,7 @@
     // header('Location: signup');
     // exit();
     // }
- echo $_SESSION['id'];
+ // echo $_SESSION['id'];
    //国籍テーブルから国籍名を取得
       $sql = 'SELECT * FROM `nationalities`';
       $nationalities = mysqli_query($db, $sql) or die(mysqli_error($db));
@@ -51,11 +51,11 @@
         //画像が選択されていれば
         if(!empty($fileName)){
           //画像のアップロード
-              $picture = date('YmdHis').$_FILES['profile_picture_path']['name'];
-              move_uploaded_file($_FILES['profile_picture_path']['name'],'../users/profile_pictures/'.$picture);
-                } else {
-              $picture = $user['profile_picture_path'];
-                } 
+          $picture = date('YmdHis').$_FILES['profile_picture_path']['name'];
+          move_uploaded_file($_FILES['profile_picture_path']['name'],'../users/profile_pictures/'.$picture);
+        } else {
+          $picture = $user['profile_picture_path'];
+        } 
     //画像が選択されている場合のアップロード処理
   if(!empty($fileName)){
         //①更新用sql文
@@ -66,7 +66,7 @@
           mysqli_real_escape_string($db, $_POST['nationality_id']),
           mysqli_real_escape_string($db, $_SESSION['id'])
         );
-        echo $sql;
+        //echo $sql;
 
         //②sql文を実行する
         mysqli_query($db, $sql) or die(mysqli_error($db));
@@ -76,6 +76,20 @@
 
       }else if ($_FILES['profile_picture_path']['error'] === 4) {
         $_FILES['profile_picture_path'] = '';
+
+        //①更新用sql文
+        $sql = sprintf("UPDATE `users` SET `gender`=%d, `birthday`='%s', `nationality_id`=%d WHERE id=%d",
+          mysqli_real_escape_string($db, $_POST['gender']),
+          mysqli_real_escape_string($db,$_POST['birthday']),
+          mysqli_real_escape_string($db, $_POST['nationality_id']),
+          mysqli_real_escape_string($db, $_SESSION['id'])
+        );
+        //echo $sql;
+
+        //②sql文を実行する
+        mysqli_query($db, $sql) or die(mysqli_error($db));
+
+
       }
 
       header('Location: /cebroad/users/show');
