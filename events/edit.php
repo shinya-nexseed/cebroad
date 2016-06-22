@@ -4,7 +4,7 @@ if (!isset($_SESSION['id'])) {
 }
 
 
-
+//$idを元にイベントを取得
   $sql = sprintf("SELECT * FROM events WHERE id=%d",
   		mysqli_real_escape_string($db, $id)
   	);
@@ -16,6 +16,7 @@ if (!isset($_SESSION['id'])) {
 
   $errors = array();
   $error_messages = array();
+  //$eventを省略;
   $a = array();
   $a = $event;
   
@@ -47,9 +48,11 @@ if (!isset($_SESSION['id'])) {
     if (!isset($_POST['title'])) {
         $e = e('Please input a title.', $e);
     } else {
+      //全角スペースを半角スペースにコンバートし、前後の半角スペースを全削除
       $title = trim(mb_convert_kana($_POST['title'], "s", 'UTF-8'));
         if ($title === '') {
             $e = e('Please input a title.', $e);
+            //文字数制限
             if (strlen($title) > 50) {
               $e = e('The title is over 50 characters.', $e);
            } else {
@@ -66,6 +69,7 @@ if (!isset($_SESSION['id'])) {
         $detail = trim(mb_convert_kana($_POST['detail'], "s", 'UTF-8'));
         if ($detail === '') {
             $e = e('Please input a detail.', $e);
+            //文字数制限
             if (strlen($detail) > 500) {
               $e = e('The detail is over 500 characters.', $e);
             } else {
@@ -74,7 +78,7 @@ if (!isset($_SESSION['id'])) {
         }
         
     }
-
+    //年-月-日に一致するかチェック
     if (empty($_POST['date'])) {
       $e = e('Please input a date.', $e);
     } else {
@@ -85,6 +89,7 @@ if (!isset($_SESSION['id'])) {
       }
     }
 
+    //時:分の形に一致するかチェック
     if (empty($_POST['starting_time'])) {
         $e = e('Please input a starting time.', $e);
     } else {
@@ -106,6 +111,8 @@ if (!isset($_SESSION['id'])) {
     if (empty($_POST['place_name']) || empty($_POST['latitude']) || empty($_POST['longitude'])) {
         $e = e('Please input a place.', $e);
     } else {
+      //緯度と経度がfloat(小数点以下を含む数字)型であるかチェック
+      //phpでは歴史の関係でgettypeの際floatでもdoubleが返ってくる
       if (gettype(floatval($_POST['latitude'])) !== 'double' || gettype(floatval($_POST['longitude'])) !== 'double') {
         $e = e('The parameter of the place is wrong.', $e);
       } else {
@@ -114,11 +121,12 @@ if (!isset($_SESSION['id'])) {
           $a['longitude'] = $_POST['longitude'];
       }
     }
-
+    //strvalで文字列としての値を取得し。ctype_digitで全ての文字が数字であることをチェック
     if (!empty($_POST['capacity'])) {
       $_POST['capacity'] = ltrim(mb_convert_kana($_POST['capacity'], "s", 'UTF-8'), '0');
       if (!ctype_digit(strval($_POST['capacity']))) {
           $e = e('The value of the capacity is invalid.', $e);
+          //文字数制限
         if (strlen($_POST['capacity']) > 5) {
             $e = e('The capacity is over 5 digit.', $e);
         } else {
@@ -137,6 +145,8 @@ if (!isset($_SESSION['id'])) {
       }
     }
 
+    //picture0~3をfor文でまとめて処理
+    //${"pic".$i."_path"}のように記述すると変数名に変数を使うことができる。(可変変数という)
     for ($i=0; $i<4; $i++) {
 
     $pic = 'pic'.$i;
@@ -152,7 +162,6 @@ if (!isset($_SESSION['id'])) {
 
 
     // ここで定義するサイズ上限のオーバーチェック
-    // (必要がある場合のみ)
     if ($_FILES[$pic]['size'] > 10485760) {
         $e = e('The filesize of picture'.$i.' is over 10MB.', $e);
     }
@@ -224,11 +233,10 @@ if (!isset($_SESSION['id'])) {
             }
               $a['picture_path_'.$i] = '/cebroad/'.${"pic".$i."_path"};
              } else {
-             die('Sorry, failed to upload picture'.$i.'. Please retry.');
+             die('<h1>Sorry, failed to upload picture'.$i.'. Please retry.</h1>');
           }
         }
       }
-
 
       $sql = sprintf("UPDATE events SET title='%s', detail='%s', date='%s', starting_time='%s', closing_time='%s', place_name='%s', latitude='%s', longitude='%s', picture_path_0='%s', picture_path_1='%s', picture_path_2='%s', picture_path_3='%s', capacity_num=%d, event_category_id=%d WHERE id=%d",
           mysqli_real_escape_string($db, $_POST['title']),
@@ -311,7 +319,7 @@ if (!isset($_POST['post_check'])) {
       $detail = $_POST['detail'];
     }
 
-
+//指定できるdateを今日〜1年後にする
 $now = date('Y-m-d');
 $year = date('Y-m-d', strtotime("+1year"));
 
@@ -351,24 +359,19 @@ $year = date('Y-m-d', strtotime("+1year"));
             </div>
         </div>
 
-
         <div class="col-sm-2 col-md-2">            
             <div class="form-group">
                 <label class="cebroad-pink">Starting time</label>
                 <input type="time" name="starting_time" id="starting_time" class="form-control" value="<?=h($starting_time)?>" required>
             </div>
         </div>
+
         <div class="col-sm-2 col-md-2">                
                 <div class="form-group">
                     <label id="closing_time_label">Closing time</label>
                     <input type="time" name="closing_time" id="closing_time" class="form-control" id="closing_time" value="<?=h($closing_time)?>">
                 </div>
         </div>
-
-<!--             <div class="form-group">
-                <a id="time_button" onclick="closingTime()">Add closing time</a>
-            </div> -->
-
 
         <div class="col-sm-4 col-md-4">
             <div class="form-group">
