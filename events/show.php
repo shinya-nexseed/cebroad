@@ -171,7 +171,7 @@ if ( !function_exists('mime_content_type') ) {
       <div class="panel-body">
         <p class="lead"><?php echo $event['event_name']; ?></p>
         <h4><i class="fa fa-users" aria-hidden="true"></i><?php echo $cnt_paticipant['cnt']?>  <i class="fa fa-thumbs-o-up" aria-hidden="true"></i><?php echo $cnt_like['cnt']?></h4>
-        <p><img src="/cebroad/images/<? echo $organizer['profile_picture_path'];?>" class="img-circle pull-left"></p>
+        <p><img src="/cebroad/users/profile_pictures/<?php echo $organizer['profile_picture_path'];?>" class="img-circle pull-left"></p>
         <!-- いいねボタン -->
         <form method="post" action="" class="navbar-right">
           <input type="hidden" name="like" value="1">
@@ -220,7 +220,7 @@ if ( !function_exists('mime_content_type') ) {
         <p>Date:<?php echo $event['date']; ?></p>
         <p>Place:<?php echo $event['place_name']; ?></p>
         <p>
-          <img src="/cebroad/images/<? echo $organizer['profile_picture_path'];?>" class="img-circle pull-left">
+          <img src="/cebroad/users/profile_pictures/<?php echo $organizer['profile_picture_path'];?>" class="img-circle pull-left">
         </p>
       </div>
     </div>
@@ -232,7 +232,7 @@ if ( !function_exists('mime_content_type') ) {
         <p class="lead">Paticipants</p>
         <div class="list-group">
           <?php foreach($event_participants as $event_participant){ ?>
-          <img src="/cebroad/images/<? echo $event_participant['profile_picture_path'];?>" class="img-circle pull-left">
+          <img src="/cebroad/users/profile_pictures/<?php echo $event_participant['profile_picture_path'];?>" class="img-circle pull-left">
           <?php } ?>
         </div>
       </div>
@@ -245,7 +245,7 @@ if ( !function_exists('mime_content_type') ) {
       <div class="panel panel-default">
         <div class="panel-heading"><a href="#" class="pull-right">View all</a> <h4>Event details</h4></div>
         <div class="panel-body">
-          <p><img src="/cebroad/webroot/assets/images/photo1.jpg" class="img-circle pull-right"> <?php echo $event['detail']; ?></p>
+          <p><img src="/cebroad/users/profile_pictures/<?php echo $organizer['profile_picture_path'];?>" class="img-circle pull-right"> <?php echo $event['detail']; ?></p>
           <div class="clearfix"></div>
           <hr>Event category: <?php echo $event['name']; ?>
         </div>
@@ -263,8 +263,8 @@ if ( !function_exists('mime_content_type') ) {
           </form>
         </div>
         <?php foreach($comments as $comment){ ?>
-        <!-- <img src=/cebroad/images/<? //echo $comment['profile_picture_path'];?> class="img-circle pull-left comment"> -->
-        <img src="/cebroad/images/<? echo $coment['profile_picture_path'];?>" class="img-circle pull-left">
+        <!-- <img src=/cebroad/users/profile_pictures/<? //echo $comment['profile_picture_path'];?> class="img-circle pull-left comment"> -->
+        <img src="/cebroad/users/profile_pictures/<?php echo $comment['profile_picture_path'];?>" class="img-circle pull-left">
           <div class="comment">
             <h5><?php echo $comment['nick_name']; ?></h5>
             <p><?php echo $comment['comment']; ?></p>
