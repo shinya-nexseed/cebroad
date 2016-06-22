@@ -3,15 +3,15 @@
     //セッションにidが存在し、かつオンのtimeと3600秒足した値が現在時刻より小さい時に
     //現在時刻より小さい時にログインしていると判定する
     if (isset($_SESSION['id']) && $_SESSION['time'] + 3600 > time()){
-    //$_SESSIONに保存している時間更新
-    //これがないとログインから１時間たったら再度ログインしないとindex.phpに入れなくなる。
-    $_SESSION['time'] = time();
-    //event/show.phpへ遷移
-    header('Location: events/show.php'); 
-    exit(); 
+        //$_SESSIONに保存している時間更新
+        //これがないとログインから１時間たったら再度ログインしないとindex.phpに入れなくなる。
+        $_SESSION['time'] = time();
+        //event/show.phpへ遷移
+        header('Location: events/show.php'); 
+        exit(); 
     }else{
-        echo'ログイン判定(ログインしていない場合にサイトトップ表示)';
-        echo'<br>';
+        // echo'ログイン判定(ログインしていない場合にサイトトップ表示)';
+        // echo'<br>';
     }
  ?>
 <!DOCTYPE html>
@@ -34,17 +34,17 @@
         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
         <link rel="icon" href="favicon.ico" type="image/x-icon">
 
-        <link rel="stylesheet" href="webroot/assets/css/normalize.css">
-        <link rel="stylesheet" href="webroot/assets/css/font-awesome.min.css">
-        <link rel="stylesheet" href="webroot/assets/css/fontello.css">
-        <link rel="stylesheet" href="webroot/assets/css/animate.css">        
-        <link rel="stylesheet" href="webroot/assets/css/bootstrap.min.css">
-        <link rel="stylesheet" href="webroot/assets/css/owl.carousel.css">
-        <link rel="stylesheet" href="webroot/assets/css/owl.theme.css">
-        <link rel="stylesheet" href="webroot/assets/css/owl.transitions.css">
-        <link rel="stylesheet" href="webroot/assets/css/style.css">
-        <link rel="stylesheet" href="webroot/assets/css/responsive.css">
-        <script src="webroot/assets/js/vendor/modernizr-2.6.2.min.js"></script>
+        <link rel="stylesheet" href="/portfolio/cebroad/webroot/assets/css/normalize.css">
+        <link rel="stylesheet" href="/portfolio/cebroad/webroot/assets/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/portfolio/cebroad/webroot/assets/css/fontello.css">
+        <link rel="stylesheet" href="/portfolio/cebroad/webroot/assets/css/animate.css">        
+        <link rel="stylesheet" href="/portfolio/cebroad/webroot/assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/portfolio/cebroad/webroot/assets/css/owl.carousel.css">
+        <link rel="stylesheet" href="/portfolio/cebroad/webroot/assets/css/owl.theme.css">
+        <link rel="stylesheet" href="/portfolio/cebroad/webroot/assets/css/owl.transitions.css">
+        <link rel="stylesheet" href="/portfolio/cebroad/webroot/assets/css/style.css">
+        <link rel="stylesheet" href="/portfolio/cebroad/webroot/assets/css/responsive.css">
+        <script src="/portfolio/cebroad/webroot/assets/js/vendor/modernizr-2.6.2.min.js"></script>
     </head>
     <body>
         <div id="preloader">
@@ -498,7 +498,7 @@
 		
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="webroot/assets/js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
-        <script src="webroot/assets/js/bootstrap.min.js"></script>
+        <script src="webroot/assets/js/bootstrap.js"></script>
         <script src="webroot/assets/js/owl.carousel.min.js"></script>
         <script src="webroot/assets/js/wow.js"></script>
         <script src="webroot/assets/js/main.js"></script>

@@ -22,6 +22,13 @@
 	if ($resource === 'index' || $resource === '') {
 		require('index.php');
 	} else {
-		require('application.php'); 
+		if($resource === 'login'){
+			require('login.php');
+		}
+		else if($resource === 'logout'){
+			require('logout.php');
+		} else{
+			require('application.php');
+		}
 	}
 ?>
