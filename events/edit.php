@@ -130,8 +130,8 @@ if (!isset($_SESSION['id'])) {
     if (empty($_POST['category'])) {
       $e = e('Please select a category.', $e);
     } else {
-        if (!ctype_digit(strval($_POST['capacity']))) {
-          $e = e('The value of the capacity is invalid.', $e);
+        if (!ctype_digit(strval($_POST['category']))) {
+          $e = e('The value of the category is invalid.', $e);
         } else {
             $a['event_category_id'] = $_POST['category'];
       }
@@ -198,13 +198,6 @@ if (!isset($_SESSION['id'])) {
     ImageDestroy($new_image);
 
 
-    if (move_uploaded_file($_FILES[$pic]['tmp_name'], ${"pic".$i."_path"} = 'events/events_pictures/'.sha1(mt_rand() . microtime()).'.jpg')) {
-        $a['picture_path_'.$i] = '/cebroad/'.${"pic".$i."_path"};
-    } else {
-        $e = e('Sorry, failed to upload picture'.$i.'. Please retry.', $e);
-    }
-
-
 
     } else if ($_FILES[$pic]['error'] !== 4) {
       switch($_FILES[$pic]['error']) {
@@ -217,10 +210,24 @@ if (!isset($_SESSION['id'])) {
     }
   }
 
-
     if ($e) {
       throw $e;
     }
+
+    for ($i=0; $i<4; $i++) {
+
+      if ($_FILES['pic'.$i]['error'] === 0) {
+        if (move_uploaded_file($_FILES['pic'.$i]['tmp_name'], ${"pic".$i."_path"} = 'events/events_pictures/'.sha1(mt_rand() . microtime()).'.jpg')) {
+            if (strpos($a['picture_path_'.$i], 'default.jpg') === false) {
+            $path_to_delete = mb_substr($a['picture_path_'.$i], strpos($a['picture_path_'.$i], 'events'));
+            unlink($path_to_delete);
+            }
+              $a['picture_path_'.$i] = '/cebroad/'.${"pic".$i."_path"};
+             } else {
+             die('Sorry, failed to upload picture'.$i.'. Please retry.');
+          }
+        }
+      }
 
 
       $sql = sprintf("UPDATE events SET title='%s', detail='%s', date='%s', starting_time='%s', closing_time='%s', place_name='%s', latitude='%s', longitude='%s', picture_path_0='%s', picture_path_1='%s', picture_path_2='%s', picture_path_3='%s', capacity_num=%d, event_category_id=%d WHERE id=%d",

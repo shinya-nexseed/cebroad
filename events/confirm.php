@@ -1,6 +1,5 @@
 <?php
- if (!isset($_SESSION['id']))
- if (empty($_SESSION['events'])) {
+ if (!isset($_SESSION['id']) || empty($_SESSION['events'])) {
  	header('Location: /cebroad/events/index');
  }
 
