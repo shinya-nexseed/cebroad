@@ -83,7 +83,7 @@
       $_POST['capacity'] = ltrim(mb_convert_kana($_POST['capacity'], "n", 'UTF-8'), '0');
       if (!ctype_digit(strval($_POST['capacity']))) {
           $e = e('The value of the capacity is invalid.', $e);
-        } else if (strlen($_POST['capacity'] > 5)) {
+        } else if (strlen($_POST['capacity']) > 5) {
             $e = e('The capacity is over 5 digit.', $e);
         }
       }
@@ -392,12 +392,14 @@ $year = date('Y-m-d', strtotime("+1year"));
             <input id=lat type="hidden" name="latitude" value="<?=h($lat)?>">
             <input id=lng type="hidden" name="longitude" value="<?=h($lng)?>">
         </div>
-        <?php foreach($error_messages as $error): ?>
-          <label class="cebroad-pink"><?=$error?></label>
-          <br>
-        <?php endforeach; ?>
 
-        <div class="col-sm-8 col-md-8" class="events-pad";>
+        <div class="col-sm-8 col-md-8">
+          <?php foreach($error_messages as $error): ?>
+            <label class="cebroad-pink"><?=$error?></label>
+          <?php endforeach; ?>
+        </div>
+
+        <div class="col-sm-8 col-md-8" class="events-pad">
             <div class="form-group">
                 <a href="/cebroad/events/index">Back</a>
                 <input type="submit" id="confirm" class="btn btn-cebroad" disabled="disabled" value="confirm">
