@@ -22,7 +22,7 @@
                         <div class="panel panel-default">
                         	<div class="panel-thumbnail"><img class="img-responsive" src="<?=h($event['picture_path_0'])?>"></div>
                                 <div class="panel-body">
-                                    <a href="/cebroad/events/show/<?=h($event['id'])?>"><p class="lead"><?=h($event['title'])?></p></a>
+                                    <a href="/portfolio/cebroad/events/show/<?=h($event['id'])?>"><p class="lead"><?=h($event['title'])?></p></a>
                                     <p><?=h($event['date'])?></p>
                                    	<p class="event_people"><i class="fa fa-users fa-lg"></i>:100</p>
     								<p class="event_like"><i class="fa fa-thumbs-o-up fa-lg"></i>:52</p>

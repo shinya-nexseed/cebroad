@@ -1,7 +1,7 @@
 <?php
   require('dbconnect.php');
   $_SESSION['id'] = 1;
-  $_SESSION['time']=time();
+
 
   if ( !function_exists('mime_content_type') ) {
       function mime_content_type($filename) {
@@ -10,38 +10,39 @@
       }
   }
 
-  //セッションにidが存在し、かつセッションのtimeと3600秒足した値が
-  //現在時刻より小さいときにログインをしていると判断する
-  if(isset($_SESSION['id'])&&$_SESSION['time']+3600>time()){
-    //セッションに保存している期間更新
-    $_SESSION['time']=time();
+
+  if(!isset($_SESSION['id'])) {
+    header('Location: /portfolio/cebroad/index');
+    exit();
+ }
+
 
 
     //ログインしているユーザーのデータをDBから取得
-    $sql=sprintf('SELECT *, schools.name AS school_name FROM `users` JOIN `schools` ON users.school_id=schools.id WHERE users.id=%d',
-      mysqli_real_escape_string($db, $_SESSION['id'])
+    $sql = sprintf('SELECT *, schools.name AS school_name FROM `users` JOIN `schools` ON users.school_id=schools.id WHERE users.id=%d',
+      $_SESSION['id']
       );
-    $record=mysqli_query($db, $sql)or die(mysqli_error($db));
-    $member=mysqli_fetch_assoc($record);
+    $record = mysqli_query($db, $sql) or die('');
+    $member = mysqli_fetch_assoc($record);
 
 
     //イベントカテゴリ呼び出し
     $sql=sprintf('SELECT * FROM `event_categories` WHERE 1');
-    $record=mysqli_query($db, $sql)or die(mysqli_error($db));
+    $record=mysqli_query($db, $sql) or die(mysqli_error($db));
 
     $categories=array();
 
-    while($result=mysqli_fetch_assoc($record)){
+    while($result = mysqli_fetch_assoc($record)) {
       //実行結果として得られたデータを取得
-      $categories[]=$result;
+      $categories[] = $result;
     }
 
     //ログインしているユーザーが作成したイベントの表示用にデータを取得
     $sql=sprintf('SELECT *FROM `events` WHERE `organizer_id`='.$_SESSION['id'].' ORDER BY `date` DESC');
 
-    $record=mysqli_query($db, $sql)or die(mysqli_error($db));
+    $record=mysqli_query($db, $sql) or die('<h1>Sorry, something wrong happened. Please retry.</h1>');
 
-    $event_users_makes=array();
+    $event_users_makes = array();
 
     while($result=mysqli_fetch_assoc($record)){
       //実行結果として得られたデータを取得
@@ -80,13 +81,13 @@
 <head>
   <meta charset="UTF-8">
   <title>Cebroad</title>
-  <link rel="stylesheet" href="../webroot/assets/css/bootstrap.min.css">
-  <link rel="stylesheet" href="../webroot/assets/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/portfolio/cebroad/webroot/assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/portfolio/cebroad/webroot/assets/font-awesome/css/font-awesome.min.css">
   <!--[if lt IE 9]>
     <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
-  <link rel="stylesheet" href="../webroot/assets/css/styles.css">
-  <link rel="stylesheet" href="../webroot/assets/events/css/events.css">
+  <link rel="stylesheet" href="/portfolio/cebroad/webroot/assets/css/styles.css">
+  <link rel="stylesheet" href="/portfolio/cebroad/webroot/assets/events/css/events.css">
 
   <script>
     // $(document).ready(function(){
@@ -106,7 +107,7 @@
                   
                   <!-- top nav -->
                   <div class="navbar navbar-blue navbar-fixed-top">  
-                    <a href="/cebroad/events/index" class="navbar-brand logo">C</a>
+                    <a href="/portfolio/cebroad/events/index" class="navbar-brand logo">C</a>
                       <ul style="list-style:none;" class="hidden-xs">
                         <li style="display:inline-block; float:left;" class="navbar-form navbar-left">
                           <div class="input-group input-group-sm" style="max-width:600px;">
@@ -129,7 +130,7 @@
                         </li>
 
                         <li style="display:inline-block; float:left;" class="navbar-form navbar-right">
-                          <a href="/cebroad/logout"><span class="badge">SignOut</span></a>
+                          <a href="/portfolio/cebroad/logout"><span class="badge">SignOut</span></a>
                         </li>
 
 
@@ -143,8 +144,8 @@
                         <li style="display:inline-block;" class="navbar-right">
                             <ul class="nav navbar-right">
                               <li class="dropdown menu">
-                                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <img src="/cebroad/users/profile_pictures/<?php echo $member['profile_picture_path']; ?>" class="img-responsive img-circle" style="height:auto; width:30px;" alt="">
+                                  <a href="" class="dropdown-toggle" data-toggle="dropdown">
+                                    <img src="/portfolio/cebroad/users/profile_pictures/<?php echo $member['profile_picture_path']; ?>" class="img-responsive img-circle" style="height:auto; width:30px;" alt="">
                                   </a>
                                   <ul class="dropdown-menu"　style="word-wrap: break-word;">
                                       <li>
@@ -152,7 +153,7 @@
                                               <div class="row">
                                                   <div class="col-lg-4">
                                                       <p class="text-center">
-                                                          <img src="/cebroad/users/profile_pictures/<?php echo $member['profile_picture_path']; ?>" class="img-responsive" style="height:auto; width:150px;" alt="">
+                                                          <img src="/portfolio/cebroad/users/profile_pictures/<?php echo $member['profile_picture_path']; ?>" class="img-responsive" style="height:auto; width:150px;" alt="">
                                                       </p>
                                                   </div>
                                                   <div class="col-lg-8" style="color:#c0c0c0">
@@ -167,8 +168,8 @@
                                               <div class="row">
                                                   <div class="col-lg-12">
                                                       <p>
-                                                           <a href="/cebroad/users/edit"><button type="button" class="btn btn-success btn-sm">User Edit</button></a><br>
-                                                          <a href="/cebroad/events/add"><button type="button" class="btn btn-primary btn-sm">Make Event</button></a>
+                                                           <a href="/portfolio/cebroad/users/edit"><button type="button" class="btn btn-success btn-sm">User Edit</button></a><br>
+                                                          <a href="/portfolio/cebroad/events/add"><button type="button" class="btn btn-primary btn-sm">Make Event</button></a>
                                                       </p>
                                                   </div>
                                               </div>
@@ -186,8 +187,8 @@
                           <!-- <li style="display:inline-block;"> -->
                             <ul class="nav navbar-nav navbar-form navbar-right">
                               <li class="dropdown" style="display:inline-block;">
-                                  <a href="#" class="dropdown-toggle" data-toggle="dropdown"  class="navbar-right">
-                                    <img src="/cebroad/users/profile_pictures/<?php echo $member['profile_picture_path']; ?>" class="img-responsive" style="height:100%; width:30px;" alt="">
+                                  <a href="" class="dropdown-toggle" data-toggle="dropdown"  class="navbar-right">
+                                    <img src="/portfolio/cebroad/users/profile_pictures/<?php echo $member['profile_picture_path']; ?>" class="img-responsive" style="height:100%; width:30px;" alt="">
                                   </a>
                                   <ul class="dropdown-menu">
                                       <li>
@@ -209,7 +210,7 @@
                                                       <p class="text-center">
                                                          <form method="get">
                                                             <div class="input-group input-group-sm" style="max-width:200px;">
-                                                              <select class="form-control" name="srch-term-categories" class="form-control" >
+                                                              <select class="form-control" name="srch-term-categories" class="form-control">
                                                               <option value="0" selected>Select Category</option>
                                                               <?php
                                                                 foreach ($categories as $category) {
@@ -238,15 +239,15 @@
                                               <div class="row">
                                                   <div class="col-lg-12">
                                                       <p>
-                                                           <a href="/cebroad/users/edit"><button type="button" class="btn btn-success btn-sm">User Edit</button></a><br>
-                                                          <a href="/cebroad/events/add"><button type="button" class="btn btn-primary btn-sm">Make Event</button></a>
+                                                           <a href="/portfolio/cebroad/users/edit"><button type="button" class="btn btn-success btn-sm">User Edit</button></a><br>
+                                                          <a href="/portfolio/cebroad/events/add"><button type="button" class="btn btn-primary btn-sm">Make Event</button></a>
                                                       </p>
                                                   </div>
                                               </div>
                                           </div>
                                       </li>
                                       <li>
-                                        <a href="/cebroad/logout"><span class="badge">SignOut</span></a>
+                                        <a href="/portfolio/cebroad/logout"><span class="badge">SignOut</span></a>
                                       </li>
                                   </ul>
                               </li>
@@ -268,13 +269,13 @@
                           <div class="profile-sidebar">
                             <!-- SIDEBAR USERPIC -->
                             <div class="profile-userpic">
-                              <img src="/cebroad/users/profile_pictures/<?php echo $member['profile_picture_path']; ?>" class="img-responsive" alt=""><br>
+                              <img src="/portfolio/cebroad/users/profile_pictures/<?php echo $member['profile_picture_path']; ?>" class="img-responsive" alt=""><br>
                             </div>
                             <!-- END SIDEBAR USERPIC -->
 
                             <!-- SIDEBAR BUTTONS -->
-                              <a href="/cebroad/users/edit"><button type="button" class="btn btn-success btn-sm">User Edit</button></a>
-                              <a href="/cebroad/events/add"><button type="button" class="btn btn-primary btn-sm">Make Event</button></a>
+                              <a href="/portfolio/cebroad/users/edit"><button type="button" class="btn btn-success btn-sm">User Edit</button></a>
+                              <a href="/portfolio/cebroad/events/add"><button type="button" class="btn btn-primary btn-sm">Make Event</button></a>
                               <br>
                               <br>
                             
@@ -291,7 +292,7 @@
                                       echo $date;
                                       echo '：';
                                       ?>
-                                      <a href="/cebroad/events/show/<?php echo $event_users_make['id']?>"><?php  echo $event_users_make['event_name'];?></a></p>
+                                      <a href="/portfolio/cebroad/events/show/<?php echo $event_users_make['id']?>"><?php  echo $event_users_make['title'];?></a></p>
                                     <?php } ?>
                                   </div>
                                 </div>
@@ -309,8 +310,8 @@
                                       echo $date;
                                       echo '：';
                                       ?>
-                                      <a href="/cebroad/events/show/<?php echo $event_users_part['id']?>">
-                                      <?php echo $event_users_part['event_name'];?></a></p>
+                                      <a href="/portfolio/cebroad/events/show/<?php echo $event_users_part['id']?>">
+                                      <?php echo $event_users_part['title'];?></a></p>
                                     <?php } ?>
                                   </div>
                                 </div>
@@ -334,7 +335,7 @@
                               <?php require($url); ?>
                           <?php else: ?>
                               <h1>Sorry, we couldn't find that page.</h1>
-                              <a href="/cebroad/events/index">Go to the top page</a>
+                              <a href="/portfolio/cebroad/events/index">Go to the top page</a>
                           <?php endif; ?>
                               
                         </div>
@@ -349,6 +350,6 @@
   </div>
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-  <script type="text/javascript" src="../webroot/assets/js/bootstrap.js"></script>
+  <script type="text/javascript" src="/portfolio/cebroad/webroot/assets/js/bootstrap.js"></script>
 </body>
 </html>

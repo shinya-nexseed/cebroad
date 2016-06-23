@@ -174,8 +174,8 @@
 
     
         $_SESSION['events'] = $_POST + $_FILES;
-
-        header('Location: /cebroad/events/confirm');
+       echo '<script> location.replace("/portfolio/cebroad/events/confirm"); </script>';
+//        header('Location: /cebroad/events/confirm');
       exit();
     } catch (Exception $e) {
     $error_messages = exception_to_array($e);
@@ -399,7 +399,7 @@ $year = date('Y-m-d', strtotime("+1year"));
 
         <div class="col-sm-8 col-md-8" class="events-pad">
             <div class="form-group">
-                <a href="/cebroad/events/index">Back</a>
+                <a href="/portfolio/cebroad/events/index">Back</a>
                 <input type="submit" id="confirm" class="btn btn-cebroad" disabled="disabled" value="confirm">
             </div>
         </div>
@@ -407,4 +407,4 @@ $year = date('Y-m-d', strtotime("+1year"));
       </div>
     </form>
   </div>
-<script src="../webroot/assets/events/js/events.js"></script>
+<script src="/portfolio/cebroad/webroot/assets/events/js/events.js"></script>

@@ -1,6 +1,7 @@
 <?php
  if (!isset($_SESSION['id']) || empty($_SESSION['events'])) {
- 	header('Location: /cebroad/events/index');
+ 	echo '<script> location.replace("/portfolio/cebroad/events/index"); </script>';
+ 	exit();
  }
 
  $a = array();
@@ -11,7 +12,7 @@
  	 	if ($a['pic'.$i]['error'] === 0) {
  	$name = dirname(__FILE__).'/events_pictures/'.sha1(mt_rand() . microtime()).'.jpg';
  	if (file_put_contents($name, $a['pic'.$i]['content'], LOCK_EX)) {
- 		${"path".$i} = mb_substr($name, strpos($name, 'cebroad')-1);
+ 		${"path".$i} = mb_substr($name, strpos($name, 'portfolio')-1);
  		$a["pic".$i."_path"] = ${"path".$i};
  	} else {
  		die("Failed to upload pictures. I'm afraid please retry.");
@@ -19,7 +20,7 @@
  		
  	} else if ($a['pic'.$i]['error'] === 4) {
  		if ($i === 0) {
- 		$a['pic0_path'] = '/cebroad/webroot/assets/events/img/default.jpg';
+ 		$a['pic0_path'] = '/portfolio/cebroad/webroot/assets/events/img/default.jpg';
  		} else {
  		 $a["pic".$i."_path"] = '';
  		} 
@@ -59,7 +60,8 @@ $sql = sprintf("INSERT INTO events SET title='%s', detail='%s', date='%s', start
 	$rtn = mysqli_query($db, $sql) or die('<h1>Sorry, something wrong happened. Please retry.</h1>');
 	$new_event = mysqli_fetch_assoc($rtn);
 
-	header('Location: /cebroad/events/show/'.$new_event['id']);
+	echo '<script> location.replace("/portfolio/cebroad/events/show/'.$new_event['id'].'"); </script>';
+	// header('Location: /portfolio/cebroad/events/show/'.$new_event['id']);
 	exit();
 }
 
@@ -141,7 +143,7 @@ if ($a['pic'.$i]['error'] === 0) {
 		</div>
 		<form method="post">
 			<div class="col-sm-8 col-md-8 col-lg-8 events-pad">
-				<a href="/cebroad/events/add/rewrite">Rewrite</a>
+				<a href="/portfolio/cebroad/events/add/rewrite">Rewrite</a>
 					<button class="btn btn-cebroad" onclick="location.href=''" name="submit" type="submit">Submit</button>
 			</div>
 		</form>

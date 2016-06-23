@@ -239,7 +239,7 @@
 $now = date('Y-m-d');
 $year = date('Y-m-d', strtotime("+1year"));
  ?>
-<script src="/cebroad/webroot/assets/js/jquery-1.12.4.min.js"></script>
+<script src="/portfolio/cebroad/webroot/assets/js/jquery-1.12.4.min.js"></script>
 <script src="http://maps.googleapis.com/maps/api/js?libraries=places&output?json&region=ph&language=en&key=AIzaSyDf24saS_c-qe8Qy4QPgVbTub1sJi02ov8"></script>
 
 
@@ -323,7 +323,7 @@ $year = date('Y-m-d', strtotime("+1year"));
                 <p class="cebroad-pink">Type the name of the event location then you see options below the form. You might not see correct options in case the internet is slow. In that case please reload the page.</p>
             </div>
         </div>
-        <img src="/cebroad/webroot/assets/events/img/loading.gif" id="loading" style="display: none;">
+        <img src="/portfolio/cebroad/webroot/assets/events/img/loading.gif" id="loading" style="display: none;">
         
         <div class="col-sm-8 col-md-8">
             <div class="form-group">
@@ -399,7 +399,7 @@ $year = date('Y-m-d', strtotime("+1year"));
 
         <div class="col-sm-8 col-md-8" class="events-pad">
             <div class="form-group">
-                <a href="/cebroad/events/index">Back</a>
+                <a href="/portfolio/cebroad/events/index">Back</a>
                 <input type="submit" id="confirm" class="btn btn-cebroad" disabled="disabled" value="confirm">
             </div>
         </div>
@@ -407,4 +407,4 @@ $year = date('Y-m-d', strtotime("+1year"));
       </div>
     </form>
   </div>
-<script src="/cebroad/webroot/assets/events/js/events.js"></script>
+<script src="/portfolio/cebroad/webroot/assets/events/js/events.js"></script>

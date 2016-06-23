@@ -141,7 +141,7 @@ if ($a['pic'.$i]['error'] === 0) {
 		</div>
 		<form method="post">
 			<div class="col-sm-8 col-md-8 col-lg-8 events-pad">
-				<a href="/cebroad/events/add/rewrite">Rewrite</a>
+				<a href="/portfolio/cebroad/events/add/rewrite">Rewrite</a>
 					<button class="btn btn-cebroad" onclick="location.href=''" name="submit" type="submit">Submit</button>
 			</div>
 		</form>

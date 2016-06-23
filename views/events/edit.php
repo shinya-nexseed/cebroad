@@ -1,17 +1,17 @@
 <?php 
 if (!isset($_SESSION['id'])) {
-  header('Location: /cebroad/index');
+  header('Location: /portfolio/cebroad/index');
 }
 
 
 //$idを元にイベントを取得
   $sql = sprintf("SELECT * FROM events WHERE id=%d",
-  		mysqli_real_escape_string($db, $id)
+  		(int)$id
   	);
   $rtn = mysqli_query($db, $sql) or die('<h1>Failed to connect a detabase.</h1>');
   $event = mysqli_fetch_assoc($rtn);
   if ((int)$_SESSION['id'] !== (int)$event['organizer_id']) {
-  header('Location: /cebroad/events/index');
+  header('Location: /portfolio/cebroad/events/index');
   }
 
   $errors = array();
@@ -226,12 +226,12 @@ if (!isset($_SESSION['id'])) {
     for ($i=0; $i<4; $i++) {
 
       if ($_FILES['pic'.$i]['error'] === 0) {
-        if (move_uploaded_file($_FILES['pic'.$i]['tmp_name'], ${"pic".$i."_path"} = 'events/events_pictures/'.sha1(mt_rand() . microtime()).'.jpg')) {
+        if (move_uploaded_file($_FILES['pic'.$i]['tmp_name'], ${"pic".$i."_path"} = 'views/events/events_pictures/'.sha1(mt_rand() . microtime()).'.jpg')) {
             if (strpos($a['picture_path_'.$i], 'default.jpg') === false) {
-            $path_to_delete = mb_substr($a['picture_path_'.$i], strpos($a['picture_path_'.$i], 'events'));
+            $path_to_delete = mb_substr($a['picture_path_'.$i], strpos($a['picture_path_'.$i], 'views'));
             unlink($path_to_delete);
             }
-              $a['picture_path_'.$i] = '/cebroad/'.${"pic".$i."_path"};
+              $a['picture_path_'.$i] = '/portfolio/cebroad/'.${"pic".$i."_path"};
              } else {
              die('<h1>Sorry, failed to upload picture'.$i.'. Please retry.</h1>');
           }
@@ -253,11 +253,11 @@ if (!isset($_SESSION['id'])) {
           mysqli_real_escape_string($db, $a['picture_path_3']),
           mysqli_real_escape_string($db, $a['capacity_num']),
           mysqli_real_escape_string($db, $a['event_category_id']),
-          mysqli_real_escape_string($db, $id)
+          (int)$id
   );
   mysqli_query($db, $sql) or die('<h1>Sorry, something wrong happened. Please retry.</h1>');
 
-      header('Location: /cebroad/events/show/'.$id);
+      echo '<script> location.replace("/portfolio/cebroad/events/show/'.(int)$id.'"); </script>';
       exit();
     } catch (Exception $e) {
     $error_messages = exception_to_array($e);
@@ -324,7 +324,7 @@ $now = date('Y-m-d');
 $year = date('Y-m-d', strtotime("+1year"));
 
  ?>
-<script src="/cebroad/webroot/assets/js/jquery-1.12.4.min.js"></script>
+<script src="/portfolio/cebroad/webroot/assets/js/jquery-1.12.4.min.js"></script>
 <script src="http://maps.googleapis.com/maps/api/js?libraries=places&output?json&region=ph&language=en&key=AIzaSyDf24saS_c-qe8Qy4QPgVbTub1sJi02ov8"></script>
 
 
@@ -401,7 +401,7 @@ $year = date('Y-m-d', strtotime("+1year"));
             <div class="form-group">
                 <label class="cebroad-pink">Place</label>
                 <input id="searchTextField" type="text" name="place" id="place" value="<?=h($place_name)?>" class="form-control" required>
-                <img src="/cebroad/webroot/assets/events/img/loading.gif" id="loading" style="display: none;">
+                <img src="/portfolio/cebroad/webroot/assets/events/img/loading.gif" id="loading" style="display: none;">
             </div>
         </div>
         
@@ -493,7 +493,7 @@ $year = date('Y-m-d', strtotime("+1year"));
 
         <div class="col-sm-8 col-md-8" class="events-pad">
             <div class="form-group">
-                <a href="/cebroad/events/index">Back</a>
+                <a href="/portfolio/cebroad/events/index">Back</a>
                 <input type="submit" id="confirm" class="btn btn-cebroad" disabled="disabled" value="confirm">
             </div>
         </div>
@@ -501,4 +501,4 @@ $year = date('Y-m-d', strtotime("+1year"));
       </div>
     </form>
 </div>
-<script src="/cebroad/webroot/assets/events/js/events.js"></script>
+<script src="/portfolio/cebroad/webroot/assets/events/js/events.js"></script>

@@ -324,7 +324,7 @@ $now = date('Y-m-d');
 $year = date('Y-m-d', strtotime("+1year"));
 
  ?>
-<script src="/cebroad/webroot/assets/js/jquery-1.12.4.min.js"></script>
+<script src="/portfolio/cebroad/webroot/assets/js/jquery-1.12.4.min.js"></script>
 <script src="http://maps.googleapis.com/maps/api/js?libraries=places&output?json&region=ph&language=en&key=AIzaSyDf24saS_c-qe8Qy4QPgVbTub1sJi02ov8"></script>
 
 
@@ -401,7 +401,7 @@ $year = date('Y-m-d', strtotime("+1year"));
             <div class="form-group">
                 <label class="cebroad-pink">Place</label>
                 <input id="searchTextField" type="text" name="place" id="place" value="<?=h($place_name)?>" class="form-control" required>
-                <img src="/cebroad/webroot/assets/events/img/loading.gif" id="loading" style="display: none;">
+                <img src="/portfolio/cebroad/webroot/assets/events/img/loading.gif" id="loading" style="display: none;">
             </div>
         </div>
         
@@ -493,7 +493,7 @@ $year = date('Y-m-d', strtotime("+1year"));
 
         <div class="col-sm-8 col-md-8" class="events-pad">
             <div class="form-group">
-                <a href="/cebroad/events/index">Back</a>
+                <a href="/portfolio/cebroad/events/index">Back</a>
                 <input type="submit" id="confirm" class="btn btn-cebroad" disabled="disabled" value="confirm">
             </div>
         </div>
@@ -501,4 +501,4 @@ $year = date('Y-m-d', strtotime("+1year"));
       </div>
     </form>
 </div>
-<script src="/cebroad/webroot/assets/events/js/events.js"></script>
+<script src="/portfolio/cebroad/webroot/assets/events/js/events.js"></script>
