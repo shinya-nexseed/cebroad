@@ -1,10 +1,6 @@
 <?php 
-
-  // var_dump($_SESSION['join']);
-
-	// $_SESSION['join']が存在しなければindex.phpに強制遷移させる
   if (!isset($_SESSION['join'])) {
-    echo '<script> location.replace("/cebroad/index"); </script>';
+    echo '<script> location.replace("/portfolio/cebroad/index"); </script>';
     exit();
   }
 
@@ -72,8 +68,7 @@ if (!empty($_POST)) {
 
   } else {
       //sqlが正しく実行されず、データが入力されなかった場合
-    // header('Location: /cebroad/index');
-    echo '<script> location.replace("/cebroad/index"); </script>';
+    echo '<script> location.replace("/portfolio/cebroad/index"); </script>';
     exit();
   }
 
@@ -83,16 +78,8 @@ if (!empty($_POST)) {
   // var_dump($_SESSION['join']);
   // echo $_SESSION['id'];
   unset($_SESSION['join']);
-  // header('Location: /cebroad/join/thanks');
-  echo '<script> location.replace("/cebroad/join/thanks"); </script>';
+  echo '<script> location.replace("/portfolio/cebroad/join/thanks"); </script>';
   exit();
-}
-
-
-
-  //htmlspecialcharsのショートカット
-function h($value){
-  return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
 }
 
 ?>
@@ -129,7 +116,7 @@ function h($value){
                 </tr>
             </table>
                     <center>
-                      <a href="/cebroad/join/signup/rewrite">Rewrite</a>
+                      <a href="/portfolio/cebroad/join/signup/rewrite">Rewrite</a>
                       <div class="form-group">
                         <div class="row">
                           <div class="col-sm-6 col-sm-offset-3">

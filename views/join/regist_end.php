@@ -1,9 +1,7 @@
 <?php
- 
-header("Content-type: text/html; charset=utf-8");
 
 if(empty($_SESSION['join'])) {
-	header("Location: /cebroad/join/regist_form");
+  echo '<script> location.replace("/portfolio/cebroad/join/regist_form"); </script>';
 	exit();
 }
 //クロスサイトリクエストフォージェリ（CSRF）対策のトークン判定
@@ -11,10 +9,6 @@ if ($_SESSION['join']['token'] !== $_SESSION['join']['token']) {
 	echo "There is a possibility of unauthorized access";
 	exit();
 }
- 
-//クリックジャッキング対策
-header('X-FRAME-OPTIONS: SAMEORIGIN');
-
  
 //エラーメッセージの初期化
 $errors = array(); 
@@ -26,7 +20,11 @@ $errors = array();
 if (count($errors) === 0){
 	
 	$urltoken = hash('sha256',uniqid(rand(),1));
-	$url = "192.168.33.10/cebroad/join/signup/".$urltoken;
+  if (DEBUG) { // development
+      $url = "192.168.33.10/cebroad/join/signup/".$urltoken;
+  } else { // production
+      $url = "http://nexseed.net/portfolio/cebroad/join/signup/".$urltoken;
+  }
 	
 	//ここでデータベースに登録する
 		$sql=sprintf('INSERT INTO pre_users SET urltoken="%s", email="%s"',
@@ -35,20 +33,17 @@ if (count($errors) === 0){
 			);
 		mysqli_query($db, $sql) or die('<h1>Sorry, something wrong happened. please retry.</h1>');
 		//プレースホルダへ実際の値を設定する
-
-			
-		//データベース接続切断
-		$db = null;
 		
 	
 	//メールの宛先
 	$mailTo = $mail;
  
 	//Return-Pathに指定するメールアドレス
-	$returnMail = 'pre_member@cebroad.sakura.ne.jp';
+	$returnMail = 'cebroad@nexseed.sakura.ne.jp';
  
 	$name = "Cebroad";
-	$mail = 'pre_member@cebroad.sakura.ne.jp';
+	$mail = 'cebroad@nexseed.sakura.ne.jp';
+  
 	$subject = "[Cebroad]Call for registration";
  
 	$body = <<< EOM

@@ -1,82 +1,80 @@
 <?php
-   // ログイン判定
+    // ログイン判定
     if (!isset($_SESSION['id'])) {
-      echo '<script> location.replace("/cebroad/index"); </script>';
-      exit();
+        echo '<script> location.replace("/portfolio/cebroad/index"); </script>';
+        exit();
     }
-    
 
-   //国籍テーブルから国籍名を取得
-      $sql = 'SELECT * FROM `nationalities`';
-      $nationalities = mysqli_query($db, $sql) or die('<h1>Sorry, something wrong happened. please retry.</h1>');
+    //国籍テーブルから国籍名を取得
+    $sql = 'SELECT * FROM `nationalities`';
+    $nationalities = mysqli_query($db, $sql) or die('<h1>Sorry, something wrong happened. please retry.</h1>');
 
-      $sql = sprintf('SELECT * FROM `users` WHERE `id`=%d',
-        $_SESSION['id']
+    $sql = sprintf('SELECT * FROM `users` WHERE `id`=%d',
+          $_SESSION['id']
         );
-      $record = mysqli_query($db, $sql) or die (mysqli_error());
-      $user = mysqli_fetch_assoc($record);
+    $record = mysqli_query($db, $sql) or die (mysqli_error());
+    $user = mysqli_fetch_assoc($record);
 
     //アップデート処理
     $errors = array();
     $error_messages = array();
 
     if (!empty($_POST)) {
-      //項目が空で送信された場合の処理
-      if ($_POST['gender'] === '0') {
-        $_POST['gender'] = '';
-      }
+        //項目が空で送信された場合の処理
+        if ($_POST['gender'] === '0') {
+            $_POST['gender'] = '';
+        }
 
-      if ($_POST['nationality_id'] === '0') {
-        $_POST['nationality_id'] = '';
-      }
+        if ($_POST['nationality_id'] === '0') {
+            $_POST['nationality_id'] = '';
+        }
 
-
-
-      //画像サイズが送信された場合
-    if ($_FILES['profile_picture_path']['error'] === 0) {
-        $fileName = $_FILES['profile_picture_path']['name'];
-        if (!empty($fileName)) {
-            $ext = substr($fileName, -3);
-            if ($ext !== 'jpg' && $ext !== 'gif' && $ext !== 'png') {
-              $error['profile_picture_path'] = 'type';
+        //画像サイズが送信された場合
+        if ($_FILES['profile_picture_path']['error'] === 0) {
+            $fileName = $_FILES['profile_picture_path']['name'];
+            
+            if (!empty($fileName)) {
+                $ext = substr($fileName, -3);
+                
+                if ($ext !== 'jpg' && $ext !== 'gif' && $ext !== 'png') {
+                    $error['profile_picture_path'] = 'type';
+                }
             }
         }
-    }
-      //エラーがなければ
+
         //画像が選択されていれば
         if(!empty($fileName)) {
-          //画像のアップロード
-          $picture = date('YmdHis').$_FILES['profile_picture_path']['name'];
-          move_uploaded_file($_FILES['profile_picture_path']['tmp_name'],'./users/profile_pictures/'.$picture);
+            //画像のアップロード
+            $picture = date('YmdHis').$_FILES['profile_picture_path']['name'];
+            move_uploaded_file($_FILES['profile_picture_path']['tmp_name'],$_SERVER['DOCUMENT_ROOT'].'/portfolio/cebroad/views/users/profile_pictures/'.$picture);
         } else {
-          $picture = $user['profile_picture_path'];
+            $picture = $user['profile_picture_path'];
         }
-    //画像が選択されている場合のアップロード処理
-  if(!empty($fileName)) {
-        //①更新用sql文
-        $sql = sprintf("UPDATE `users` SET `gender`=%d, `profile_picture_path`='%s', `birthday`='%s', `nationality_id`=%d WHERE id=%d",
-          mysqli_real_escape_string($db, $_POST['gender']),
-          mysqli_real_escape_string($db, $picture),
-          mysqli_real_escape_string($db,$_POST['birthday']),
-          mysqli_real_escape_string($db, $_POST['nationality_id']),
-          mysqli_real_escape_string($db, $_SESSION['id'])
-        );
-        //echo $sql;
 
-        //②sql文を実行する
-        mysqli_query($db, $sql) or die('<h1>Sorry, something wrong happened. please retry.</h1>');
+        //画像が選択されている場合のアップロード処理
+        if(!empty($fileName)) {
+            //①更新用sql文
+            $sql = sprintf("UPDATE `users` SET `gender`=%d, `profile_picture_path`='%s', `birthday`='%s', `nationality_id`=%d WHERE id=%d",
+                mysqli_real_escape_string($db, $_POST['gender']),
+                mysqli_real_escape_string($db, $picture),
+                mysqli_real_escape_string($db,$_POST['birthday']),
+                mysqli_real_escape_string($db, $_POST['nationality_id']),
+                mysqli_real_escape_string($db, $_SESSION['id'])
+              );
 
-        //Jcropの画面に遷移させる
-        // header('Location: crop');
-        echo '<script> location.replace("/cebroad/join/crop"); </script>';
+            //②sql文を実行する
+            mysqli_query($db, $sql) or die('<h1>Sorry, something wrong happened. please retry.</h1>');
 
+            //Jcropの画面に遷移させる
+            // header('Location: crop');
+            echo '<script> location.replace("/portfolio/cebroad/join/crop"); </script>';
+        }
 
-      }
-
-      // header('Location: /cebroad/users/show');
-      exit();
-      }
+        echo '<script> location.replace("/portfolio/cebroad/users/show"); </script>';
+        exit();
+    }
 ?> 
+
         <div class="container">
           <div class="row">
             <div class="col-md-6 col-md-offset-3">
@@ -132,7 +130,7 @@
                   <select class="form-control" name="nationality_id">
                         <option value="0">Select your nationality</option>
                       <?php while ($nationality = mysqli_fetch_assoc($nationalities)) { ?>
-                        <option value="<?php echo $nationality['nationality_id']; ?>"><?php echo $nationality['nationality_name']; ?></option>
+                        <option value="<?php echo $nationality['nationality_id']; ?>"><?php echo $nationality['nationality']; ?></option>
                       <?php } ?>
                   </select>
                 </div>
@@ -151,4 +149,4 @@
           </div>
         </div>
     </div>
-<script src="/cebroad/webroot/assets/js/thanks.js"></script>
+<script src="/portfolio/cebroad/webroot/assets/js/thanks.js"></script>

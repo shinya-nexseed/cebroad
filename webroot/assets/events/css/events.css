@@ -1,0 +1,42 @@
+textarea {
+	resize: none;
+}
+.testvar {
+	height: 2000px;
+}
+.events-pad {
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+/*cebroadのメインカラー*/
+.cebroad-pink {
+	color: #ff2a50;
+}
+/*cebroadのメインカラーを用いたボタン*/
+.btn-cebroad {
+  background: rgb(255, 42, 80);
+  color: #FFFFFF;
+  border: none;
+  -moz-box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+}
+.btn-cebroad:hover, .btn-cebroad:focus {
+  background: rgb(235, 42, 80);
+}
+.btn-cebroad:active {
+  background: rgb(235, 42, 80);
+}
+
+/*.box {
+    width: 20%;
+    display: inline-block;
+    padding-top: 15%;
+    position: relative;
+}
+.box img {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}*/

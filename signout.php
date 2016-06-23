@@ -1,6 +1,4 @@
 <?php
-	session_start();
-
 	//セッション情報を削除
 	$_SESSION = array();
 	if(ini_get("session.use_cookies")){
@@ -17,7 +15,7 @@
 	setcookie('password','',time()-3600);
 
 	// header('Location: index');
-	echo '<script> location.replace("/cebroad/index"); </script>';
+	echo '<script> location.replace("/portfolio/cebroad/index"); </script>';
 	exit();
 
 ?>

@@ -1,17 +1,8 @@
 <?php 
-header("Content-type: text/html; charset=utf-8");
  
 //クロスサイトリクエストフォージェリ（CSRF）対策
 $_SESSION['join']['token'] = base64_encode(openssl_random_pseudo_bytes(32));
 $token = $_SESSION['join']['token'];
- 
-//クリックジャッキング対策
-header('X-FRAME-OPTIONS: SAMEORIGIN');
-
-  //htmlspecialcharsのショートカット
-function h($value){
-  return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
-}
 
 $error = Array();
 if (!empty($_POST)) {

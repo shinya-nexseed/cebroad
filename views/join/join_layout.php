@@ -1,26 +1,17 @@
-<?php
-  session_start();
-  require('dbconnect.php');
-  // 仮ログインデータ
-  // DBのusersテーブルにid = 1のデータを登録しておく
-  //$_SESSION['id'] = 1;
-  // echo 'join_layout通過ほげ';
-?>
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
   <title>Cebroad</title>
   <!-- Bootstrap -->
-    <link href="/cebroad/webroot/assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/cebroad/webroot/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
-    <link href="/cebroad/webroot/assets/css/form.css" rel="stylesheet">
-    <link href="/cebroad/webroot/assets/css/timeline.css" rel="stylesheet">
-    <link href="/cebroad/webroot/assets/css/signup.css" rel="stylesheet">
-    <link href="/cebroad/webroot/assets/css/main.css" rel="stylesheet">
-    <script src="/cebroad/webroot/assets/js/jquery.min.js"></script>
-    <script src="/cebroad/webroot/assets/js/jquery.Jcrop.js"></script>
+    <link href="/portfolio/cebroad/webroot/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/portfolio/cebroad/webroot/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="/portfolio/cebroad/webroot/assets/css/form.css" rel="stylesheet">
+    <link href="/portfolio/cebroad/webroot/assets/css/timeline.css" rel="stylesheet">
+    <link href="/portfolio/cebroad/webroot/assets/css/signup.css" rel="stylesheet">
+    <link href="/portfolio/cebroad/webroot/assets/css/main.css" rel="stylesheet">
+    <script src="/portfolio/cebroad/webroot/assets/js/jquery.min.js"></script>
+    <script src="/portfolio/cebroad/webroot/assets/js/jquery.Jcrop.js"></script>
     <script type="text/javascript">
     $(function(){
 
@@ -75,9 +66,15 @@
 </head>
 <body>
   <?php
-  // echo 'join_layout通過';
-  //   echo '<br>';
-    require($resource.'/'.$action.'.php');
+      $url = 'views/'.$resource.'/'.$action.'.php';
+      // echo $url;
   ?>
+
+  <?php if (@file_get_contents($url)):?>
+      <?php require($url); ?>
+  <?php else: ?>
+      <h1>Sorry, we couldn't find that page.</h1>
+      <a href="/portfolio/cebroad/events/index">Go to the top page</a>
+  <?php endif; ?>
 </body>
 </html>

@@ -2,8 +2,7 @@
 // メモ
 // join/register(メールアドレス登録)→pre_thanks→signup→check→thanks
 if ($id === '0' || $id === '') {
-  // header('Location: /cebroad/index');
-  echo '<script> location.replace("/cebroad/index"); </script>';
+  echo '<script> location.replace("/portfolio/cebroad/index"); </script>';
   exit();
 } 
 // else {
@@ -68,8 +67,7 @@ if ($id === 'rewrite') {
     if (empty($error)) {
       $_SESSION['join'] = $_POST;
       $_SESSION['join']['email'] = $mail;
-      // header('Location: /cebroad/join/check');
-      echo '<script> location.replace("/cebroad/join/check"); </script>';
+      echo '<script> location.replace("/portfolio/cebroad/join/check"); </script>';
       exit();
     }
   }
@@ -84,11 +82,6 @@ if ($id === 'rewrite') {
       $error['rewrite'] = true;
     }
 
-
-  //htmlspecialcharsのショートカット
-  function h($value){
-    return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
-  }
 ?>
   
       <div class="container">

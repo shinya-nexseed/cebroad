@@ -1,8 +1,4 @@
 <?php
-require('dbconnect.php');
-
-session_start();
-
 // $_SESSION = array();//セッションの初期化（リダイレクト処理確認時のデバッグに使用）
 
 //自動ログイン処理
@@ -49,7 +45,7 @@ if(!empty($_POST)) {
       // }
 
       // header('Location: events/index');
-      echo '<script> location.replace("/cebroad/events/index"); </script>';
+      echo '<script> location.replace("/portfolio/cebroad/events/index"); </script>';
 
       exit();
     } else {
@@ -58,11 +54,6 @@ if(!empty($_POST)) {
   }
 }
 
-  
-
-  function h($value){
-    return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
-  }
 ?>
 
 <!DOCTYPE html>
@@ -75,12 +66,12 @@ if(!empty($_POST)) {
     <title>Cebroad</title>
 
     <!-- Bootstrap -->
-    <link href="/cebroad/webroot/assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/cebroad/webroot/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
-    <link href="/cebroad/webroot/assets/css/form.css" rel="stylesheet">
-    <link href="/cebroad/webroot/assets/css/timeline.css" rel="stylesheet">
-    <link href="/cebroad/webroot/assets/css/signup.css" rel="stylesheet">
-    <link href="/cebroad/webroot/assets/css/main.css" rel="stylesheet">
+    <link href="/portfolio/cebroad/webroot/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/portfolio/cebroad/webroot/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="/portfolio/cebroad/webroot/assets/css/form.css" rel="stylesheet">
+    <link href="/portfolio/cebroad/webroot/assets/css/timeline.css" rel="stylesheet">
+    <link href="/portfolio/cebroad/webroot/assets/css/signup.css" rel="stylesheet">
+    <link href="/portfolio/cebroad/webroot/assets/css/main.css" rel="stylesheet">
     <!--
       designフォルダ内では2つパスの位置を戻ってからcssにアクセスしていることに注意！
      -->
@@ -110,7 +101,7 @@ if(!empty($_POST)) {
 
                   <form id="register-form" action="" method="post" role="form" style="display: block;">
                   <p>If you do not register yet, please register.</p>
-                  <p>&raquo;  <a href="/cebroad/join/regist_form">TO THE REGISTERATION SCREEN</a></p>
+                  <p>&raquo;  <a href="/portfolio/cebroad/join/regist_form">TO THE REGISTERATION SCREEN</a></p>
                   <br>
                   <h3>Please input your Email address and password to sign in ♪</h3>
                     <!--メールアドレス-->
@@ -156,6 +147,6 @@ if(!empty($_POST)) {
       </div>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="/cebroad/webroot/assets/js/bootstrap.min.js"></script>
+    <script src="/portfolio/cebroad/webroot/assets/js/bootstrap.min.js"></script>
   </body>
 </html>
