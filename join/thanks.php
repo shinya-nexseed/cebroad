@@ -1,10 +1,10 @@
 <?php 
     // $_SESSION['join']が存在しなければsignup.phpに強制遷移させる
     // if (!isset($_SESSION['join'])) {
-    // header('Location: signup');
-    // exit();
+    //   header('Location: /cebroad/index');
+    //   exit();
     // }
- // echo $_SESSION['id'];
+
    //国籍テーブルから国籍名を取得
       $sql = 'SELECT * FROM `nationalities`';
       $nationalities = mysqli_query($db, $sql) or die(mysqli_error($db));
@@ -18,7 +18,7 @@
       $record = mysqli_query($db, $sql) or die (mysqli_error());
       $user = mysqli_fetch_assoc($record);
     } else {
-      header('Location: /cebroad/join/signup');
+      header('Location: /cebroad/index');
       exit();
     }
 
@@ -103,50 +103,52 @@
               <div class="panel panel-login">
                 <div class="panel-heading">
                   <div class="row">
-                    <a href="#" id="register-form-link"></a>
+                    <label id="register-form-link">Thank you for your registration.</label>
                   </div>
                   <hr>
                 </div>
-              <div class="panel-body">
-                <div class="row">
                   <div class="col-lg-12">
-        <form class="thanks-form" id="register-form" action="" method="post" role="form" enctype="multipart/form-data" style="display: block;">
+                    <p>If you want to add your informations,you can add and press the "Add Information" button.</p>
+                    <p>If you do not want, please press the "To Event Screen" button. Thank you.</p>
+                  </div>
+              <div class="panel-body">              
+                  <div class="col-lg-12">
+                  <form class="thanks-form" id="register-form" action="" method="post" role="form" enctype="multipart/form-data" style="display: block;">
 
           <!-- プロフィール写真 -->
-          <div class="form-group">
-            <label class="col-sm-4 control-label">Profile Picture</label>
-              <div class="col-sm-8">
-                <input type="file" name="profile_picture_path" class="form-control">
-                <?php if (isset($error['profile_picture_path']) === 'type'): ?>
-                  <p class="error">* You can choose 「.gif」「.jpg」「.png」file only.</p>
-                <?php endif; ?>
-              </div>
-          </div>
+                  <label class="control-label">Profile Picture</label>
+                  <input type="file" name="profile_picture_path" id="profile_picture_path" style="display: none;">
+                  <div class="input-group">
+                    <input type="text" id="photoCover" class="form-control" placeholder="Select jpg or png(Maximum of 5MB)">
+                    <span class="input-group-btn"><button type="button" class="btn btn-cebroad" onclick="$('#profile_picture_path').click();">Browse</button></span>
+                  </div>
+                  <label id="label" class="cebroad-pink"></label>
+                  <div class="events-pad">
+                    <img src="" id="preview" style="display:none; width: 300px;">
+                  </div>
+                  <?php if (isset($error['profile_picture_path']) && $error['profile_picture_path'] === 'type'): ?>
+                    <p class="error">* You can choose「.jpg」「.png」file only.</p>
+                  <?php endif; ?>
 
           <!-- 性別 -->
             <div class="form-group">
-              <label class="col-sm-4 control-label">Gender</label>
-                <div class="col-sm-8">
+                  <label class="control-label">Gender</label>
                   <select class="form-control" name="gender">
                     <option value="0">Select Your Gender</option>
                     <option value="1">Male</option>
                     <option value="2">Female</option>
                   </select>
                 </div>
-            </div>
           <!-- 誕生日 -->
             <div class="form-group">
-              <label class="col-sm-4 control-label">Birthday</label>
-                <div class="col-sm-8">
-                  <input type="date" name="birthday" class="form-control">
+                  <label class="control-label">Birthday</label>
+                  <input type="date" name="birthday" class="form-control" min="1930-01-01" max="2010-12-31">
                   <!-- placeholder="Example:1990/01/01" -->
                 </div>
-            </div>
           <!-- 国籍 -->
           <!-- 国籍テーブルから外部キーとして取得 -->
             <div class="form-group">
-              <label class="col-sm-4 control-label">Nationality</label>
-                <div class="col-sm-8">
+              <label class="control-label">Nationality</label>
                   <select class="form-control" name="nationality_id">
                         <option value="0">Select your nationality</option>
                       <?php while ($nationality = mysqli_fetch_assoc($nationalities)) { ?>
@@ -154,18 +156,19 @@
                       <?php } ?>
                   </select>
                 </div>
+              </div>
+
+            <div class="col-sm-12 col-md-12 pull-right">
+              <input type="submit" class="btn btn-cebroad pull-right" name="register-submit" action='' value="Add Information" onclick="return check()">
             </div>
-            <div class="col-md-8 col-md-offset-4">
-              <input type="submit" class="btn btn-cebroad"  name="register-submit" action='' value="Add Information">
+
+            <div class="col-sm-12 col-md-12 pull-right" style="padding-top: 20px;">
+              <a href="/cebroad/events/index" class="btn btn-cebroad pull-right" onclick="return check2()">To Event Screen</a>
             </div>
-        </form> 
-                  <div class="thanks-div col-md-8 col-md-offset-4">
-                    <a href="/cebroad/events/index" class="btn btn-cebroad">EVENTS</a>
-                  </div>
+        </form>
                 </div>
-              </div>   
             </div>
           </div>
         </div>
-      </div>
     </div>
+<script src="/cebroad/webroot/assets/js/thanks.js"></script>

@@ -1,4 +1,9 @@
 <?php
+  // $_SESSION['join']が存在しなければsignup.phpに強制遷移させる
+  // if (!isset($_SESSION['join'])) {
+  //   header('Location: ../index');
+  //   exit();
+  // }
 
 $sql = sprintf('SELECT * FROM `users` WHERE `id`=%d', mysqli_real_escape_string($db, $_SESSION['id'])
   );

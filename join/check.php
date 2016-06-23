@@ -3,10 +3,10 @@
   // var_dump($_SESSION['join']);
 
 	// $_SESSION['join']が存在しなければindex.phpに強制遷移させる
-if (!isset($_SESSION['join'])) {
-  header('Location: /cebroad/join/index');
-  exit();
-}
+  if (!isset($_SESSION['join'])) {
+    header('Location: ../index');
+    exit();
+  }
 
 // signupからpostで持ってきたidの値を使用してselect文作成
 	$sql = sprintf('SELECT * FROM schools WHERE id=%d',

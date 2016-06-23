@@ -45,6 +45,23 @@
       alert('Please select a crop region then press submit.');
       return false;
     };
+
+    function check() {
+      if (window.confirm('You added the informations. Okay?')) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+
+    function check2() {
+      if (window.confirm('You did not add the informations. Okay?')) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+
   </script>
   <style type="text/css">
     #target {
@@ -58,8 +75,8 @@
 </head>
 <body>
   <?php
-  echo 'join_layout通過';
-    echo '<br>';
+  // echo 'join_layout通過';
+  //   echo '<br>';
     require($resource.'/'.$action.'.php');
   ?>
 </body>
