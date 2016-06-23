@@ -4,6 +4,20 @@ if (!isset($_SESSION['id'])) {
 }
 
 
+//$idを元にイベント参加者を取得
+
+      $sql=sprintf('SELECT * FROM `users` JOIN `participants` ON `id`=participants.user_id WHERE participants.event_id=%d',
+        mysqli_real_escape_string($db, $id)
+        );
+      $record=mysqli_query($db, $sql)or die(mysqli_error($db));
+      
+      $event_participants=array();
+
+      while($result=mysqli_fetch_assoc($record)){
+        $event_participants[]=$result;
+      }
+
+
 //$idを元にイベントを取得
   $sql = sprintf("SELECT * FROM events WHERE id=%d",
   		mysqli_real_escape_string($db, $id)
@@ -256,6 +270,18 @@ if (!isset($_SESSION['id'])) {
           mysqli_real_escape_string($db, $id)
   );
   mysqli_query($db, $sql) or die('<h1>Sorry, something wrong happened. Please retry.</h1>');
+
+  //イベント参加者に編集したことを通知する
+  foreach ($event_participants as $event_participant) {
+        $sql= sprintf('INSERT INTO `notifications`(`user_id`, `partner_id`, `event_id`, `topic_id`, `created`) VALUES(%d,%d,%d,3,now())',
+          $event_participant['user_id'],
+          $a['organizer_id'],
+          $id
+          );
+        $record = mysqli_query($db, $sql) or die(mysqli_error($db));
+  }
+     
+
 
       header('Location: /cebroad/events/show/'.$id);
       exit();
