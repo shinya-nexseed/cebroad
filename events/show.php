@@ -133,12 +133,12 @@
         $table_paticipant = mysqli_fetch_assoc($record);
 
         //通知情報を送信
-        // $sql= sprintf('INSERT INTO `notifications`(`user_id`, `partner_id`, `event_id`, `topic_id`, `created`) VALUES(%d,%d,%d,2,now())',
-        //   $event['organizer_id'],
-        //   $_SESSION['id'],
-        //   $id
-        //   );
-        // $record = mysqli_query($db, $sql) or die(mysqli_error($db));
+        $sql= sprintf('INSERT INTO `notifications`(`user_id`, `partner_id`, `event_id`, `topic_id`, `created`) VALUES(%d,%d,%d,2,now())',
+          $event['organizer_id'],
+          $_SESSION['id'],
+          $id
+          );
+        $record = mysqli_query($db, $sql) or die(mysqli_error($db));
 
         header('Location: /cebroad/'.$resource.'/'.$action.'/'.$id);
       }
