@@ -4,62 +4,45 @@
   if(isset($_SESSION['id'])&&$_SESSION['time']+3600>time()){
     //セッションに保存している期間更新
     $_SESSION['time']=time();
-
-
     //ログインしているユーザーのデータをDBから取得
     $sql=sprintf('SELECT *, schools.name AS school_name FROM `users` JOIN `schools` ON users.school_id=schools.id WHERE users.id=%d',
       mysqli_real_escape_string($db, $_SESSION['id'])
       );
     $record=mysqli_query($db, $sql)or die(mysqli_error($db));
     $member=mysqli_fetch_assoc($record);
-
-
     //イベントカテゴリ呼び出し
     $sql=sprintf('SELECT * FROM `event_categories` WHERE 1');
     $record=mysqli_query($db, $sql)or die(mysqli_error($db));
-
     $categories=array();
-
     while($result=mysqli_fetch_assoc($record)){
       //実行結果として得られたデータを取得
       $categories[]=$result;
     }
-
     //ログインしているユーザーが作成したイベントの表示用にデータを取得
     $sql=sprintf('SELECT *FROM `events` WHERE `organizer_id`='.$_SESSION['id'].' ORDER BY `date` DESC');
-
     $record=mysqli_query($db, $sql)or die(mysqli_error($db));
-
     $event_users_makes=array();
-
     while($result=mysqli_fetch_assoc($record)){
       //実行結果として得られたデータを取得
       $event_users_makes[]=$result;
     }
-
-
     //ログインしているユーザーが参加するイベントの表示用にデータを取得
     $sql=sprintf('SELECT *FROM `events` 
       INNER JOIN `participants` ON events.id=participants.event_id
       WHERE participants.user_id='.$_SESSION['id'].
       ' ORDER BY `date` DESC'
       );
-
     $record=mysqli_query($db, $sql)or die(mysqli_error($db));
-
     $event_users_parts=array();
-
     while($result=mysqli_fetch_assoc($record)){
       //実行結果として得られたデータを取得
       $event_users_parts[]=$result;
     }
-
-  }else{
-    //ログインしていない場合の処理
-    header('Location: ../signin');
-    exit();
+  // }else{
+  //   //ログインしていない場合の処理
+  //   header('Location: ../signin');
+  //   exit();
   }
-
   function h($value){
     return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
   }
@@ -71,12 +54,12 @@
   <title>Cebroad</title>
   <meta name="generator" content="Bootply" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <link href="/portfolio/cebroad/webroot/assets/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="/portfolio/cebroad/webroot/assets/font-awesome/css/font-awesome.css">
+  <link href="/cebroad/webroot/assets/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/cebroad/webroot/assets/font-awesome/css/font-awesome.css">
   <!--[if lt IE 9]>
     <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
-  <link href="/portfolio/cebroad/webroot/assets/css/styles.css" rel="stylesheet">
+  <link href="/cebroad/webroot/assets/css/styles.css" rel="stylesheet">
 
   <script>
     $(document).ready(function(){
@@ -164,11 +147,11 @@
      transition: all 0.3s ease-in-out 0s;
   }
   .gurdeepoushan .dropdown-menu li a:hover {
-      background:#304445 none repeat scroll 0 0 !important;
+      background:#ff2a50 none repeat scroll 0 0 !important;
       color: #fff;
   }
   .popup-head {
-      background: #304445 none repeat scroll 0 0 !important;
+      background: #ff2a50 none repeat scroll 0 0 !important;
       border-bottom: 3px solid #ccc;
       color: #fff;
       display: table;
@@ -197,11 +180,11 @@
        background-attachment: fixed;
       background-clip: border-box;
       background-color: rgba(0, 0, 0, 0);
-      background-image: url("https://scontent.fixc1-1.fna.fbcdn.net/v/t1.0-9/12670232_624826600991767_3547881030871377118_n.jpg?oh=92b8b3e25bdd56df4af5dc466feb46ce&oe=57CC10E7");
+      background-color:lightgrey ;
       background-origin: padding-box;
       background-position: center top;
       background-repeat: repeat;
-      border: 1px solid #304445;
+      border: 1px solid #ff2a50;
       bottom: 0;
       display: none;
       height: 466px;
@@ -315,7 +298,7 @@
       margin-right: 24px !important;
   }
   .chat_box.chat_box_colors_a .chat_message_wrapper.chat_message_right ul.chat_message > li:first-child::before {
-      border-left-color: #E8FFD4;
+      border-left-color: #ffa5b5;
   }
   .chat_box.chat_box_colors_a .chat_message_wrapper ul.chat_message > li:first-child::before {
       border-right-color: #FCFBF6;
@@ -338,7 +321,7 @@
       width: 0;
   }
   .chat_box.chat_box_colors_a .chat_message_wrapper.chat_message_right ul.chat_message > li {
-      background: #E8FFD4 none repeat scroll 0 0;
+      background: #ffa5b5 none repeat scroll 0 0;
   }
   .chat_box .chat_message_wrapper ul.chat_message > li {
       background: #ededed none repeat scroll 0 0;
@@ -644,6 +627,6 @@
 
   <!-- script references -->
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-  <script type="text/javascript" src="/portfolio/cebroad/webroot/assets/js/bootstrap.js"></script>
+  <script type="text/javascript" src="/cebroad/webroot/assets/js/bootstrap.js"></script>
 </body>
 </html>
