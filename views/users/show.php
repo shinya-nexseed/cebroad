@@ -69,7 +69,7 @@ $school = mysqli_fetch_assoc($record);
                     <tr>
                     <!-- 国籍表示 -->
                       <td>Nationality</td>
-                      <td><?php echo h($nationality['nationality_name']); ?></td>
+                      <td><?php echo h($nationality['nationality']); ?></td>
                     </tr>
                       <tr>
                     <!-- 学校名表示 -->

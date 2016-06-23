@@ -77,6 +77,17 @@
   <link rel="stylesheet" href="/portfolio/cebroad/webroot/assets/css/styles.css">
   <link rel="stylesheet" href="/portfolio/cebroad/webroot/assets/events/css/events.css">
   <link rel="stylesheet" href="/portfolio/cebroad/webroot/assets/events/css/users_show.css">
+  <link rel="stylesheet" href="/portfolio/cebroad/webroot/assets/events/css/main.css">
+
+  <style type="text/css">
+    #target {
+      background-color: #ccc;
+      width: 500px;
+      height: 330px;
+      font-size: 24px;
+      display: block;
+    }
+  </style>
 </head>
 <body>
   <div class="wrapper">
@@ -333,3 +344,7 @@
   <script type="text/javascript" src="/portfolio/cebroad/webroot/assets/js/bootstrap.js"></script>
 </body>
 </html>
+<script src="/cebroad/webroot/assets/js/jquery.min.js"></script>
+<script src="/cebroad/webroot/assets/js/jquery.Jcrop.js"></script>
+<script src="/cebroad/webroot/assets/js/inputfile.js"></script>
+<script src="/cebroad/webroot/assets/js/crop.js"></script>
