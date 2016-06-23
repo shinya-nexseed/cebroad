@@ -1,6 +1,6 @@
 <?php
   session_start();
-  define('DEBUG', FALSE); //環境切り替え用 TRUEで開発環境モード
+  define('DEBUG', TRUE); //環境切り替え用 TRUEで開発環境モード
 
   $params = explode('/', $_GET['url']);
   $resource = $params[0];
@@ -17,6 +17,18 @@
     $post = $_POST;
   }
 
+  echo '<br>';
+  echo '<br>';
+  echo '<br>';
+  echo '<br>';
+
+  echo 'resource = '.$resource;
+  echo '<br>';
+  echo 'action = '.$action;
+  echo '<br>';
+  echo 'id = '.$id;
+  echo '<br>';
+
   if ($resource === 'index' || $resource === '') {
     require('index.php');
   } else {
@@ -27,6 +39,7 @@
     } else if ($resource === 'join') {
       require('views/join/join_layout.php'); 
     } else {
+      echo 'application';
       require('application.php');
     }
   }

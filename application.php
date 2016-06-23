@@ -1,6 +1,5 @@
 <?php
   require('dbconnect.php');
-
   $_SESSION['id'] = 1;
   $_SESSION['time']=time();
 
@@ -81,21 +80,21 @@
 <head>
   <meta charset="UTF-8">
   <title>Cebroad</title>
-  <link rel="stylesheet" href="/cebroad/webroot/assets/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/cebroad/webroot/assets/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../webroot/assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../webroot/assets/font-awesome/css/font-awesome.min.css">
   <!--[if lt IE 9]>
     <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
-  <link rel="stylesheet" href="/cebroad/webroot/assets/css/styles.css">
-  <link rel="stylesheet" href="/cebroad/webroot/assets/events/css/events.css">
+  <link rel="stylesheet" href="../webroot/assets/css/styles.css">
+  <link rel="stylesheet" href="../webroot/assets/events/css/events.css">
 
   <script>
-    $(document).ready(function(){
-        //Handles menu drop down
-        $('.dropdown-menu').find('form').click(function (e) {
-            e.stopPropagation();
-        });
-    });
+    // $(document).ready(function(){
+    //     //Handles menu drop down
+    //     $('.dropdown-menu').find('form').click(function (e) {
+    //         e.stopPropagation();
+    //     });
+    // });
   </script>
 </head>
 <body>
@@ -327,13 +326,8 @@
                         <div class="row">
                           
                           <?php
-                            if (DEBUG) { // development
-                                $url = dirname(__FILE__).'/'.$resource.'/'.$action.'.php';
-                            } else { // production
-                                $dir_path_org = dirname(__FILE__);
-                                $dir_path = str_replace('/portfolio','',$dir_path_org);
-                                $url = $dir_path.'/views/'.$resource.'/'.$action.'.php';
-                            }
+                              $url = dirname(__FILE__).'/views/'.$resource.'/'.$action.'.php';
+                              echo $url;
                           ?>
 
                           <?php if (@file_get_contents($url)):?>
@@ -355,6 +349,6 @@
   </div>
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-  <script type="text/javascript" src="/cebroad/webroot/assets/js/bootstrap.js"></script>
+  <script type="text/javascript" src="../webroot/assets/js/bootstrap.js"></script>
 </body>
 </html>
