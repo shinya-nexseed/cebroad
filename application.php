@@ -1,7 +1,4 @@
 <?php
-  require('dbconnect.php');
-  $_SESSION['id'] = 1;
-
 
   if ( !function_exists('mime_content_type') ) {
       function mime_content_type($filename) {
@@ -10,13 +7,7 @@
       }
   }
 
-
-  if(!isset($_SESSION['id'])) {
-    header('Location: /portfolio/cebroad/index');
-    exit();
- }
-
-
+  if(isset($_SESSION['id'])) {
 
     //ログインしているユーザーのデータをDBから取得
     $sql = sprintf('SELECT *, schools.name AS school_name FROM `users` JOIN `schools` ON users.school_id=schools.id WHERE users.id=%d',
@@ -328,7 +319,7 @@
                           
                           <?php
                               $url = dirname(__FILE__).'/views/'.$resource.'/'.$action.'.php';
-                              echo $url;
+                              // echo $url;
                           ?>
 
                           <?php if (@file_get_contents($url)):?>
