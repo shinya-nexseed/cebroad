@@ -4,6 +4,13 @@
   $_SESSION['id'] = 1;
   $_SESSION['time']=time();
 
+  if ( !function_exists('mime_content_type') ) {
+      function mime_content_type($filename) {
+          $mime_type = exec('file -Ib '.$filename);
+          return $mime_type;
+      }
+  }
+
   //セッションにidが存在し、かつセッションのtimeと3600秒足した値が
   //現在時刻より小さいときにログインをしていると判断する
   if(isset($_SESSION['id'])&&$_SESSION['time']+3600>time()){
@@ -74,14 +81,13 @@
 <head>
   <meta charset="UTF-8">
   <title>Cebroad</title>
-  <meta name="generator" content="Bootply" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <link href="/cebroad/webroot/assets/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="/cebroad/webroot/assets/font-awesome/css/font-awesome.css">
+  <link rel="stylesheet" href="/cebroad/webroot/assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/cebroad/webroot/assets/font-awesome/css/font-awesome.min.css">
   <!--[if lt IE 9]>
     <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
-  <link href="/cebroad/webroot/assets/css/styles.css" rel="stylesheet">
+  <link rel="stylesheet" href="/cebroad/webroot/assets/css/styles.css">
+  <link rel="stylesheet" href="/cebroad/webroot/assets/events/css/events.css">
 
   <script>
     $(document).ready(function(){
@@ -322,7 +328,7 @@
                           
                           <?php
                             if (DEBUG) { // development
-                                $url = dirname(__FILE__).$resource.'/'.$action.'.php';
+                                $url = dirname(__FILE__).'/'.$resource.'/'.$action.'.php';
                             } else { // production
                                 $dir_path_org = dirname(__FILE__);
                                 $dir_path = str_replace('/portfolio','',$dir_path_org);
