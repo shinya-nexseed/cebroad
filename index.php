@@ -52,7 +52,7 @@
         <h2 class="text-center">Cebu Local SNS</h2>
         <p>Join the getherings that interest you and meet new friends beyond school!</p>
         <div class="search-form wow pulse" data-wow-delay="0.8s">
-          <a href="join/signup.php"><button class="navbar-btn nav-button wow bounceInRight login" data-wow-delay="0.8s">Sing up</button></a>
+          <a href="join/regist_form"><button class="navbar-btn nav-button wow bounceInRight login" data-wow-delay="0.8s">Sing up</button></a>
         </div>
       </div>
     </div>
@@ -64,7 +64,7 @@
 
   <div class="navbar-collapse" id="special">
     <div class="button navbar-right">
-      <a href="signin.php"><button class="navbar-btn nav-button wow bounceInRight signup" id="login" data-wow-delay="0.8s">Login</button></a>
+      <a href="signin"><button class="navbar-btn nav-button wow bounceInRight signup" id="login" data-wow-delay="0.8s">Login</button></a>
     </div>
   </div><!-- /.navbar-collapse -->
 
@@ -149,7 +149,7 @@
       </div>
     </div>
     <div class="wow pulse" data-wow-delay="0.8s">
-      <a href="event/show.php"><button class="navbar-btn nav-button wow bounceInRight viewmore" data-wow-delay="0.8s">View More</button></a>
+      <a href="event/show"><button class="navbar-btn nav-button wow bounceInRight viewmore" data-wow-delay="0.8s">View More</button></a>
     </div>
     <hr>
   </div>
@@ -161,7 +161,7 @@
             <h4>Useful lnks</h4>
             <div class="footer-links">
               <ul class="list-unstyled">
-                <li><a href="aboutus.php">About us</a></li>
+                <li><a href="aboutus">About us</a></li>
                 <li><a href="">Terms and Conditions</a></li>
                 <li><a href="">Privacy policy</a></li>
                 <li><a href="">Contact us</a></li>
@@ -171,7 +171,7 @@
         </div>
       </div>
       <div class="row footer-copy">
-        <p><span>(C) All rights reserved</span> | <span><a href="aboutus.php">Team0404</a></span>
+        <p><span>(C) All rights reserved</span> | <span><a href="aboutus">Team0404</a></span>
       </div>
     </div>
   </div>

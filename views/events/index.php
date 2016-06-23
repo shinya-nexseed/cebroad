@@ -1,4 +1,5 @@
 <?php 
+    echo $_SESSION['id'];
 	$sql = 'SELECT * FROM events ORDER BY date DESC';
 	$records = mysqli_query($db, $sql) or die(mysqli_error($db));
 	$rtn = array();

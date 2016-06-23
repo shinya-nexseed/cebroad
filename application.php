@@ -63,9 +63,6 @@
     exit();
   }
 
-  function h($value){
-    return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
-  }
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -121,7 +118,7 @@
                         </li>
 
                         <li style="display:inline-block; float:left;" class="navbar-form navbar-right">
-                          <a href="/portfolio/cebroad/logout"><span class="badge">SignOut</span></a>
+                          <a href="/portfolio/cebroad/signout"><span class="badge">SignOut</span></a>
                         </li>
 
 
@@ -136,7 +133,7 @@
                             <ul class="nav navbar-right">
                               <li class="dropdown menu">
                                   <a href="" class="dropdown-toggle" data-toggle="dropdown">
-                                    <img src="/portfolio/cebroad/users/profile_pictures/<?php echo $member['profile_picture_path']; ?>" class="img-responsive img-circle" style="height:auto; width:30px;" alt="">
+                                    <img src="/portfolio/cebroad/views/users/profile_pictures/<?php echo $member['profile_picture_path']; ?>" class="img-responsive img-circle" style="height:auto; width:30px;" alt="">
                                   </a>
                                   <ul class="dropdown-menu"　style="word-wrap: break-word;">
                                       <li>
@@ -144,7 +141,7 @@
                                               <div class="row">
                                                   <div class="col-lg-4">
                                                       <p class="text-center">
-                                                          <img src="/portfolio/cebroad/users/profile_pictures/<?php echo $member['profile_picture_path']; ?>" class="img-responsive" style="height:auto; width:150px;" alt="">
+                                                          <img src="/portfolio/cebroad/views/users/profile_pictures/<?php echo $member['profile_picture_path']; ?>" class="img-responsive" style="height:auto; width:150px;" alt="">
                                                       </p>
                                                   </div>
                                                   <div class="col-lg-8" style="color:#c0c0c0">
@@ -179,7 +176,7 @@
                             <ul class="nav navbar-nav navbar-form navbar-right">
                               <li class="dropdown" style="display:inline-block;">
                                   <a href="" class="dropdown-toggle" data-toggle="dropdown"  class="navbar-right">
-                                    <img src="/portfolio/cebroad/users/profile_pictures/<?php echo $member['profile_picture_path']; ?>" class="img-responsive" style="height:100%; width:30px;" alt="">
+                                    <img src="/portfolio/cebroad/views/users/profile_pictures/<?php echo $member['profile_picture_path']; ?>" class="img-responsive" style="height:100%; width:30px;" alt="">
                                   </a>
                                   <ul class="dropdown-menu">
                                       <li>
@@ -260,7 +257,7 @@
                           <div class="profile-sidebar">
                             <!-- SIDEBAR USERPIC -->
                             <div class="profile-userpic">
-                              <img src="/portfolio/cebroad/users/profile_pictures/<?php echo $member['profile_picture_path']; ?>" class="img-responsive" alt=""><br>
+                              <img src="/portfolio/cebroad/views/users/profile_pictures/<?php echo $member['profile_picture_path']; ?>" class="img-responsive" alt=""><br>
                             </div>
                             <!-- END SIDEBAR USERPIC -->
 

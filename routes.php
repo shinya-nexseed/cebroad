@@ -3,6 +3,10 @@
   define('DEBUG', TRUE); //環境切り替え用 TRUEで開発環境モード
   require('dbconnect.php');
 
+  //htmlspecialcharsのショートカット
+  function h($value){
+    return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+  }
 
   $params = explode('/', $_GET['url']);
   $resource = $params[0];
