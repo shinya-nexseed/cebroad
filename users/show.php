@@ -11,7 +11,7 @@
 //ユーザー情報取得
 $sql = sprintf('SELECT * FROM `users` WHERE `id`=%d', mysqli_real_escape_string($db, $_SESSION['id'])
 	);
-$record = mysqli_query($db, $sql) or die (mysqli_error($db));
+$record = mysqli_query($db, $sql) or die ('<h1>Sorry, something wrong happened. please retry.</h1>');
 $user = mysqli_fetch_assoc($record);
 
 //genderのidを性別名に格納
@@ -28,13 +28,13 @@ switch ($user['gender']) {
 //国籍情報取得
 $sql = sprintf('SELECT * FROM `nationalities` WHERE `nationality_id`=%d', mysqli_real_escape_string($db, $user['nationality_id'])
 	);
-$record = mysqli_query($db, $sql) or die (mysqli_error($db));
+$record = mysqli_query($db, $sql) or die ('<h1>Sorry, something wrong happened. please retry.</h1>');
 $nationality = mysqli_fetch_assoc($record); 
 
 //学校情報取得
 $sql = sprintf('SELECT * FROM `schools` WHERE `id`=%d', mysqli_real_escape_string($db, $user['school_id'])
 	);
-$record = mysqli_query($db, $sql) or die (mysqli_error($db));
+$record = mysqli_query($db, $sql) or die ('<h1>Sorry, something wrong happened. please retry.</h1>');
 $school = mysqli_fetch_assoc($record); 
 
  //htmlspecialcharsのショートカット
