@@ -1,6 +1,6 @@
 <?php
 	session_start();
-	define('DEBUG', FALSE); //環境切り替え用 TRUEで開発環境モード
+	define('DEBUG', TRUE); //環境切り替え用 TRUEで開発環境モード
 
 	$params = explode('/', $_GET['url']);
 	$resource = $params[0];
