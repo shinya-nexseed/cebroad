@@ -1,17 +1,24 @@
 <?php 
-if (!isset($_SESSION['id'])) {
-  header('Location: /portfolio/cebroad/index');
-}
+//$idを元にイベント参加者を取得
+  $sql=sprintf('SELECT * FROM `users` JOIN `participants` ON `id`=participants.user_id WHERE participants.event_id=%d',
+    mysqli_real_escape_string($db, $id)
+    );
+  $record=mysqli_query($db, $sql)or die(mysqli_error($db));
+  
+  $event_participants=array();
 
+  while($result=mysqli_fetch_assoc($record)){
+    $event_participants[]=$result;
+  }
 
 //$idを元にイベントを取得
   $sql = sprintf("SELECT * FROM events WHERE id=%d",
-  		(int)$id
-  	);
+      mysqli_real_escape_string($db, $id)
+    );
   $rtn = mysqli_query($db, $sql) or die('<h1>Failed to connect a detabase.</h1>');
   $event = mysqli_fetch_assoc($rtn);
   if ((int)$_SESSION['id'] !== (int)$event['organizer_id']) {
-  header('Location: /portfolio/cebroad/events/index');
+    echo '<script> location.replace("/portfolio/cebroad/events/index"); </script>';
   }
 
   $errors = array();
@@ -254,13 +261,23 @@ if (!isset($_SESSION['id'])) {
           mysqli_real_escape_string($db, $a['capacity_num']),
           mysqli_real_escape_string($db, $a['event_category_id']),
           (int)$id
-  );
-  mysqli_query($db, $sql) or die('<h1>Sorry, something wrong happened. Please retry.</h1>');
+      );
+      mysqli_query($db, $sql) or die('<h1>Sorry, something wrong happened. Please retry.</h1>');
+
+      //イベント参加者に編集したことを通知する
+      foreach ($event_participants as $event_participant) {
+            $sql= sprintf('INSERT INTO `notifications`(`user_id`, `partner_id`, `event_id`, `topic_id`, `created`) VALUES(%d,%d,%d,3,now())',
+              $event_participant['user_id'],
+              $a['organizer_id'],
+              $id
+              );
+            $record = mysqli_query($db, $sql) or die(mysqli_error($db));
+      }
 
       echo '<script> location.replace("/portfolio/cebroad/events/show/'.(int)$id.'"); </script>';
       exit();
     } catch (Exception $e) {
-    $error_messages = exception_to_array($e);
+      $error_messages = exception_to_array($e);
   }
 }
 
