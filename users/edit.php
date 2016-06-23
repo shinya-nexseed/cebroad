@@ -162,9 +162,9 @@ function h($value){
 									<td>Birthday</td>
 									<td>
 										<?php if(isset($user['birthday'])): ?>
-											<input type="date" name="birthday" class="form-control" value="<?php echo h($user['birthday']); ?>">
+											<input type="date" name="birthday" class="form-control" min="1930-01-01" max="2010-12-31" value="<?php echo h($user['birthday']); ?>">
 										<?php else: ?>
-											<input type="date" name="birthday" class="form-control" placeholder="例： 1986/09/01" value="" ?>
+											<input type="date" name="birthday" class="form-control" min="1930-01-01" max="2010-12-31" value="" ?>
 										<?php endif; ?>	
 									</td>
 								  </tr>
