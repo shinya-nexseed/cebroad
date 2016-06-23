@@ -4,7 +4,7 @@
 
 	// $_SESSION['join']が存在しなければindex.phpに強制遷移させる
   if (!isset($_SESSION['join'])) {
-    header('Location: ../index');
+    echo '<script> location.replace("/cebroad/index"); </script>';
     exit();
   }
 
@@ -12,7 +12,7 @@
 	$sql = sprintf('SELECT * FROM schools WHERE id=%d',
 		mysqli_real_escape_string($db, $_SESSION['join']['school_id'])
 		);
-	$rtn = mysqli_query($db, $sql) or die(mysqli_error($db));
+	$rtn = mysqli_query($db, $sql) or die('<h1>Sorry, something wrong happened. please retry.</h1>');
 
 // $nameに上記のsql文で取得したname一件を代入
 	$school = mysqli_fetch_assoc($rtn);
@@ -29,8 +29,8 @@ if (!empty($_POST)) {
       );
 
     // ②sql文を実行する
-    // mysqli_query($db, $sql) or die(mysqli_error($db));
-    mysqli_query($db, $sql) or die(mysqli_error($db));
+    // mysqli_query($db, $sql) or die('<h1>Sorry, something wrong happened. please retry.</h1>');
+    mysqli_query($db, $sql) or die('<h1>Sorry, something wrong happened. please retry.</h1>');
 
     // if(mysqli_query($db, $sql)) {
        //true
@@ -40,7 +40,7 @@ if (!empty($_POST)) {
     //ログインしているユーザーのデータをDBから取得（$_SESSION['id']を使用して）
     // $sql = sprintf('SELECT * FROM users WHERE id=%d', mysqli_real_escape_string($db, $_SESSION['id'])
     //   );
-    // $record = mysqli_query($db, $sql) or die(mysqli_error($db));
+    // $record = mysqli_query($db, $sql) or die('<h1>Sorry, something wrong happened. please retry.</h1>');
     // $member = mysqli_fetch_assoc($record);
 
    // }
@@ -54,7 +54,7 @@ if (!empty($_POST)) {
       mysqli_real_escape_string($db, sha1($_SESSION['join']['password']))
     );
       // $recordにmysqli_query()関数を使用してデータを格納
-    $record = mysqli_query($db, $sql) or die(mysqli_error($db));
+    $record = mysqli_query($db, $sql) or die('<h1>Sorry, something wrong happened. please retry.</h1>');
 
       // SELECT文で取得したデータが存在するかどうかで条件分岐している
     if ($table = mysqli_fetch_assoc($record)) {
@@ -72,7 +72,8 @@ if (!empty($_POST)) {
 
   } else {
       //sqlが正しく実行されず、データが入力されなかった場合
-    header('Location: /cebroad/index');
+    // header('Location: /cebroad/index');
+    echo '<script> location.replace("/cebroad/index"); </script>';
     exit();
   }
 
@@ -82,7 +83,8 @@ if (!empty($_POST)) {
   // var_dump($_SESSION['join']);
   // echo $_SESSION['id'];
   unset($_SESSION['join']);
-  header('Location: /cebroad/join/thanks');
+  // header('Location: /cebroad/join/thanks');
+  echo '<script> location.replace("/cebroad/join/thanks"); </script>';
   exit();
 }
 

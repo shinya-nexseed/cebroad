@@ -28,7 +28,7 @@ if(!empty($_POST)) {
 		$sql = sprintf('SELECT * FROM users WHERE email="%s" AND password="%s"',
 			mysqli_real_escape_string($db, $_POST['email']),
 			mysqli_real_escape_string($db, sha1($_POST['password'])));
-		$record = mysqli_query($db, $sql) or die (mysqli_error($db));
+		$record = mysqli_query($db, $sql) or die ('<h1>Sorry, something wrong happened. please retry.</h1>');
 
 		//SELECT文で取得したデータが存在するかどうかで条件分岐している
 		if($table = mysqli_fetch_assoc($record)) {
@@ -48,7 +48,9 @@ if(!empty($_POST)) {
       //   //$_COOKIE = array('email'=>$_POST['email'],'password'=>$_POST['password']);
       // }
 
-      header('Location: events/index');
+      // header('Location: events/index');
+      echo '<script> location.replace("/cebroad/events/index"); </script>';
+
       exit();
     } else {
       $errors['login'] = '*You failed to sign in. Please check your email address and password.';

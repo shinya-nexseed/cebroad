@@ -16,7 +16,8 @@
 	setcookie('email','',time()-3600);
 	setcookie('password','',time()-3600);
 
-	header('Location: index');
+	// header('Location: index');
+	echo '<script> location.replace("/cebroad/index"); </script>';
 	exit();
 
 ?>

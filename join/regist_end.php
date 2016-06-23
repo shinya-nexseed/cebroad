@@ -33,7 +33,7 @@ if (count($errors) === 0){
 			mysqli_real_escape_string($db, $urltoken),
 			mysqli_real_escape_string($db, $mail)
 			);
-		mysqli_query($db, $sql) or die(mysqli_error($db));
+		mysqli_query($db, $sql) or die('<h1>Sorry, something wrong happened. please retry.</h1>');
 		//プレースホルダへ実際の値を設定する
 
 			

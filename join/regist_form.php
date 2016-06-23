@@ -32,7 +32,7 @@ if (!empty($_POST)) {
 
     if (empty($error)) {
       $sql = sprintf('SELECT COUNT(*) AS cnt FROM pre_users WHERE email="%s"',mysqli_real_escape_string($db, $_POST['email']));//%sの中には入力したメアド
-      $record = mysqli_query($db, $sql) or die(mysqli_error($db));
+      $record = mysqli_query($db, $sql) or die('<h1>Sorry, something wrong happened. please retry.</h1>');
       $table = mysqli_fetch_assoc($record);
 
       //　上の実行文で何をしているか

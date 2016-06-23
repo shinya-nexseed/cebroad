@@ -2,12 +2,13 @@
   // $_SESSION['join']が存在しなければsignup.phpに強制遷移させる
   // if (!isset($_SESSION['join'])) {
   //   header('Location: ../index');
+  // echo '<script> location.replace("/cebroad/index"); </script>';
   //   exit();
   // }
 
 $sql = sprintf('SELECT * FROM `users` WHERE `id`=%d', mysqli_real_escape_string($db, $_SESSION['id'])
   );
-$record = mysqli_query($db, $sql) or die (mysqli_error($db));
+$record = mysqli_query($db, $sql) or die ('<h1>Sorry, something wrong happened. please retry.</h1>');
 $user = mysqli_fetch_assoc($record); 
 
 $filename = 'users/profile_pictures/'.$user['profile_picture_path'];
@@ -63,10 +64,11 @@ echo $cropfilename;
     );
 
 //SQL文実行
-  mysqli_query($db, $sql) or die(mysqli_error($db));
+  mysqli_query($db, $sql) or die('<h1>Sorry, something wrong happened. please retry.</h1>');
 
 //ユーザー情報詳細ページへ遷移
-  header('Location: /cebroad/users/show');
+  // header('Location: /cebroad/users/show');
+  echo '<script> location.replace("/cebroad/users/show"); </script>';
   exit;
 }
 

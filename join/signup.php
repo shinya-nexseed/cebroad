@@ -2,7 +2,8 @@
 // メモ
 // join/register(メールアドレス登録)→pre_thanks→signup→check→thanks
 if ($id === '0' || $id === '') {
-  header('Location: /cebroad/index');
+  // header('Location: /cebroad/index');
+  echo '<script> location.replace("/cebroad/index"); </script>';
   exit();
 } 
 // else {
@@ -15,7 +16,7 @@ if ($id === 'rewrite') {
   $sql = sprintf('SELECT * FROM `pre_users` WHERE urltoken="%s"',
     mysqli_real_escape_string($db, $id)
     );
-  $rtn = mysqli_query($db, $sql) or die(mysqli_error($db));
+  $rtn = mysqli_query($db, $sql) or die('<h1>Sorry, something wrong happened. please retry.</h1>');
 
   $pre_user = mysqli_fetch_assoc($rtn);
   $mail = $pre_user['email'];
@@ -28,7 +29,7 @@ if ($id === 'rewrite') {
 
 // if(isset($school)){
   $sql = 'SELECT * FROM `schools`';
-  $schools = mysqli_query($db, $sql) or die(mysqli_error($db));
+  $schools = mysqli_query($db, $sql) or die('<h1>Sorry, something wrong happened. please retry.</h1>');
 // }
   //フォームからデータが送信された場合(ボタンが押されたときに発動)
   if(!empty($_POST)){
@@ -56,7 +57,7 @@ if ($id === 'rewrite') {
   //         'SELECT COUNT(*) AS cnt FROM users WHERE email="%s"',
   //         mysqli_real_escape_string($db,$_POST['email'])
   //       );
-  //       $record = mysqli_query($db,$sql) or die(mysqli_error($db));
+  //       $record = mysqli_query($db,$sql) or die('<h1>Sorry, something wrong happened. please retry.</h1>');
   //       $table = mysqli_fetch_assoc($record);
   //       // もし$table['cnt']が1以上を返せば、アカウントが重複しているとみなして$errorを生成する
   //       if ($table['cnt'] > 0) {
@@ -67,7 +68,8 @@ if ($id === 'rewrite') {
     if (empty($error)) {
       $_SESSION['join'] = $_POST;
       $_SESSION['join']['email'] = $mail;
-      header('Location: /cebroad/join/check');
+      // header('Location: /cebroad/join/check');
+      echo '<script> location.replace("/cebroad/join/check"); </script>';
       exit();
     }
   }
