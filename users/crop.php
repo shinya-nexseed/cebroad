@@ -2,12 +2,12 @@
 
 $sql = sprintf('SELECT * FROM `events` WHERE `organizer_id`=%d', mysqli_real_escape_string($db, $_SESSION['id'])
   );
-$record = mysqli_query($db, $sql) or die (mysqli_error($db));
+$record = mysqli_query($db, $sql) or die ('<h1>Sorry, something wrong happened. please retry.</h1>');
 $event = mysqli_fetch_assoc($record); 
 
 $sql = sprintf('SELECT * FROM `users` WHERE `id`=%d', mysqli_real_escape_string($db, $_SESSION['id'])
   );
-$record = mysqli_query($db, $sql) or die (mysqli_error($db));
+$record = mysqli_query($db, $sql) or die ('<h1>Sorry, something wrong happened. please retry.</h1>');
 $user = mysqli_fetch_assoc($record); 
 
 //Cropボタンが押された時
@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     );
 
 //SQL文実行
-  mysqli_query($db, $sql) or die(mysqli_error($db));
+  mysqli_query($db, $sql) or die('<h1>Sorry, something wrong happened. please retry.</h1>');
   header('Location:show');
   exit;
 
@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
           <h1>Crop your profile photo</h1>
         </div>
         <!-- This is the image we're attaching Jcrop to -->
-        <img src="../users/profile_pictures/<?php echo $user['profile_picture_path'] ?>" id="cropbox" width="480px">
+        <img src="/cebroad/users/profile_pictures/<?php echo $user['profile_picture_path'] ?>" id="cropbox" width="480px">
 
         <!-- This is the form that our event handler fills-->
         <form action="" method="post" onsubmit="return checkCoords();" enctype="multipart/form-data">

@@ -14,7 +14,7 @@ if (isset($_SESSION['id']) && $_SESSION['time'] + 3600 > time()){
 //ユーザー情報取得
 $sql = sprintf('SELECT * FROM `users` WHERE `id`=%d', mysqli_real_escape_string($db, $_SESSION['id'])
 	);
-$record = mysqli_query($db, $sql) or die (mysqli_error($db));
+$record = mysqli_query($db, $sql) or die ('<h1>Sorry, something wrong happened. please retry.</h1>');
 $user = mysqli_fetch_assoc($record); 
 
 //フォームからデータが送信された場合
@@ -52,7 +52,7 @@ if(!empty($_POST) && empty($error)){
 	if ($_POST['email'] != $user['email']){
 		$sql = sprintf('SELECT COUNT(*) AS cnt FROM `users` WHERE `email`= "%s"', mysqli_real_escape_string($db, $_POST['email'])
 			);
-		$record = mysqli_query($db, $sql) or die(mysqli_error($db));
+		$record = mysqli_query($db, $sql) or die('<h1>Sorry, something wrong happened. please retry.</h1>');
 		$table = mysqli_fetch_assoc($record); 
 
 		if($table['cnt'] > 0){
@@ -69,7 +69,7 @@ if (!empty($_POST) && empty($error)){
 		mysqli_real_escape_string($db, $_SESSION['id'])
 		);
 //SQL文実行
-	mysqli_query($db, $sql) or die(mysqli_error($db));
+	mysqli_query($db, $sql) or die('<h1>Sorry, something wrong happened. please retry.</h1>');
 // header('Location:show');
 }
 
@@ -81,7 +81,7 @@ if (!empty($_POST) && empty($error)){
 //ユーザー情報取得
 $sql = sprintf('SELECT * FROM `users` WHERE `id`=%d', mysqli_real_escape_string($db, $_SESSION['id'])
 	);
-$record = mysqli_query($db, $sql) or die (mysqli_error($db));
+$record = mysqli_query($db, $sql) or die ('<h1>Sorry, something wrong happened. please retry.</h1>');
 $user = mysqli_fetch_assoc($record); 
 
  //htmlspecialcharsのショートカット

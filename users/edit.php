@@ -4,24 +4,28 @@ require('functions.php');
 // ログイン判定
 //    セッションにidが存在し、かつオンのtimeと3600秒足した値が現在時刻より小さい時に
 //    現在時刻より小さい時にログインしていると判定する
-   if (isset($_SESSION['id']) && $_SESSION['time'] + 3600 > time()){
-    //$_SESSIONに保存している時間更新
-    //これがないとログインから１時間たったら再度ログインしないとindex.phpに入れなくなる。
-    $_SESSION['time'] = time();
+   if (!isset($_SESSION['id'])) {
+   		echo '<script> location.replace("/cebroad/index"); </script>';
+   		exit();
 	}
+
 //ユーザー情報取得
-$sql = sprintf('SELECT * FROM `users` WHERE `id`=%d', mysqli_real_escape_string($db, $_SESSION['id'])
+$sql = sprintf('SELECT * FROM `users` WHERE `id`=%d',$_SESSION['id']
 	);
-$record = mysqli_query($db, $sql) or die (mysqli_error($db));
-$user = mysqli_fetch_assoc($record); 
+$record = mysqli_query($db, $sql) or die ('<h1>Sorry, something wrong happened. please retry.</h1>');
+$user = mysqli_fetch_assoc($record);
 //フォームからデータが送信された場合
 $error = Array();
-if(!empty($_POST)){
+if(!empty($_POST)) {
 //エラー項目の確認
-	if($_POST['nick_name'] == ''){
+	if(isset($_POST['nick_name'])) {
+		if ($_POST['nick_name'] === '') {
+			$error['nick_name'] = 'blank';
+		}
+	} else {
 		$error['nick_name'] = 'blank';
 	}
-	if (isset($_POST['gender']) == ''){
+	if (empty($_POST['gender'])){
 		$error['gender'] = 'blank';
 	}
 }
@@ -30,7 +34,7 @@ if(!empty($_FILES)){
 	$fileName = $_FILES['profile_picture_path']['name'];
 	if (!empty($fileName)) {
 		$ext = substr($fileName, -3);
-		if ($ext != 'jpg' && $ext != 'gif' && $ext != 'png') {
+		if ($ext != 'jpg' && $ext && $ext != 'png') {
 			$error['profile_picture_path'] = 'type';
 		}
 	}
@@ -58,9 +62,11 @@ if (!empty($_POST) && empty($error)){
 			mysqli_real_escape_string($db, $_SESSION['id'])
 			);
 //SQL文実行
-		mysqli_query($db, $sql) or die(mysqli_error($db));
+		mysqli_query($db, $sql) or die('<h1>Sorry, something wrong happened. please retry.</h1>');
 //Jcropの画面に遷移させる
-		header('Location:crop');
+		// header('Location:crop');
+		echo '<script> location.replace("crop"); </script>';
+		exit();
 //画像が選択されていない場合のアップロード処理
 	}else{
 		$sql = sprintf('UPDATE `users` SET `nick_name`="%s", `school_id`=%d, gender="%s",`introduction`="%s", `birthday`="%s", `nationality_id`=%d, modified = NOW() WHERE `id`=%d',
@@ -73,36 +79,38 @@ if (!empty($_POST) && empty($error)){
 			mysqli_real_escape_string($db, $_SESSION['id'])
 			);
 //SQL文実行
-		mysqli_query($db, $sql) or die(mysqli_error($db));
+		mysqli_query($db, $sql) or die('<h1>Sorry, something wrong happened. please retry.</h1>');
 //ユーザー情報詳細表示ページへ遷移
-		header('Location:/cebroad/users/show');
+		//header('Location:/cebroad/users/show');
+		echo '<script> location.replace("/cebroad/users/show"); </script>';
+		exit();
 	}
 }
 //国籍情報取得
 $sql = sprintf('SELECT * FROM `nationalities` WHERE `nationality_id`=%d', 
 	mysqli_real_escape_string($db, $user['nationality_id'])
 	);
-$record = mysqli_query($db, $sql) or die (mysqli_error($db));
+$record = mysqli_query($db, $sql) or die ('<h1>Sorry, something wrong happened. please retry.</h1>');
 $nationality_selected = mysqli_fetch_assoc($record); 
 //全籍情報取得
 $sql = sprintf('SELECT * FROM `nationalities` WHERE 1'
 	);
-$nationalities = mysqli_query($db, $sql) or die(mysqli_error($db));
+$nationalities = mysqli_query($db, $sql) or die('<h1>Sorry, something wrong happened. please retry.</h1>');
 //学校情報取得
 $sql = sprintf('SELECT * FROM `schools` WHERE `id`=%d', 
 	mysqli_real_escape_string($db, $user['school_id'])
 	);
-$record = mysqli_query($db, $sql) or die (mysqli_error($db));
+$record = mysqli_query($db, $sql) or die ('<h1>Sorry, something wrong happened. please retry.</h1>');
 $school_selected = mysqli_fetch_assoc($record);    
 //全学校情報取得
 $sql = sprintf('SELECT * FROM `schools` WHERE 1'
 	);
-$schools = mysqli_query($db, $sql) or die (mysqli_error($db));
+$schools = mysqli_query($db, $sql) or die ('<h1>Sorry, something wrong happened. please retry.</h1>');
 //ユーザー情報取得
 $sql = sprintf('SELECT * FROM `users` WHERE `id`=%d', 
 	mysqli_real_escape_string($db, $_SESSION['id'])
 	);
-$record = mysqli_query($db, $sql) or die (mysqli_error($db));
+$record = mysqli_query($db, $sql) or die ('<h1>Sorry, something wrong happened. please retry.</h1>');
 $user = mysqli_fetch_assoc($record); 
 
  //htmlspecialcharsのショートカット
@@ -172,7 +180,7 @@ function h($value){
 								<!-- 国籍 -->
 									<td>Nationality</td>
 									<td>
-										<select name="nationality_id">
+										<select name="nationality_id" class="form-control">
 											<?php while($nationality = mysqli_fetch_assoc($nationalities)): ?>
 												<?php if($nationality_selected['nationality_id'] == $nationality['nationality_id']): ?>
 													<option value="<?php echo $nationality['nationality_id'] ?>" selected><?php echo $nationality['nationality_name']; ?></option>
@@ -187,7 +195,7 @@ function h($value){
 								<!-- 学校名 -->
 									<td>School name</td>
 									<td>
-										<select name="school_id" id="school_id">
+										<select name="school_id" id="school_id" class="form-control">
 											<?php while($school = mysqli_fetch_assoc($schools)): ?>
 												<?php if($school_selected['id']==$school['id']): ?>
 													<option value="<?php echo $school['id']; ?>" selected><?php echo $school['name']; ?></option>
@@ -213,7 +221,18 @@ function h($value){
 								<!-- プロフィール写真 -->
 									<td>Profile photo</td>
 									<td>
-										<input type="file" name="profile_picture_path" class="from-control">
+					                  	<input type="file" name="profile_picture_path" id="profile_picture_path" style="display: none;">
+					                  	<div class="input-group">
+					                    	<input type="text" id="photoCover" class="form-control" placeholder="Select jpg or png(Maximum of 5MB)">
+					                    	<span class="input-group-btn"><button type="button" class="btn btn-cebroad" onclick="$('#profile_picture_path').click();">Browse</button></span>
+					                  	</div>
+					                  		<label id="label" class="cebroad-pink"></label>
+					                  	<div class="events-pad">
+					                    	<img src="" id="preview" style="display:none; width: 300px;">
+					                  	</div>
+					                  	<?php if (isset($error['profile_picture_path']) && $error['profile_picture_path'] === 'type'): ?>
+					                    	<p class="error">* You can choose「.jpg」「.png」file only.</p>
+					                  	<?php endif; ?>
 										<td>
 										</tr>		                      
 										<tr>
@@ -230,4 +249,4 @@ function h($value){
 				</form>
 			</div>
 		</div>
-	</div> 
+	</div>
