@@ -1,5 +1,11 @@
 <?php
-    require('../dbconnect.php');
+    session_start();
+    // このファイルのみ独立しているので、DBやセッションなどは個別で読み込む必要あり
+    $db = mysqli_connect('localhost', 'root', 'mysql', 'cebroad') or die(mysqli_connect_error());
+    mysqli_set_charset($db, 'utf8');
+    // production
+    // $db = mysqli_connect('mysql465.db.sakura.ne.jp', 'nexseed', 'nexseedwebsite129', 'nexseed_cebroad') or die(mysqli_connect_error());
+    // mysqli_set_charset($db, 'utf8');
 
     if (isset($_POST['message_val'])) {
         $sql = sprintf('INSERT INTO message SET message="%s", sender_id=1, room_id=%d, created=NOW()',

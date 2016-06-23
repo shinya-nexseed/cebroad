@@ -1,6 +1,7 @@
 <?php
 	session_start();
 	define('DEBUG', TRUE); //環境切り替え用 TRUEで開発環境モード
+  require('dbconnect.php');
 
 	$params = explode('/', $_GET['url']);
 	$resource = $params[0];

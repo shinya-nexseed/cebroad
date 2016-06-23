@@ -1,16 +1,12 @@
-<?php
-  // session_start();
-  require('dbconnect.php');
-?>
 
 <!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
   <title>Cebroad</title>
-    <link href="/cebroad/webroot/assets/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/cebroad/webroot/assets/font-awesome/css/font-awesome.css">
-    <link href="/cebroad/webroot/assets/css/styles.css" rel="stylesheet">
+    <link href="/portfolio/cebroad/webroot/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/portfolio/cebroad/webroot/assets/font-awesome/css/font-awesome.css">
+    <link href="/portfolio/cebroad/webroot/assets/css/styles.css" rel="stylesheet">
 
 <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
     <style type="text/css">
@@ -312,6 +308,14 @@ img {
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 </head>
 <body>
+    <br />
+    <font size='1'><table class='xdebug-error xe-notice' dir='ltr' border='1' cellspacing='0' cellpadding='1'>
+    <tr><th align='left' bgcolor='#f57900' colspan="5"><span style='background-color: #cc0000; color: #fce94f; font-size: x-large;'>( ! )</span> Notice: Use of undefined constant DEBUG - assumed 'DEBUG' in /var/www/html/portfolio/cebroad/dbconnect.php on line <i>2</i></th></tr>
+    <tr><th align='left' bgcolor='#e9b96e' colspan='5'>Call Stack</th></tr>
+    <tr><th align='center' bgcolor='#eeeeec'>#</th><th align='left' bgcolor='#eeeeec'>Time</th><th align='left' bgcolor='#eeeeec'>Memory</th><th align='left' bgcolor='#eeeeec'>Function</th><th align='left' bgcolor='#eeeeec'>Location</th></tr>
+    <tr><td bgcolor='#eeeeec' align='center'>1</td><td bgcolor='#eeeeec' align='center'>0.0001</td><td bgcolor='#eeeeec' align='right'>231552</td><td bgcolor='#eeeeec'>{main}(  )</td><td title='/var/www/html/portfolio/cebroad/events/chat_send.php' bgcolor='#eeeeec'>.../chat_send.php<b>:</b>0</td></tr>
+    <tr><td bgcolor='#eeeeec' align='center'>2</td><td bgcolor='#eeeeec' align='center'>0.0001</td><td bgcolor='#eeeeec' align='right'>232080</td><td bgcolor='#eeeeec'>require( <font color='#00bb00'>'/var/www/html/portfolio/cebroad/dbconnect.php'</font> )</td><td title='/var/www/html/portfolio/cebroad/events/chat_send.php' bgcolor='#eeeeec'>.../chat_send.php<b>:</b>2</td></tr>
+    </table></font>
                 
     <?php
     require($resource.'/'.$action.'.php');
