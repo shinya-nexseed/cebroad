@@ -118,7 +118,7 @@
          */
         $.ajax({
             type: "POST",
-            url: "chat_send.php",
+            url: "/portfolio/cebroad/events/chat_send.php",
             data: data,
             /**
              * Ajax通信が成功した場合に呼び出されるメソッド
