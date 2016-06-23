@@ -76,15 +76,7 @@
   <![endif]-->
   <link rel="stylesheet" href="/portfolio/cebroad/webroot/assets/css/styles.css">
   <link rel="stylesheet" href="/portfolio/cebroad/webroot/assets/events/css/events.css">
-
-  <script>
-    // $(document).ready(function(){
-    //     //Handles menu drop down
-    //     $('.dropdown-menu').find('form').click(function (e) {
-    //         e.stopPropagation();
-    //     });
-    // });
-  </script>
+  <link rel="stylesheet" href="/portfolio/cebroad/webroot/assets/events/css/users_show.css">
 </head>
 <body>
   <div class="wrapper">
