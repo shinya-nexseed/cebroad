@@ -84,8 +84,11 @@ $sql = sprintf('SELECT * FROM `users` WHERE `id`=%d', mysqli_real_escape_string(
 $record = mysqli_query($db, $sql) or die (mysqli_error($db));
 $user = mysqli_fetch_assoc($record); 
 
+ //htmlspecialcharsのショートカット
+function h($value){
+  return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+}
 ?>
-
 <!-- 以下application.php内で表示 -->
 <div class="container-fluid">
 	<div class="row">
@@ -143,7 +146,7 @@ $user = mysqli_fetch_assoc($record);
 									<tr>
 										<td>
 											<br>
-											<input type="submit" class="btn btn-mini" value="update" align="" onclick="gate();">
+											<input type="submit" class="btn btn-cebroad" value="update" align="" onclick="gate();">
 										</td>
 									</tr>
 								</tbody>

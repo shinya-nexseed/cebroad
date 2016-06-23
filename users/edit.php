@@ -21,7 +21,7 @@ if(!empty($_POST)){
 	if($_POST['nick_name'] == ''){
 		$error['nick_name'] = 'blank';
 	}
-	if ($_POST['gender'] == ''){
+	if (isset($_POST['gender']) == ''){
 		$error['gender'] = 'blank';
 	}
 }

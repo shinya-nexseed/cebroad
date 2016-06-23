@@ -54,8 +54,11 @@ $sql = sprintf('SELECT * FROM `users` WHERE `id`=%d', mysqli_real_escape_string(
 $record = mysqli_query($db, $sql) or die (mysqli_error($db));
 $user = mysqli_fetch_assoc($record); 
 
+ //htmlspecialcharsのショートカット
+function h($value){
+  return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+}
 ?>
-
 <!-- Javascriptでのパスワードチェック -->
 <script type="text/javascript">
 	function checkForm(){
@@ -161,7 +164,7 @@ return true;
 									<tr>
 										<td>
 											<br>
-											<input type="submit" class="btn btn-mini" value="update" align="">
+											<input type="submit" class="btn btn-cebroad" value="update" align="">
 										</td>
 									</tr>
 								</tbody>
