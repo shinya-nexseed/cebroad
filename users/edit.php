@@ -1,7 +1,6 @@
 <?php
 //関数
 require('functions.php'); 
-
 // ログイン判定
 //    セッションにidが存在し、かつオンのtimeと3600秒足した値が現在時刻より小さい時に
 //    現在時刻より小さい時にログインしていると判定する
@@ -10,13 +9,11 @@ require('functions.php');
     //これがないとログインから１時間たったら再度ログインしないとindex.phpに入れなくなる。
     $_SESSION['time'] = time();
 	}
-
 //ユーザー情報取得
 $sql = sprintf('SELECT * FROM `users` WHERE `id`=%d', mysqli_real_escape_string($db, $_SESSION['id'])
 	);
 $record = mysqli_query($db, $sql) or die (mysqli_error($db));
 $user = mysqli_fetch_assoc($record); 
-
 //フォームからデータが送信された場合
 $error = Array();
 if(!empty($_POST)){
@@ -24,12 +21,10 @@ if(!empty($_POST)){
 	if($_POST['nick_name'] == ''){
 		$error['nick_name'] = 'blank';
 	}
-
 	if ($_POST['gender'] == ''){
 		$error['gender'] = 'blank';
 	}
 }
-
 //画像ファイルが送信された場合
 if(!empty($_FILES)){
 	$fileName = $_FILES['profile_picture_path']['name'];
@@ -40,7 +35,6 @@ if(!empty($_FILES)){
 		}
 	}
 }
-
 //エラーがない場合
 if (!empty($_POST) && empty($error)){
 //画像が選択されていれば
@@ -81,34 +75,29 @@ if (!empty($_POST) && empty($error)){
 //SQL文実行
 		mysqli_query($db, $sql) or die(mysqli_error($db));
 //ユーザー情報詳細表示ページへ遷移
-		header('Location:show');
+		header('Location:/cebroad/users/show');
 	}
 }
-
 //国籍情報取得
-$sql = sprintf('SELECT * FROM `nationality` WHERE `nationality_id`=%d', 
+$sql = sprintf('SELECT * FROM `nationalities` WHERE `nationality_id`=%d', 
 	mysqli_real_escape_string($db, $user['nationality_id'])
 	);
 $record = mysqli_query($db, $sql) or die (mysqli_error($db));
 $nationality_selected = mysqli_fetch_assoc($record); 
-
 //全籍情報取得
-$sql = sprintf('SELECT * FROM `nationality` WHERE 1'
+$sql = sprintf('SELECT * FROM `nationalities` WHERE 1'
 	);
 $nationalities = mysqli_query($db, $sql) or die(mysqli_error($db));
-
 //学校情報取得
 $sql = sprintf('SELECT * FROM `schools` WHERE `id`=%d', 
 	mysqli_real_escape_string($db, $user['school_id'])
 	);
 $record = mysqli_query($db, $sql) or die (mysqli_error($db));
 $school_selected = mysqli_fetch_assoc($record);    
-
 //全学校情報取得
 $sql = sprintf('SELECT * FROM `schools` WHERE 1'
 	);
 $schools = mysqli_query($db, $sql) or die (mysqli_error($db));
-
 //ユーザー情報取得
 $sql = sprintf('SELECT * FROM `users` WHERE `id`=%d', 
 	mysqli_real_escape_string($db, $_SESSION['id'])
@@ -116,6 +105,10 @@ $sql = sprintf('SELECT * FROM `users` WHERE `id`=%d',
 $record = mysqli_query($db, $sql) or die (mysqli_error($db));
 $user = mysqli_fetch_assoc($record); 
 
+ //htmlspecialcharsのショートカット
+function h($value){
+  return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+}
 ?>
 
 <!-- 以下application.php内で表示 -->
@@ -149,14 +142,15 @@ $user = mysqli_fetch_assoc($record);
 									</td> 
 								</tr>
 								  <tr>
+								<!-- 性別 -->
 									<td>Gender:</td>
 									<td>
 										<?php if(isset($user['gender'])): ?>
-											<input type="radio" name="gender" value="male" <?php if($user['gender']== "male") echo "checked" ?>><label for="male">male</label>
-											<input type="radio" name="gender" value="female"<?php if($user['gender']== "female") echo "checked" ?>><label for="female">female</label>
+											<input type="radio" name="gender" value="1" <?php if($user['gender'] === '1') echo "checked" ?>><label for="male">male</label>
+											<input type="radio" name="gender" value="2"<?php if($user['gender'] === '2') echo "checked" ?>><label for="female">female</label>
 										<?php else: ?>
-											<input type="radio" name="gender"><label value="male">male</label>
-											<input type="radio" name="gender"><label value="female">female</label>
+											<input type="radio" name="gender"><label value="1">male</label>
+											<input type="radio" name="gender"><label value="2">female</label>
 										<?php endif; ?>	
 										<?php if(isset($error['gender']) && $error['gender'] == 'blank'): ?>
 											<p class="error">＊Please choose your gender </p>
@@ -164,30 +158,33 @@ $user = mysqli_fetch_assoc($record);
 									</td>
 								  </tr>
 								  <tr>
+								<!-- 誕生日 -->
 									<td>Birthday</td>
 									<td>
 										<?php if(isset($user['birthday'])): ?>
-											<input type="text" name="birthday" class="form-control" value="<?php echo h($user['birthday']); ?>">
+											<input type="date" name="birthday" class="form-control" value="<?php echo h($user['birthday']); ?>">
 										<?php else: ?>
-											<input type="text" name="birthday" class="form-control" placeholder="例： 1986/09/01" value="" ?>
+											<input type="date" name="birthday" class="form-control" placeholder="例： 1986/09/01" value="" ?>
 										<?php endif; ?>	
 									</td>
 								  </tr>
 								  <tr>
+								<!-- 国籍 -->
 									<td>Nationality</td>
 									<td>
 										<select name="nationality_id">
 											<?php while($nationality = mysqli_fetch_assoc($nationalities)): ?>
 												<?php if($nationality_selected['nationality_id'] == $nationality['nationality_id']): ?>
-													<option value="<?php echo $nationality['nationality_id'] ?>" selected><?php echo $nationality['nationality']; ?></option>
+													<option value="<?php echo $nationality['nationality_id'] ?>" selected><?php echo $nationality['nationality_name']; ?></option>
 												<?php else: ?>
-													<option value="<?php echo $nationality['nationality_id'] ?>"><?php echo $nationality['nationality']; ?></option>
+													<option value="<?php echo $nationality['nationality_id'] ?>"><?php echo $nationality['nationality_name']; ?></option>
 												<?php endif; ?>
 											<?php endwhile; ?>
 										</select>				              
 									</td>
 								  </tr>
 								<tr>
+								<!-- 学校名 -->
 									<td>School name</td>
 									<td>
 										<select name="school_id" id="school_id">
@@ -202,6 +199,7 @@ $user = mysqli_fetch_assoc($record);
 									</td>
 								  </tr>
 								  <tr>
+								<!-- 自己紹介 -->
 									<td>Self-introduction</td>
 									<td>
 										<?php if(isset($user['introduction'])): ?>
@@ -212,6 +210,7 @@ $user = mysqli_fetch_assoc($record);
 									</td>
 								  </tr>	
 								  <tr>
+								<!-- プロフィール写真 -->
 									<td>Profile photo</td>
 									<td>
 										<input type="file" name="profile_picture_path" class="from-control">
