@@ -6,7 +6,7 @@
       $event=mysqli_fetch_assoc($record);
 
 
-      //対象IDのイベントデータを取得
+      //対象IDのユーザーデータを取得
       $sql=sprintf('SELECT * FROM `users` WHERE `id`='.$event['organizer_id']);
       $record=mysqli_query($db, $sql)or die(mysqli_error($db));
       $organizer=mysqli_fetch_assoc($record);
@@ -132,7 +132,15 @@
         $record = mysqli_query($db, $sql) or die(mysqli_error($db));
         $table_paticipant = mysqli_fetch_assoc($record);
 
-          header('Location: /cebroad/'.$resource.'/'.$action.'/'.$id);
+        //通知情報を送信
+        // $sql= sprintf('INSERT INTO `notifications`(`user_id`, `partner_id`, `event_id`, `topic_id`, `created`) VALUES(%d,%d,%d,2,now())',
+        //   $event['organizer_id'],
+        //   $_SESSION['id'],
+        //   $id
+        //   );
+        // $record = mysqli_query($db, $sql) or die(mysqli_error($db));
+
+        header('Location: /cebroad/'.$resource.'/'.$action.'/'.$id);
       }
 
       //commentが送信された場合
@@ -144,13 +152,14 @@
           $_POST['comment']
           );
         $record = mysqli_query($db, $sql) or die(mysqli_error($db));
-      }
 
-      if(isset($_POST['comment_delete'])){
-        //コメントを保存
-        $sql = sprintf('DELETE FROM `comments` WHERE `id`='.$_POST['comment_delete']);
+        //通知情報を送信
+        $sql= sprintf('INSERT INTO `notifications`(`user_id`, `partner_id`, `event_id`, `topic_id`, `created`) VALUES(%d,%d,%d,1,now())',
+          $event['organizer_id'],
+          $_SESSION['id'],
+          $id
+          );
         $record = mysqli_query($db, $sql) or die(mysqli_error($db));
-        echo $sql;
       }
 
       if ( !function_exists('mime_content_type') ) {
