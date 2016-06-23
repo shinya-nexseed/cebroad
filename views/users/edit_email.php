@@ -1,13 +1,5 @@
 <?php
-//関数
-require('functions.php'); 
-
-//ログイン判定
-//セッションにidが存在し、かつオンのtimeと3600秒足した値が現在時刻より小さい時に
-//現在時刻より小さい時にログインしていると判定する
 if (isset($_SESSION['id']) && $_SESSION['time'] + 3600 > time()){
-//$_SESSIONに保存している時間更新
-//これがないとログインから１時間たったら再度ログインしないとindex.phpに入れなくなる。
 	$_SESSION['time'] = time();
 }
 
@@ -73,22 +65,14 @@ if (!empty($_POST) && empty($error)){
 // header('Location:show');
 }
 
-// //hのショートカット
-//     function h($value){
-//       return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
-//     }
-
 //ユーザー情報取得
 $sql = sprintf('SELECT * FROM `users` WHERE `id`=%d', mysqli_real_escape_string($db, $_SESSION['id'])
 	);
 $record = mysqli_query($db, $sql) or die ('<h1>Sorry, something wrong happened. please retry.</h1>');
 $user = mysqli_fetch_assoc($record); 
 
- //htmlspecialcharsのショートカット
-function h($value){
-  return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
-}
 ?>
+
 <!-- 以下application.php内で表示 -->
 <div class="container-fluid">
 	<div class="row">
@@ -97,7 +81,7 @@ function h($value){
 				<div class="panel-body">
 					<div class="row">
 						<div class=" col-md-3 col-lg-3" align="center"> 
-							<img alt="User Pic" src="profile_pictures/<?php echo h($user['profile_picture_path']); ?>" class="img-responsive"><br>
+							<img alt="User Pic" src="/portfolio/cebroad/views/users/profile_pictures/<?php echo h($user['profile_picture_path']); ?>" class="img-responsive"><br>
 							<div class="list-group">
 								<a class="list-group-item" href="edit">Basic info.</a>
 								<a class="list-group-item" href="edit_password">Password</a>

@@ -1,11 +1,6 @@
 <?php
-//関数
-require('functions.php'); 
-// ログイン判定
-//    セッションにidが存在し、かつオンのtimeと3600秒足した値が現在時刻より小さい時に
-//    現在時刻より小さい時にログインしていると判定する
    if (!isset($_SESSION['id'])) {
-   		echo '<script> location.replace("/cebroad/index"); </script>';
+   		echo '<script> location.replace("/portfolio/cebroad/index"); </script>';
    		exit();
 	}
 
@@ -45,7 +40,7 @@ if (!empty($_POST) && empty($error)){
 	if(!empty($fileName)){
 //画像のアップロード
 		$picture = date('YmdHis').$_FILES['profile_picture_path']['name'];
-		move_uploaded_file($_FILES['profile_picture_path']['tmp_name'],'./users/profile_pictures/'.$picture);
+		move_uploaded_file($_FILES['profile_picture_path']['tmp_name'],$_SERVER['DOCUMENT_ROOT'].'/portfolio/cebroad/views/users/profile_pictures/'.$picture);
 	} else {
 		$picture = $user['profile_picture_path'];
 	}
@@ -82,7 +77,7 @@ if (!empty($_POST) && empty($error)){
 		mysqli_query($db, $sql) or die('<h1>Sorry, something wrong happened. please retry.</h1>');
 //ユーザー情報詳細表示ページへ遷移
 		//header('Location:/cebroad/users/show');
-		echo '<script> location.replace("/cebroad/users/show"); </script>';
+		echo '<script> location.replace("/portfolio/cebroad/users/show"); </script>';
 		exit();
 	}
 }
@@ -113,10 +108,6 @@ $sql = sprintf('SELECT * FROM `users` WHERE `id`=%d',
 $record = mysqli_query($db, $sql) or die ('<h1>Sorry, something wrong happened. please retry.</h1>');
 $user = mysqli_fetch_assoc($record); 
 
- //htmlspecialcharsのショートカット
-function h($value){
-  return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
-}
 ?>
 
 <!-- 以下application.php内で表示 -->
@@ -127,7 +118,7 @@ function h($value){
 				<div class="panel-body">
 					<div class="row">
 						<div class=" col-md-3 col-lg-3" align="center"> 
-							<img alt="User Pic" src="profile_pictures/<?php echo h($user['profile_picture_path']); ?>" class="img-responsive"><br>	              			    
+							<img alt="User Pic" src="/portfolio/cebroad/views/users/profile_pictures/<?php echo h($user['profile_picture_path']); ?>" class="img-responsive"><br>	              			    
 							<div class="list-group">
 								<a class="list-group-item" href="edit">Basic info.</a>
 								<a class="list-group-item" href="edit_password">Password</a>
@@ -183,9 +174,9 @@ function h($value){
 										<select name="nationality_id" class="form-control">
 											<?php while($nationality = mysqli_fetch_assoc($nationalities)): ?>
 												<?php if($nationality_selected['nationality_id'] == $nationality['nationality_id']): ?>
-													<option value="<?php echo $nationality['nationality_id'] ?>" selected><?php echo $nationality['nationality_name']; ?></option>
+													<option value="<?php echo $nationality['nationality_id'] ?>" selected><?php echo $nationality['nationality']; ?></option>
 												<?php else: ?>
-													<option value="<?php echo $nationality['nationality_id'] ?>"><?php echo $nationality['nationality_name']; ?></option>
+													<option value="<?php echo $nationality['nationality_id'] ?>"><?php echo $nationality['nationality']; ?></option>
 												<?php endif; ?>
 											<?php endwhile; ?>
 										</select>				              
