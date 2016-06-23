@@ -1,13 +1,4 @@
 <?php
-// //データベース接続
-//   require('dbconnect.php');
-// //関数
-//   require('functions.php'); 
-
-
-// //セッションを使うページに必ず入れる
-//   session_start();
-
 // //ログイン判定
 //    //セッションにidが存在し、かつオンのtimeと3600秒足した値が現在時刻より小さい時に
 //    //現在時刻より小さい時にログインしていると判定する
@@ -21,17 +12,24 @@
 $sql = sprintf('SELECT * FROM `users` WHERE `id`=%d', mysqli_real_escape_string($db, $_SESSION['id'])
 	);
 $record = mysqli_query($db, $sql) or die (mysqli_error($db));
-$user = mysqli_fetch_assoc($record); 
+$user = mysqli_fetch_assoc($record);
 
-// var_dump($user);
+//genderのidを性別名に格納
+$gender = '';
+switch ($user['gender']) {
+	case '1':
+	$gender = 'male';
+	break;
+	case '2':
+	$gender = 'female';
+	break;
+}
 
 //国籍情報取得
-$sql = sprintf('SELECT * FROM `nationality` WHERE `nationality_id`=%d', mysqli_real_escape_string($db, $user['nationality_id'])
+$sql = sprintf('SELECT * FROM `nationalities` WHERE `nationality_id`=%d', mysqli_real_escape_string($db, $user['nationality_id'])
 	);
 $record = mysqli_query($db, $sql) or die (mysqli_error($db));
 $nationality = mysqli_fetch_assoc($record); 
-
-// var_dump($nationality);
 
 //学校情報取得
 $sql = sprintf('SELECT * FROM `schools` WHERE `id`=%d', mysqli_real_escape_string($db, $user['school_id'])
@@ -39,14 +37,11 @@ $sql = sprintf('SELECT * FROM `schools` WHERE `id`=%d', mysqli_real_escape_strin
 $record = mysqli_query($db, $sql) or die (mysqli_error($db));
 $school = mysqli_fetch_assoc($record); 
 
-// // var_dump($school);
-// function h($value){
-//       return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
-//     }
-
-
+ //htmlspecialcharsのショートカット
+function h($value){
+  return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+}
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -71,26 +66,32 @@ $school = mysqli_fetch_assoc($record);
 		                  	<table class="table table-user-information">
 			                    <tbody>
 			                      <tr>
+			                      <!-- ニックネーム表示 -->
 			                        <td>Nick name:</td>
 			                        	<td><?php echo h($user['nick_name']); ?></td> 
 			                      </tr>
 			                      <tr>
+			                      <!-- 性別表示 -->
 			                        <td>Gender:</td>
-			                        	<td><?php echo h($user['gender']); ?></td>	 
+			                        	<td><?php echo $gender; ?></td>	 
 			                      </tr>
 			                      <tr>
+			                      <!-- 誕生日表示 -->
 			                        <td>Birthday</td>
 			                        <td><?php echo h($user['birthday']); ?></td>
 			                      </tr>
 			                      <tr>
+			                      <!-- 国籍表示 -->
 			                        <td>Nationality</td>
-			                        <td><?php echo h($nationality['nationality']); ?></td>
+			                        <td><?php echo h($nationality['nationality_name']); ?></td>
 			                      </tr>
 			                        <tr>
+			                      <!-- 学校名表示 -->
 			                        <td>School name</td>
 			                        <td><?php echo h($school['name']); ?></td>
 			                      </tr>
 			                      <tr>
+			                      <!-- 自己紹介文表示 -->
 			                        <td>Self-introduction</td>
 			                        <td><?php echo h($user['introduction']); ?></td>
 			                      </tr>
@@ -106,6 +107,3 @@ $school = mysqli_fetch_assoc($record);
         	</div>
     	</div>
 	</div>
-	
-
-
