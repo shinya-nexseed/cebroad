@@ -248,9 +248,9 @@
       color: #000000;
   }
   .open-btn {
-      border: 2px solid #189d0e;
+      border: 2px solid #ff2a50;
       border-radius: 32px;
-      color: #189d0e !important;
+      color: #ff2a50 !important;
       display: inline-block;
       margin: 10px 0 0;
       padding: 9px 16px;

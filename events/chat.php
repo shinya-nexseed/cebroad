@@ -14,8 +14,8 @@
       $sql=sprintf('SELECT * FROM `events` WHERE events.id='.$id);
       $record=mysqli_query($db, $sql)or die(mysqli_error($db));
       $event=mysqli_fetch_assoc($record);
-var_dump($_SESSION);
-var_dump($event);
+// var_dump($_SESSION);
+// var_dump($event);
 
       if($event['organizer_id']!=$_SESSION['id']){//対象のイベントがオーガナイザーでない場合
         //対象のroomが存在するかを確認
@@ -58,8 +58,8 @@ var_dump($event);
 
           $records = mysqli_query($db, $sql) or die(mysqli_error($db));
           $room = mysqli_fetch_assoc($records);
-echo "どるroom バーダンプ";
-var_dump($room);
+// echo "どるroom バーダンプ";
+// var_dump($room);
 
       }else{//ログインユーザーとオーガナイザーが一致する場合
             //対象のルームの一覧化
@@ -88,6 +88,11 @@ var_dump($room);
  ?>
 
 
+<script type="text/javascript">
+    var user_id = <?php echo $_SESSION['id'];?>;
+    // var str = 'user_id = ' + user_id;
+    // console.log(str);
+</script>
 
 <script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
  <script>
@@ -106,6 +111,7 @@ var_dump($room);
          var room_id = window.sessionStorage.getItem(['room_id']);
          console.log(room_id);
          var data = {room_id : room_id};
+         // var user_id = <?= $_SESSION['id'];?>;
          /**
           * Ajax通信メソッド
           * @param type  : HTTP通信の種類
@@ -138,7 +144,11 @@ var_dump($room);
                  $("#chat_box").empty(); // 一度ul#chat_messageの子要素を削除
                  for (var i = 0; i < data.length; i++) {
                    // sender_idで分岐
-                   if (data[i]['organizer_id'] == data[i]['sender_id']) {
+                   var str = 'ajax user_id = ' + user_id;
+                   console.log(str);
+                   var str = 'ajax sender_id = ' + data[i]['sender_id'];
+                   console.log(str);
+                   if (user_id != data[i]['sender_id']) {
                         var add_element = '<div class="chat_message_wrapper"><div class="chat_user_avatar"><a href="https://web.facebook.com/iamgurdeeposahan" target="_blank" ><img alt="Gurdeep Osahan (Web Designer)" title="Gurdeep Osahan (Web Designer)"  src="http://www.webncc.in/images/gurdeeposahan.jpg" class="md-user-image"></a></div><ul class="chat_message" id="chat_message"><li><p>' + data[i]['message'] + '</p></li></ul></div>';
                         console.log(add_element);
                         // ul#chat_messageの子要素として追加
@@ -168,6 +178,7 @@ var_dump($room);
          //サブミット後、ページをリロードしないようにする
          return false;
      });
+
     $('#message_form').submit(function(event)
     {
         // HTMLでの送信をキャンセル
@@ -178,6 +189,8 @@ var_dump($room);
         var room_id = window.sessionStorage.getItem(['room_id']);
         console.log(room_id);
         var data = {message_val : val, room_id : room_id};
+        // var user_id = <?php echo $_SESSION['id'];?>
+        // console.log(user_id);
         /**
          * Ajax通信メソッド
          * @param type  : HTTP通信の種類
@@ -206,7 +219,7 @@ var_dump($room);
                  $("#chat_box").empty(); // 一度ul#chat_messageの子要素を削除
                  for (var i = 0; i < data.length; i++) {
                    // sender_idで分岐
-                   if ($_SESSION['id'] != data[i]['sender_id']) {
+                   if (user_id != data[i]['sender_id']) {
                         var add_element = '<div class="chat_message_wrapper"><div class="chat_user_avatar"><a href="https://web.facebook.com/iamgurdeeposahan" target="_blank" ><img alt="Gurdeep Osahan (Web Designer)" title="Gurdeep Osahan (Web Designer)"  src="http://www.webncc.in/images/gurdeeposahan.jpg" class="md-user-image"></a></div><ul class="chat_message" id="chat_message"><li><p>' + data[i]['message'] + '</p></li></ul></div>';
                         console.log(add_element);
                         // ul#chat_messageの子要素として追加
@@ -219,6 +232,7 @@ var_dump($room);
                   // ↑この追加するというコードを、分岐やメッセージごとに一意なidをタグにつけるなどして
                   // 表示を作っていく
                 };
+
             },
             /**
              * Ajax通信が失敗した場合に呼び出されるメソッド
@@ -232,10 +246,14 @@ var_dump($room);
                 alert('Error : ' + errorThrown);
             }
         });
-        
+    
+            $('#submit_message').val('');
+
         //サブミット後、ページをリロードしないようにする
         return false;
     });
+
+
  });
  </script>
 
@@ -244,10 +262,10 @@ var_dump($room);
         <div class="round hollow text-center">
         <!-- organizerの場合はopen btnをwhile文で複数表示、participantの場合は一つ表示の条件分岐-->
         <?php if($event['organizer_id']!=$_SESSION['id']){//対象のイベントのオーガナイザーで無い場合 ?>
-         <a href="#" class="open-btn" id=<?php echo $room['id']; ?>><i class="fa fa-comments-o" aria-hidden="true"></i>send to <?php echo $event['event_name']; ?></a>
+         <a href="#" class="open-btn" id=<?php echo $room['id']; ?> onclick="scroll()"><i class="fa fa-comments-o" aria-hidden="true"></i>send to <?php echo $event['event_name']; ?></a>
         <?php }else{  
             foreach ($rooms as $room) { ?>
-            <a href="#" class="open-btn" id=<?php echo $room['id']; ?>><i class="fa fa-comments-o" aria-hidden="true"></i>send to <?php echo $room['participant_id']; ?></a>  
+            <a href="#" class="open-btn" id=<?php echo $room['id']; ?> onclick="scroll()"><i class="fa fa-comments-o" aria-hidden="true"></i>send to <?php echo $room['participant_id']; ?></a>  
             <?php } ?>
         <?php } ?>
         </div>
@@ -266,34 +284,6 @@ var_dump($room);
 
 <div id="chat" class="chat_box_wrapper chat_box_small chat_box_active" style="opacity: 1; display: block; transform: translateX(0px);">
     <div class="chat_box touchscroll chat_box_colors_a" id="chat_box">
-        <!-- 左メッセージ -->
-       <!--  <div class="chat_message_wrapper">
-            <div class="chat_user_avatar">
-                <a href="https://web.facebook.com/iamgurdeeposahan" target="_blank" >
-                <img alt="Gurdeep Osahan (Web Designer)" title="Gurdeep Osahan (Web Designer)"  src="http://www.webncc.in/images/gurdeeposahan.jpg" class="md-user-image">
-                </a>
-            </div>
-            <ul class="chat_message" id="chat_message">
-                
-            </ul>
-        </div> -->
-
-        <!-- 右メッセージ -->
-        <!-- <div class="chat_message_wrapper chat_message_right">
-            <div class="chat_user_avatar">
-            <a href="https://web.facebook.com/iamgurdeeposahan" target="_blank" >
-                <img alt="Gurdeep Osahan (Web Designer)" title="Gurdeep Osahan (Web Designer)" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="md-user-image">
-            </a>
-            </div>
-            <ul class="chat_message" id="chat_message_right"> -->
-                <!-- <li>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem delectus distinctio dolor earum est hic id impedit ipsum minima mollitia natus nulla perspiciatis quae quasi, quis recusandae, saepe, sunt totam.
-                        <span class="chat_message_time">13:34</span>
-                    </p>
-                </li> -->
-            <!-- </ul>
-        </div> -->
 
     </div>
 </div>
@@ -327,4 +317,10 @@ $("a").click(function () {
   $('#sidebar_secondary').removeClass('popup-box-on');
     });
 })
+
+function scroll() {
+window.scrollTo(0,50);
+console.log('scroll');
+}
+
 </script>
