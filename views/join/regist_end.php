@@ -27,7 +27,7 @@ if (count($errors) === 0){
   }
 	
 	//ここでデータベースに登録する
-		$sql=sprintf('INSERT INTO pre_users SET urltoken="%s", email="%s"',
+		$sql=sprintf('INSERT INTO pre_users SET urltoken="%s", email="%s", created=NOW()',
 			mysqli_real_escape_string($db, $urltoken),
 			mysqli_real_escape_string($db, $mail)
 			);
