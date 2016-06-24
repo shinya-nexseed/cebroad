@@ -24,12 +24,12 @@
   }
 
   if ($resource === 'index' || $resource === '') {
-    require('index.php');
+    require('views/index.php');
   } else {
     if ($resource === 'signin') {
-      require('signin.php');
+      require('views/signin.php');
     } else if ($resource === 'signout') {
-      require('signout.php');
+      require('views/signout.php');
     } else if ($resource === 'join') {
       require('views/join/join_layout.php'); 
     } else {

@@ -36,7 +36,7 @@ if (!empty($_POST)) {
         $error['email'] = 'duplicate';
       } else {
         $_SESSION['join'] = $_POST;
-        header('Location: regist_end');
+        echo '<script> location.replace("/portfolio/cebroad/join/regist_end"); </script>';
       }
     }
 }

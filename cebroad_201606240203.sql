@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2016 年 6 月 24 日 01:58
+-- Generation Time: 2016 年 6 月 24 日 02:02
 -- サーバのバージョン： 5.6.29
 -- PHP Version: 5.5.33
 
@@ -296,7 +296,7 @@ CREATE TABLE `pre_users` (
   `urltoken` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `confirmed_flag` int(11) NOT NULL DEFAULT '0',
-  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created` datetime NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
