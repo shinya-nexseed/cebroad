@@ -118,7 +118,7 @@
     }
   </style>
 
-  <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet"> -->
       <style type="text/css">
           @import url(https://fonts.googleapis.com/css?family=Oswald:400,300);
   @import url(https://fonts.googleapis.com/css?family=Open+Sans);

@@ -101,7 +101,7 @@
      /**
       * 送信ボタンクリック
       */
-     $('a').click(function()
+     $('a.open-btn').click(function()
      {
          //POSTメソッドで送るデータを定義します var data = {パラメータ名 : 値};
          var id = $(this).attr('id');
