@@ -1,6 +1,6 @@
 <?php
   session_start();
-  define('DEBUG', TRUE); //環境切り替え用 TRUEで開発環境モード
+  define('DEBUG', FALSE); //環境切り替え用 TRUEで開発環境モード
   require('dbconnect.php');
 
   //htmlspecialcharsのショートカット
@@ -24,7 +24,7 @@
   }
 
   if ($resource === 'index' || $resource === '') {
-    require('views/index.php');
+    require('index.php');
   } else {
     if ($resource === 'signin') {
       require('views/signin.php');
