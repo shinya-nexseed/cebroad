@@ -344,7 +344,7 @@
   <script type="text/javascript" src="/portfolio/cebroad/webroot/assets/js/bootstrap.js"></script>
 </body>
 </html>
-<script src="/cebroad/webroot/assets/js/jquery.min.js"></script>
-<script src="/cebroad/webroot/assets/js/jquery.Jcrop.js"></script>
-<script src="/cebroad/webroot/assets/js/inputfile.js"></script>
-<script src="/cebroad/webroot/assets/js/crop.js"></script>
+<script src="/portfolio/cebroad/webroot/assets/js/jquery.min.js"></script>
+<script src="/portfolio/cebroad/webroot/assets/js/jquery.Jcrop.js"></script>
+<script src="/portfolio/cebroad/webroot/assets/js/inputfile.js"></script>
+<script src="/portfolio/cebroad/webroot/assets/js/crop.js"></script>
