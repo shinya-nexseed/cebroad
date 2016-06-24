@@ -1,10 +1,10 @@
 -- phpMyAdmin SQL Dump
--- version 4.4.15.5
+-- version 4.5.1
 -- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: 2016 年 6 月 24 日 02:02
--- サーバのバージョン： 5.6.29
+-- Host: 127.0.0.1:8080
+-- Generation Time: 2016 年 6 朁E24 日 04:54
+-- サーバのバージョン： 10.1.10-MariaDB
 -- PHP Version: 5.5.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -34,33 +34,7 @@ CREATE TABLE `comments` (
   `delete_flag` tinyint(1) NOT NULL DEFAULT '0',
   `created` datetime NOT NULL,
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
-
---
--- テーブルのデータのダンプ `comments`
---
-
-INSERT INTO `comments` (`id`, `user_id`, `event_id`, `comment`, `delete_flag`, `created`, `modified`) VALUES
-(1, 1, 2, '保存実験', 0, '2016-06-16 23:30:34', '2016-06-16 14:30:34'),
-(2, 2, 2, '保存実験', 0, '2016-06-16 23:30:45', '2016-06-22 02:31:12'),
-(3, 1, 2, '保存実験', 0, '2016-06-16 23:31:40', '2016-06-16 14:31:40'),
-(4, 2, 2, '保存', 0, '2016-06-16 23:32:21', '2016-06-22 02:31:08'),
-(5, 1, 2, '保存', 0, '2016-06-16 23:57:07', '2016-06-16 14:57:07'),
-(6, 1, 2, '保存', 0, '2016-06-17 11:06:35', '2016-06-17 02:06:35'),
-(7, 2, 4, '保存', 0, '2016-06-20 19:52:40', '2016-06-20 10:52:40'),
-(8, 2, 4, '保存', 0, '2016-06-20 19:52:46', '2016-06-20 10:52:46'),
-(9, 2, 4, '保存', 0, '2016-06-20 19:53:26', '2016-06-20 10:53:26'),
-(10, 2, 4, '保存', 0, '2016-06-20 20:21:21', '2016-06-20 11:21:21'),
-(11, 2, 4, '保存', 0, '2016-06-20 20:22:14', '2016-06-20 11:22:14'),
-(12, 1, 4, '保存', 0, '2016-06-21 01:01:35', '2016-06-20 16:01:35'),
-(13, 2, 4, '保存', 0, '2016-06-21 01:01:41', '2016-06-22 02:31:17'),
-(14, 1, 4, '保存', 0, '2016-06-21 01:04:25', '2016-06-20 16:04:25'),
-(15, 3, 4, '保存', 0, '2016-06-21 01:04:41', '2016-06-22 02:31:19'),
-(16, 1, 4, '保存', 0, '2016-06-21 01:05:29', '2016-06-20 16:05:29'),
-(17, 3, 3, 'To yuta2', 0, '2016-06-21 09:59:03', '2016-06-22 02:36:15'),
-(18, 1, 3, 'hogehoge', 0, '2016-06-21 09:59:07', '2016-06-22 02:36:17'),
-(19, 1, 3, 'ほげほげ', 0, '2016-06-22 11:46:38', '2016-06-22 02:46:38'),
-(20, 1, 3, 'ふがふが', 0, '2016-06-22 11:52:37', '2016-06-22 02:52:37');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -89,14 +63,7 @@ CREATE TABLE `events` (
   `delete_flag` tinyint(1) NOT NULL DEFAULT '0',
   `created` datetime NOT NULL,
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB AUTO_INCREMENT=99 DEFAULT CHARSET=utf8;
-
---
--- テーブルのデータのダンプ `events`
---
-
-INSERT INTO `events` (`id`, `title`, `detail`, `date`, `starting_time`, `closing_time`, `place_name`, `latitude`, `longitude`, `picture_path_0`, `picture_path_1`, `picture_path_2`, `picture_path_3`, `capacity_num`, `organizer_id`, `event_category_id`, `open_flag`, `delete_flag`, `created`, `modified`) VALUES
-(98, 'Hello world!', 'yehaaaaaaa', '2016-08-22', '10:00', '', 'Liv Super Club', '10.3265784', '123.93233329999998', '/portfolio/cebroad/views/events/events_pictures/e8ed2e11966937f0f2b615b50f4f1592904ee782.jpg', '', '', '', 20, 6, 1, 0, 0, '2016-06-24 02:48:35', '2016-06-23 17:48:35');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -111,7 +78,7 @@ CREATE TABLE `event_categories` (
   `delete_flag` tinyint(1) NOT NULL DEFAULT '0',
   `created` datetime NOT NULL,
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- テーブルのデータのダンプ `event_categories`
@@ -119,7 +86,10 @@ CREATE TABLE `event_categories` (
 
 INSERT INTO `event_categories` (`id`, `name`, `category_picture_path`, `delete_flag`, `created`, `modified`) VALUES
 (1, 'club', '', 0, '0000-00-00 00:00:00', '2016-06-11 06:26:12'),
-(2, 'study', '', 0, '0000-00-00 00:00:00', '2016-06-11 06:26:12');
+(2, 'study', '', 0, '0000-00-00 00:00:00', '2016-06-11 06:26:12'),
+(3, 'travel', '', 0, '0000-00-00 00:00:00', '2016-06-24 02:46:14'),
+(4, 'sports', '', 0, '0000-00-00 00:00:00', '2016-06-24 02:46:14'),
+(5, 'hack', '', 0, '0000-00-00 00:00:00', '2016-06-24 02:46:24');
 
 -- --------------------------------------------------------
 
@@ -131,14 +101,6 @@ CREATE TABLE `likes` (
   `user_id` int(11) NOT NULL,
   `event_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- テーブルのデータのダンプ `likes`
---
-
-INSERT INTO `likes` (`user_id`, `event_id`) VALUES
-(2, 2),
-(2, 3);
 
 -- --------------------------------------------------------
 
@@ -153,41 +115,7 @@ CREATE TABLE `message` (
   `room_id` int(11) NOT NULL,
   `created` datetime NOT NULL,
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=latin1;
-
---
--- テーブルのデータのダンプ `message`
---
-
-INSERT INTO `message` (`id`, `message`, `sender_id`, `room_id`, `created`, `modified`) VALUES
-(1, 'today is wednesday', 1, 1, '2016-06-22 00:00:00', '2016-06-22 11:06:29'),
-(2, 'test sender1 room2 ', 1, 2, '2016-06-23 00:00:00', '2016-06-22 11:07:56'),
-(3, 'test sender 2 room1', 2, 1, '2016-06-22 00:00:00', '2016-06-22 11:08:17'),
-(4, 'test sender2 room2', 2, 2, '2016-06-24 00:00:00', '2016-06-22 11:08:46'),
-(5, 'hello world!!!', 1, 1, '2016-06-23 01:50:45', '2016-06-22 16:50:45'),
-(6, 'hogehoge', 1, 1, '2016-06-23 02:37:08', '2016-06-22 17:37:08'),
-(7, 'hogehoge', 1, 0, '2016-06-23 02:37:16', '2016-06-22 17:37:16'),
-(8, 'hogehoge', 1, 1, '2016-06-23 02:38:27', '2016-06-22 17:38:27'),
-(9, 'hogehoge', 1, 0, '2016-06-23 02:41:50', '2016-06-22 17:41:50'),
-(10, 'hogehoge', 1, 1, '2016-06-23 03:08:20', '2016-06-22 18:08:20'),
-(11, 'hogehoge', 1, 1, '2016-06-23 03:09:41', '2016-06-22 18:09:41'),
-(12, 'hogehoge', 1, 1, '2016-06-23 03:10:05', '2016-06-22 18:10:05'),
-(13, 'ahahaha', 1, 1, '2016-06-23 03:11:58', '2016-06-22 18:11:58'),
-(14, 'ohoho', 1, 1, '2016-06-23 03:17:48', '2016-06-22 18:17:48'),
-(15, 'ehehe', 1, 1, '2016-06-23 03:18:36', '2016-06-22 18:18:36'),
-(16, 'mumu?', 1, 2, '2016-06-23 03:18:42', '2016-06-22 18:18:42'),
-(17, 'aaa', 1, 2, '2016-06-23 03:21:23', '2016-06-22 18:21:23'),
-(18, 'yahhaaaa', 1, 2, '2016-06-23 03:35:25', '2016-06-22 18:35:25'),
-(19, '.....', 1, 2, '2016-06-23 03:36:03', '2016-06-22 18:36:03'),
-(20, 'ljkhjfgdxgf', 1, 2, '2016-06-23 03:39:06', '2016-06-22 18:39:06'),
-(21, 'aaaaaaaaa', 1, 1, '2016-06-23 03:39:14', '2016-06-22 18:39:14'),
-(22, 'mumumu', 1, 2, '2016-06-23 03:51:34', '2016-06-22 18:51:34'),
-(23, 'ほげ', 1, 1, '2016-06-23 03:54:22', '2016-06-22 18:54:22'),
-(24, 'ふが', 2, 1, '2016-06-23 03:54:48', '2016-06-22 18:54:48'),
-(25, 'gggggg', 2, 1, '2016-06-23 03:55:06', '2016-06-22 18:55:06'),
-(26, 'aaaaa', 1, 1, '2016-06-23 03:55:37', '2016-06-22 18:55:37'),
-(27, 'hahahh', 1, 1, '2016-06-23 09:30:54', '2016-06-23 00:30:54'),
-(28, 'hahahhhhhh', 1, 1, '2016-06-23 09:31:01', '2016-06-23 00:31:01');
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -201,14 +129,19 @@ CREATE TABLE `nationalities` (
   `delete_flag` tinyint(1) NOT NULL DEFAULT '0',
   `created` datetime NOT NULL,
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- テーブルのデータのダンプ `nationalities`
 --
 
 INSERT INTO `nationalities` (`nationality_id`, `nationality`, `delete_flag`, `created`, `modified`) VALUES
-(1, 'Japan', 0, '2016-06-21 12:37:54', '2016-06-21 03:37:54');
+(1, 'Japan', 0, '2016-06-21 12:37:54', '2016-06-21 03:37:54'),
+(4, 'Taiwan', 0, '0000-00-00 00:00:00', '2016-06-24 02:48:52'),
+(5, 'Korea', 0, '0000-00-00 00:00:00', '2016-06-24 02:48:52'),
+(6, 'China', 0, '0000-00-00 00:00:00', '2016-06-24 02:49:36'),
+(7, 'Philippines', 0, '0000-00-00 00:00:00', '2016-06-24 02:49:36'),
+(8, 'China', 0, '0000-00-00 00:00:00', '2016-06-24 02:49:38');
 
 -- --------------------------------------------------------
 
@@ -225,23 +158,7 @@ CREATE TABLE `notifications` (
   `click_flag` tinyint(1) NOT NULL DEFAULT '0',
   `created` datetime NOT NULL,
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
-
---
--- テーブルのデータのダンプ `notifications`
---
-
-INSERT INTO `notifications` (`id`, `user_id`, `partner_id`, `event_id`, `topic_id`, `click_flag`, `created`, `modified`) VALUES
-(1, 1, 2, 4, 1, 1, '2016-06-20 19:53:26', '2016-06-20 15:54:27'),
-(2, 1, 2, 4, 1, 1, '2016-06-20 20:21:21', '2016-06-20 15:54:20'),
-(3, 1, 2, 4, 1, 1, '2016-06-20 20:22:14', '2016-06-20 15:46:17'),
-(4, 1, 1, 4, 1, 0, '2016-06-21 01:01:35', '2016-06-20 16:01:35'),
-(5, 1, 1, 4, 1, 0, '2016-06-21 01:01:42', '2016-06-20 16:01:42'),
-(6, 1, 1, 4, 1, 0, '2016-06-21 01:04:25', '2016-06-20 16:04:25'),
-(7, 1, 1, 4, 1, 0, '2016-06-21 01:04:41', '2016-06-20 16:04:41'),
-(8, 1, 1, 4, 1, 0, '2016-06-21 01:05:29', '2016-06-20 16:05:29'),
-(9, 2, 1, 3, 1, 0, '2016-06-21 09:59:03', '2016-06-21 00:59:03'),
-(10, 2, 1, 3, 1, 0, '2016-06-21 09:59:07', '2016-06-21 00:59:07');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -252,7 +169,7 @@ INSERT INTO `notifications` (`id`, `user_id`, `partner_id`, `event_id`, `topic_i
 CREATE TABLE `notification_topics` (
   `id` int(11) NOT NULL,
   `topic` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- テーブルのデータのダンプ `notification_topics`
@@ -275,16 +192,6 @@ CREATE TABLE `participants` (
   `event_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- テーブルのデータのダンプ `participants`
---
-
-INSERT INTO `participants` (`user_id`, `event_id`) VALUES
-(1, 4),
-(2, 4),
-(2, 3),
-(1, 3);
-
 -- --------------------------------------------------------
 
 --
@@ -297,7 +204,7 @@ CREATE TABLE `pre_users` (
   `email` varchar(255) NOT NULL,
   `confirmed_flag` int(11) NOT NULL DEFAULT '0',
   `created` datetime NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- テーブルのデータのダンプ `pre_users`
@@ -322,19 +229,7 @@ CREATE TABLE `rooms` (
   `organizer_id` int(11) NOT NULL,
   `participant_id` int(11) NOT NULL,
   `updated` datetime DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
-
---
--- テーブルのデータのダンプ `rooms`
---
-
-INSERT INTO `rooms` (`id`, `event_id`, `organizer_id`, `participant_id`, `updated`) VALUES
-(1, 2, 1, 2, '2016-06-22 00:00:00'),
-(2, 2, 2, 1, '2016-06-22 00:00:00'),
-(3, 2, 3, 4, '2016-06-22 00:00:00'),
-(4, 2, 3, 2, '2016-06-23 00:00:00'),
-(5, 2, 5, 6, NULL),
-(6, 0, 2, 3, NULL);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -348,14 +243,16 @@ CREATE TABLE `schools` (
   `delete_flag` tinyint(1) NOT NULL DEFAULT '0',
   `created` datetime NOT NULL,
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- テーブルのデータのダンプ `schools`
 --
 
 INSERT INTO `schools` (`id`, `name`, `delete_flag`, `created`, `modified`) VALUES
-(1, 'NexSeed', 0, '0000-00-00 00:00:00', '2016-06-11 07:02:46');
+(1, 'NexSeed', 0, '0000-00-00 00:00:00', '2016-06-11 07:02:46'),
+(2, 'QQ English', 0, '0000-00-00 00:00:00', '2016-06-24 02:51:19'),
+(3, 'AJITO', 0, '0000-00-00 00:00:00', '2016-06-24 02:51:19');
 
 -- --------------------------------------------------------
 
@@ -377,7 +274,7 @@ CREATE TABLE `users` (
   `delete_flag` tinyint(1) NOT NULL DEFAULT '0',
   `created` datetime NOT NULL,
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- テーブルのデータのダンプ `users`
@@ -469,57 +366,57 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=99;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
 --
 -- AUTO_INCREMENT for table `event_categories`
 --
 ALTER TABLE `event_categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `message`
 --
 ALTER TABLE `message`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 --
 -- AUTO_INCREMENT for table `nationalities`
 --
 ALTER TABLE `nationalities`
-  MODIFY `nationality_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `nationality_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `notification_topics`
 --
 ALTER TABLE `notification_topics`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `pre_users`
 --
 ALTER TABLE `pre_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `rooms`
 --
 ALTER TABLE `rooms`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `schools`
 --
 ALTER TABLE `schools`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
