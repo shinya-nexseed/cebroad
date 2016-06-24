@@ -15,7 +15,7 @@
 	setcookie('password','',time()-3600);
 
 	// header('Location: index');
-	echo '<script> location.replace("/portfolio/cebroad/index"); </script>';
+	echo '<script> location.replace("/portfolio/cebroad/home"); </script>';
 	exit();
 
 ?>

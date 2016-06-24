@@ -23,7 +23,7 @@
     $post = $_POST;
   }
 
-  if ($resource === 'index' || $resource === '') {
+  if ($resource === 'home' || $resource === '') {
     require('index.php');
   } else {
     if ($resource === 'signin') {

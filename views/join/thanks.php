@@ -1,7 +1,7 @@
 <?php
     // ログイン判定
     if (!isset($_SESSION['id'])) {
-        echo '<script> location.replace("/portfolio/cebroad/index"); </script>';
+        echo '<script> location.replace("/portfolio/cebroad/home"); </script>';
         exit();
     }
 

@@ -46,7 +46,7 @@
         <h2 class="text-center">Cebu Local SNS</h2>
         <p>Join the getherings that interest you and meet new friends beyond school!</p>
         <div class="search-form wow pulse" data-wow-delay="0.8s">
-          <a href="join/regist_form"><button class="navbar-btn nav-button wow bounceInRight login" data-wow-delay="0.8s">Sing up</button></a>
+          <a href="join/regist_form"><button class="navbar-btn nav-button wow bounceInRight login" data-wow-delay="0.8s">Sign up</button></a>
         </div>
       </div>
     </div>

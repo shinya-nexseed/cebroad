@@ -1,6 +1,6 @@
 <?php 
   if (!isset($_SESSION['join'])) {
-    echo '<script> location.replace("/portfolio/cebroad/index"); </script>';
+    echo '<script> location.replace("/portfolio/cebroad/home"); </script>';
     exit();
   }
 
@@ -68,7 +68,7 @@ if (!empty($_POST)) {
 
   } else {
       //sqlが正しく実行されず、データが入力されなかった場合
-    echo '<script> location.replace("/portfolio/cebroad/index"); </script>';
+    echo '<script> location.replace("/portfolio/cebroad/home"); </script>';
     exit();
   }
 
