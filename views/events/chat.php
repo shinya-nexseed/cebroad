@@ -46,7 +46,7 @@
 // var_dump($records);
 
           //対象のルームの一覧化
-          $sql=sprintf('SELECT rooms.*, events.event_name, a_users.nick_name AS organizer_name, b_users.nick_name AS participant_name, a_users.profile_picture_path AS a_users_picture, b_users.profile_picture_path AS b_users_picture FROM `rooms`
+          $sql=sprintf('SELECT rooms.*, events.title, a_users.nick_name AS organizer_name, b_users.nick_name AS participant_name, a_users.profile_picture_path AS a_users_picture, b_users.profile_picture_path AS b_users_picture FROM `rooms`
             LEFT JOIN `events` ON rooms.event_id=events.id
             LEFT JOIN `users` AS a_users ON rooms.organizer_id=a_users.id
             LEFT JOIN `users` AS b_users ON rooms.participant_id=b_users.id
@@ -63,7 +63,7 @@
 
       }else{//ログインユーザーとオーガナイザーが一致する場合
             //対象のルームの一覧化
-            $sql=sprintf('SELECT rooms.*, events.event_name ,a_users.nick_name AS organizer_name, b_users.nick_name AS participant_name, a_users.profile_picture_path AS a_users_picture, b_users.profile_picture_path AS b_users_picture FROM `rooms`
+            $sql=sprintf('SELECT rooms.*, events.title ,a_users.nick_name AS organizer_name, b_users.nick_name AS participant_name, a_users.profile_picture_path AS a_users_picture, b_users.profile_picture_path AS b_users_picture FROM `rooms`
             LEFT JOIN `events` ON rooms.event_id=events.id
             LEFT JOIN `users` AS a_users ON rooms.organizer_id=a_users.id
             LEFT JOIN `users` AS b_users ON rooms.participant_id=b_users.id
@@ -262,7 +262,7 @@
         <div class="round hollow text-center">
         <!-- organizerの場合はopen btnをwhile文で複数表示、participantの場合は一つ表示の条件分岐-->
         <?php if($event['organizer_id']!=$_SESSION['id']){//対象のイベントのオーガナイザーで無い場合 ?>
-         <a href="#" class="open-btn" id=<?php echo $room['id']; ?> onclick="scroll()"><i class="fa fa-comments-o" aria-hidden="true"></i>send to <?php echo $event['event_name']; ?></a>
+         <a href="#" class="open-btn" id=<?php echo $room['id']; ?> onclick="scroll()"><i class="fa fa-comments-o" aria-hidden="true"></i>send to <?php echo $event['title']; ?></a>
         <?php }else{  
             foreach ($rooms as $room) { ?>
             <a href="#" class="open-btn" id=<?php echo $room['id']; ?> onclick="scroll()"><i class="fa fa-comments-o" aria-hidden="true"></i>send to <?php echo $room['participant_id']; ?></a>  
@@ -277,7 +277,7 @@
     <div class="popup-head">
         <div class="popup-head-left pull-left"><a Design and Developmenta title="Gurdeep Osahan (Web Designer)" target="_blank" href="">
             <img class="md-user-image" alt="" title="" src="" title="" alt="">
-            <h1><?php echo $room['event_name']; ?></h1></a></div>
+            <h1><?php echo $room['title']; ?></h1></a></div>
             <button data-widget="remove" id="removeClass" class="chat-header-button pull-right" type="button"><i class="glyphicon glyphicon-remove"></i></button>
         </div>
     </div>

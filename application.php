@@ -702,6 +702,12 @@
       </div>
   </div>
 
+  <?php 
+    if ($resource === 'events' && $action === 'show') {
+      require(dirname(__FILE__).'/views/events/chat.php');
+    }
+   ?>
+
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
   <script type="text/javascript" src="/portfolio/cebroad/webroot/assets/js/bootstrap.js"></script>

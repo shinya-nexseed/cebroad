@@ -169,7 +169,7 @@ if ( !function_exists('mime_content_type') ) {
       <img src="/cebroad/webroot/assets/images/sand.jpg" class="img-responsive" height="600">
       <!-- </div> -->
       <div class="panel-body">
-        <p class="lead"><?php echo $event['event_name']; ?></p>
+        <p class="lead"><?php echo $event['title']; ?></p>
         <h4><i class="fa fa-users" aria-hidden="true"></i><?php echo $cnt_paticipant['cnt']?>  <i class="fa fa-thumbs-o-up" aria-hidden="true"></i><?php echo $cnt_like['cnt']?></h4>
         <p><img src="/cebroad/users/profile_pictures/<?php echo $organizer['profile_picture_path'];?>" class="img-circle pull-left"></p>
         <!-- いいねボタン -->
@@ -190,7 +190,7 @@ if ( !function_exists('mime_content_type') ) {
           <i class="fa fa-users" aria-hidden="true"></i><input type="submit" class="btn btn-default" value="Cansel">  
           <?php }else { ?>
           <!-- 押したことがなく、定員に達している場合はボタンは非アクティブ状態 -->
-          <?php if($cnt_paticipant['cnt']<$event['capacity_nim']){?> 
+          <?php if($cnt_paticipant['cnt']<$event['capacity_num']){?> 
           <i class="fa fa-users" aria-hidden="true"></i><input type="submit" class="btn btn-success" value="Join">
           <!-- 押したことがなく、定員に達していない場合はボタンはアクティブ状態 -->
           <?php }else { ?>
